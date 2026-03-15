@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diseño para última milla — Caso de estudio · Adrivette</title>
+  <meta name="description" content="Caso de estudio: Diseño para última milla en Mercado Libre. Experiencias para operadores logísticos bajo presión extrema: escaneabilidad total y fallbacks para cada punto de fallo. Product Designer: Adriana Romero." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== TOKENS (idénticos al portfolio principal) ===== */
+    :root {
+      --color-bg: #0f0f0f;
+      --color-bg-card: #1a1a1a;
+      --color-bg-tag: #242424;
+      --color-text: #f5f5f5;
+      --color-text-muted: rgba(245,245,245,0.55);
+      --color-accent: #F472B6;
+      --color-accent-2: #67E8F9;
+      --color-border: rgba(255,255,255,0.08);
+      --font: 'Red Hat Text', sans-serif;
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 24px;
+      --space-lg: 40px;
+      --space-xl: 80px;
+      --space-2xl: 128px;
+      --radius: 16px;
+      --radius-sm: 8px;
+      --max-w: 1100px;
+      --content-w: 760px;
+      --transition: 200ms ease;
+    }
+
+    /* ===== RESET ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+
+    /* ===== SKIP LINK ===== */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: var(--space-sm);
+      background: var(--color-accent);
+      color: #0f0f0f;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 14px;
+      z-index: 1000;
+      transition: top var(--transition);
+    }
+    .skip-link:focus { top: var(--space-sm); }
+
+    /* ===== NAV ===== */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: var(--space-sm) var(--space-lg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15,15,15,0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    .nav-back:hover, .nav-back:focus-visible { color: var(--color-text); }
+    .nav-back svg { flex-shrink: 0; }
+    .nav-divider {
+      width: 1px;
+      height: 20px;
+      background: var(--color-border);
+    }
+    .nav-logo {
+      font-weight: 800;
+      font-size: 18px;
+      text-decoration: none;
+      background: linear-gradient(135deg, var(--color-accent), var(--color-accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-links {
+      display: flex;
+      gap: var(--space-lg);
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      transition: color var(--transition);
+    }
+    .nav-links a:hover,
+    .nav-links a:focus-visible { color: var(--color-text); }
+    .nav-cta {
+      background: var(--color-accent);
+      color: #0f0f0f !important;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: 100px;
+      font-weight: 700 !important;
+      transition: opacity var(--transition) !important;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ===== LANG SWITCH ===== */
+    .lang-switch {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      background: var(--color-bg-tag);
+      border: 1px solid var(--color-border);
+      border-radius: 100px;
+      padding: 3px;
+    }
+    .lang-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      padding: 4px 10px;
+      border-radius: 100px;
+      transition: background var(--transition), color var(--transition);
+    }
+    .lang-btn.active {
+      background: var(--color-accent);
+      color: #0f0f0f;
+    }
+
+    /* ===== LAYOUT ===== */
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+    }
+    .content-col {
+      max-width: var(--content-w);
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+    }
+
+    /* ===== ACCESIBILIDAD ===== */
+    :focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+    }
+
+    /* ===== HERO DEL CASO ===== */
+    .case-hero {
+      padding: clamp(48px, 8vh, 100px) 0 clamp(40px, 6vh, 80px);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .caso-nda-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-accent-2);
+      padding: 4px 12px;
+      border-radius: 100px;
+      background: rgba(103,232,249,0.1);
+      border: 1px solid rgba(103,232,249,0.2);
+      margin-bottom: var(--space-sm);
+    }
+    .case-hero-meta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      margin-bottom: var(--space-sm);
+    }
+    .company-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background: rgba(103,232,249,0.08);
+      border: 1px solid rgba(103,232,249,0.2);
+      color: var(--color-accent-2);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 100px;
+    }
+    .year-badge {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--color-text-muted);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 100px;
+    }
+    .case-hero h1 {
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: var(--space-sm);
+    }
+    .case-summary {
+      font-size: 19px;
+      color: var(--color-text-muted);
+      line-height: 1.7;
+      max-width: 600px;
+      margin-bottom: var(--space-md);
+    }
+    .nda-disclaimer {
+      font-size: 13px;
+      color: var(--color-text-muted);
+      background: rgba(103,232,249,0.05);
+      border: 1px solid rgba(103,232,249,0.12);
+      border-radius: var(--radius-sm);
+      padding: var(--space-sm) var(--space-md);
+      margin-bottom: var(--space-md);
+      line-height: 1.65;
+    }
+    .meta-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      margin-bottom: var(--space-lg);
+    }
+    .meta-chip {
+      background: var(--color-bg-tag);
+      border: 1px solid var(--color-border);
+      padding: 5px 14px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+    }
+    .meta-chip.highlight {
+      background: rgba(244,114,182,0.1);
+      border-color: rgba(244,114,182,0.25);
+      color: var(--color-accent);
+    }
+    .next-project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      text-decoration: none;
+      transition: color var(--transition), gap var(--transition);
+    }
+    .next-project-link:hover, .next-project-link:focus-visible {
+      color: var(--color-text);
+      gap: 10px;
+    }
+
+    /* ===== MOCKUP PLACEHOLDER ===== */
+    .mockup-placeholder {
+      border: 2px dashed rgba(255,255,255,0.12);
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      color: var(--color-text-muted);
+      font-size: 14px;
+      font-weight: 500;
+      background: var(--color-bg-card);
+    }
+    .mockup-placeholder svg { opacity: 0.4; }
+    .mockup-placeholder-lg {
+      height: 400px;
+      margin: var(--space-xl) 0;
+    }
+    .mockup-placeholder-sm {
+      height: 240px;
+      margin: var(--space-md) 0;
+    }
+
+    /* ===== SECCIONES DE CONTENIDO ===== */
+    .case-section {
+      padding: var(--space-xl) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .case-section:last-of-type {
+      border-bottom: none;
+    }
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-accent);
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      margin-bottom: var(--space-sm);
+    }
+    .section-title {
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      line-height: 1.25;
+      margin-bottom: var(--space-md);
+    }
+    .body-text {
+      color: var(--color-text-muted);
+      font-size: 16px;
+      line-height: 1.85;
+      margin-bottom: var(--space-md);
+    }
+    .body-text strong { color: var(--color-text); }
+    .body-text:last-child { margin-bottom: 0; }
+
+    /* ===== BLOCKQUOTE ===== */
+    blockquote {
+      border-left: 3px solid var(--color-accent);
+      padding: var(--space-md) var(--space-lg);
+      background: rgba(244,114,182,0.05);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: var(--space-lg) 0;
+    }
+    blockquote p {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.65;
+      color: var(--color-text);
+      font-style: italic;
+    }
+    blockquote cite {
+      display: block;
+      margin-top: var(--space-xs);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      font-style: normal;
+    }
+
+    /* ===== TABLA DE USUARIOS ===== */
+    .user-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: var(--space-md) 0;
+      font-size: 14px;
+    }
+    .user-table th {
+      text-align: left;
+      padding: var(--space-xs) var(--space-sm);
+      color: var(--color-accent);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .user-table td {
+      padding: var(--space-sm);
+      border-bottom: 1px solid var(--color-border);
+      color: var(--color-text-muted);
+      vertical-align: top;
+    }
+    .user-table td:first-child {
+      font-weight: 700;
+      color: var(--color-text);
+      white-space: nowrap;
+    }
+    .user-table tr:last-child td { border-bottom: none; }
+    .user-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ===== PASOS DEL PROCESO ===== */
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-sm);
+      margin: var(--space-md) 0;
+    }
+    .process-step {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--space-md);
+      position: relative;
+      overflow: hidden;
+    }
+    .process-step::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--color-accent), var(--color-accent-2));
+      opacity: 0.4;
+    }
+    .step-number {
+      font-size: clamp(40px, 5vw, 56px);
+      font-weight: 800;
+      color: var(--color-accent-2);
+      opacity: 0.2;
+      line-height: 1;
+      margin-bottom: var(--space-xs);
+      letter-spacing: -2px;
+    }
+    .step-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .step-desc {
+      font-size: 14px;
+      color: var(--color-text-muted);
+      line-height: 1.65;
+    }
+
+    /* ===== TARJETAS DE DECISIONES ===== */
+    .decision-cards {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      margin: var(--space-md) 0;
+    }
+    .decision-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--space-md) var(--space-lg);
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .decision-card:hover {
+      border-color: rgba(255,255,255,0.18);
+      transform: translateX(4px);
+    }
+    .decision-number {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--color-accent);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .decision-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: var(--space-xs);
+      line-height: 1.3;
+    }
+    .decision-desc {
+      font-size: 15px;
+      color: var(--color-text-muted);
+      line-height: 1.75;
+    }
+    .decision-desc strong { color: var(--color-text); }
+
+    /* ===== MÉTRICAS ===== */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-sm);
+      margin: var(--space-md) 0;
+    }
+    .metric-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--space-md);
+      text-align: center;
+    }
+    .metric-value {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800;
+      color: var(--color-accent-2);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .metric-value.placeholder {
+      color: rgba(103,232,249,0.35);
+      font-size: 24px;
+    }
+    .metric-label {
+      font-size: 13px;
+      color: var(--color-text-muted);
+      line-height: 1.4;
+    }
+
+    /* ===== APRENDIZAJES ===== */
+    .learnings-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      margin: var(--space-md) 0;
+    }
+    .learning-item {
+      display: flex;
+      gap: var(--space-sm);
+      align-items: flex-start;
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .learning-item:last-child { border-bottom: none; }
+    .learning-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(244,114,182,0.12);
+      border: 1px solid rgba(244,114,182,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .learning-text {
+      font-size: 15px;
+      color: var(--color-text-muted);
+      line-height: 1.7;
+    }
+    .learning-text strong { color: var(--color-text); }
+
+    /* ===== FOOTER DEL CASO ===== */
+    .case-footer-section {
+      padding: var(--space-xl) 0;
+      border-top: 1px solid var(--color-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      text-decoration: none;
+      transition: color var(--transition), gap var(--transition);
+    }
+    .back-link:hover, .back-link:focus-visible {
+      color: var(--color-text);
+      gap: 10px;
+    }
+
+    /* ===== MÁS PROYECTOS ===== */
+    .more-projects {
+      padding: var(--space-xl) 0;
+      border-top: 1px solid var(--color-border);
+    }
+    .more-projects-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-accent);
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      margin-bottom: var(--space-md);
+    }
+    .more-projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+    }
+    .more-project-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--space-md);
+      text-decoration: none;
+      transition: border-color var(--transition), transform var(--transition);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .more-project-card:hover, .more-project-card:focus-visible {
+      border-color: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+    .mp-company {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+    .mp-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--color-text);
+      line-height: 1.3;
+    }
+    .mp-arrow {
+      font-size: 13px;
+      color: var(--color-accent);
+      margin-top: 4px;
+    }
+    @media (max-width: 600px) {
+      .more-projects-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ===== FOOTER PÁGINA ===== */
+    footer {
+      padding: var(--space-lg) 0;
+      border-top: 1px solid var(--color-border);
+      text-align: center;
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+    footer a { color: var(--color-accent); text-decoration: none; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      :root { --space-xl: 48px; }
+      nav {
+        padding: var(--space-sm);
+      }
+      .nav-links { display: none; }
+      .process-steps { grid-template-columns: 1fr; }
+      .metrics-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .metrics-grid { grid-template-columns: 1fr; }
+      .case-footer-section { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* ===== PASSWORD GATE ===== */
+    .pw-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: var(--color-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-lg);
+    }
+    .pw-gate-box {
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+    .pw-gate-lock {
+      width: 48px;
+      height: 48px;
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--space-md);
+    }
+    .pw-gate-box h2 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: var(--space-xs);
+    }
+    .pw-gate-box p {
+      font-size: 15px;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-lg);
+      line-height: 1.6;
+    }
+    .pw-gate-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .pw-input {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      padding: 12px var(--space-md);
+      font-family: var(--font);
+      font-size: 15px;
+      color: var(--color-text);
+      width: 100%;
+      transition: border-color var(--transition);
+      text-align: center;
+      letter-spacing: 2px;
+    }
+    .pw-input:focus {
+      outline: none;
+      border-color: var(--color-accent);
+    }
+    .pw-input.error {
+      border-color: #f87171;
+      animation: shake 300ms ease;
+    }
+    .pw-error {
+      font-size: 13px;
+      color: #f87171;
+      min-height: 18px;
+    }
+    .pw-btn {
+      background: var(--color-accent);
+      color: #0f0f0f;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 12px var(--space-md);
+      font-family: var(--font);
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity var(--transition);
+    }
+    .pw-btn:hover { opacity: 0.85; }
+    .pw-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--color-text-muted);
+      text-decoration: none;
+      margin-top: var(--space-md);
+      transition: color var(--transition);
+    }
+    .pw-back:hover { color: var(--color-text); }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PASSWORD GATE -->
+  <div class="pw-gate" id="pw-gate" role="dialog" aria-modal="true" aria-labelledby="pw-title">
+    <div class="pw-gate-box">
+      <div class="pw-gate-lock" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <rect x="3" y="9" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M6.5 9V6.5a3.5 3.5 0 1 1 7 0V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h2 id="pw-title" data-i18n="pw-title">Contenido protegido</h2>
+      <p data-i18n="pw-desc">Este caso de estudio contiene información confidencial. Introduce la contraseña para continuar.</p>
+      <form class="pw-gate-form" id="pw-form" onsubmit="return false;">
+        <input class="pw-input" id="pw-input" type="password" placeholder="Contraseña" autocomplete="off" aria-label="Contraseña" />
+        <p class="pw-error" id="pw-error" role="alert" aria-live="polite"></p>
+        <button class="pw-btn" type="submit" id="pw-submit" data-i18n="pw-btn">Acceder</button>
+      </form>
+      <a href="index.html#casos" class="pw-back">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M11 7H3M3 7l3.5-3.5M3 7l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span data-i18n="pw-back">Volver al portfolio</span>
+      </a>
+    </div>
+  </div>
+
+  <a href="#main" class="skip-link">Saltar al contenido principal</a>
+
+  <!-- NAV -->
+  <nav aria-label="Navegación principal">
+    <div class="nav-left">
+      <a href="index.html#casos" class="nav-back" aria-label="Volver a Proyectos">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M13 8H3M3 8L7 4M3 8L7 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span data-i18n="nav-back">Proyectos</span>
+      </a>
+      <div class="nav-divider" aria-hidden="true"></div>
+      <a href="index.html" class="nav-logo" aria-label="Adrivette — inicio">Adrivette</a>
+    </div>
+    <ul class="nav-links" role="list">
+      <li><a href="index.html#sobre-mi" data-i18n="nav-about">Sobre mí</a></li>
+      <li><a href="index.html#casos" data-i18n="nav-work">Proyectos</a></li>
+      <li><a href="index.html#contacto" data-i18n="nav-contact">Hablemos</a></li>
+      <li><a href="index.html#cv" class="nav-cta">CV</a></li>
+    </ul>
+    <div class="lang-switch" role="group" aria-label="Select language">
+      <button class="lang-btn active" id="btn-es" onclick="setLang('es')" aria-pressed="true">🇲🇽 ES</button>
+      <button class="lang-btn" id="btn-en" onclick="setLang('en')" aria-pressed="false">🇺🇸 EN</button>
+    </div>
+  </nav>
+
+  <main id="main">
+
+    <!-- HERO DEL CASO -->
+    <header class="case-hero">
+      <div class="content-col">
+        <div class="caso-nda-badge" aria-label="Proyecto confidencial">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <rect x="2" y="5" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M4 5V3.5a2 2 0 1 1 4 0V5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+          <span data-i18n="nda-badge">Confidencial — Proceso y aprendizajes</span>
+        </div>
+        <div class="case-hero-meta">
+          <div class="company-badge">Mercado Libre</div>
+          <div class="year-badge">2026</div>
+        </div>
+        <h1 data-i18n="hero-title">Inbound &amp; Sorting — Clasificación en tiempo real</h1>
+        <p class="case-summary" data-i18n="hero-summary">Rediseño de la herramienta handheld que usan los reps para clasificar paquetes al momento de llegar al service center. El objetivo: que en segundos pudieran identificar si un paquete era normal, voluminoso o tenía una anomalía que lo bloqueara.</p>
+        <p class="nda-disclaimer" role="note" data-i18n="nda-disclaimer">
+          Por acuerdo de confidencialidad no puedo mostrar pantallas ni datos específicos del producto. Este caso de estudio se centra en el proceso, las decisiones de diseño y los aprendizajes.
+        </p>
+        <div class="meta-chips" role="list" aria-label="Metadatos del proyecto">
+          <span class="meta-chip" role="listitem" data-i18n="chip-logistics">Logística</span>
+          <span class="meta-chip" role="listitem">Handheld</span>
+          <span class="meta-chip" role="listitem" data-i18n="chip-research">Research contextual</span>
+          <span class="meta-chip highlight" role="listitem">Product Designer</span>
+        </div>
+        <a href="espacios.html" class="next-project-link" aria-label="Ver siguiente proyecto: Espacios — albo">
+          <span data-i18n="next-project">Ver siguiente proyecto</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </header>
+
+    <!-- GIF PROCESO -->
+    <div class="content-col">
+      <figure style="margin: var(--space-xl) 0;">
+        <img src="assets/handheld.gif" alt="Rep usando la handheld para clasificar paquetes en el service center" style="width: 60%; display: block; margin: 0 auto; border-radius: var(--radius); border: 1px solid var(--color-border);" />
+      </figure>
+    </div>
+
+    <!-- EL RETO -->
+    <section class="case-section" aria-labelledby="reto-title">
+      <div class="content-col">
+        <p class="section-label" aria-hidden="true">01</p>
+        <h2 id="reto-title" class="section-title" data-i18n="s1-title">El reto</h2>
+        <p class="body-text" data-i18n="s1-p1">
+          Cuando un paquete llega al service center, el rep tiene que tomar una decisión rápida: ¿es mercancía normal, es voluminoso, o tiene una anomalía que impide que salga a entrega? Una clasificación incorrecta tiene consecuencias directas — el paquete llega tarde, se pierde, o peor: es entregado cuando no debería serlo.
+        </p>
+
+        <blockquote>
+          <p data-i18n="s1-quote">"Una mala clasificación no se nota en el service center. Se nota cuando el paquete llega al lugar equivocado o no llega nunca."</p>
+        </blockquote>
+
+        <p class="body-text" data-i18n="s1-p2">
+          La herramienta handheld que usaban los reps para hacer esta tarea no estaba diseñada para ayudarlos a tomar esa decisión. La pantalla estaba saturada de información, no había señales visuales claras para distinguir los tipos de paquete y los casos con anomalía no tenían un tratamiento diferenciado. El rep tenía que interpretar — y en un service center con presión de tiempo, ruido y movimiento constante, eso generaba errores.
+        </p>
+        <p class="body-text" data-i18n-html="s1-p3">
+          Mi rol como <strong>Product Designer</strong> incluyó el research contextual en campo y el diseño de las soluciones que transformaron esa herramienta.
+        </p>
+      </div>
+    </section>
+
+    <!-- USUARIOS -->
+    <section class="case-section" aria-labelledby="usuarios-title">
+      <div class="content-col">
+        <p class="section-label" aria-hidden="true">02</p>
+        <h2 id="usuarios-title" class="section-title" data-i18n="s2-title">El usuario</h2>
+        <p class="body-text" data-i18n-html="s2-p1">
+          El usuario principal de esta herramienta es el <strong>rep de inbound</strong>: la persona que recibe los paquetes en el service center y los clasifica usando una handheld con escáner. No es un usuario nuevo en tecnología — la handheld es su herramienta de trabajo principal y la usa todo el día.
+        </p>
+
+        <table class="user-table" aria-label="Contexto del usuario principal">
+          <thead>
+            <tr>
+              <th scope="col" data-i18n="th-aspect">Aspecto</th>
+              <th scope="col" data-i18n="th-reality">Realidad del rep de inbound</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-i18n="tr1-aspect">Entorno</td>
+              <td data-i18n="tr1-reality">Service center con alto flujo de paquetes, ruido constante y presión de tiempo.</td>
+            </tr>
+            <tr>
+              <td data-i18n="tr2-aspect">Herramienta</td>
+              <td data-i18n="tr2-reality">Handheld con escáner. Familiar para él — es su dispositivo de trabajo habitual.</td>
+            </tr>
+            <tr>
+              <td data-i18n="tr3-aspect">Tarea crítica</td>
+              <td data-i18n="tr3-reality">Clasificar cada paquete como normal, voluminoso o con anomalía. Decisión rápida, consecuencias altas.</td>
+            </tr>
+            <tr>
+              <td data-i18n="tr4-aspect">Condición física</td>
+              <td data-i18n="tr4-reality">De pie, en movimiento, con las manos ocupadas. No puede detenerse a leer.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- MI PROCESO -->
+    <section class="case-section" aria-labelledby="proceso-title">
+      <div class="content-col">
+        <p class="section-label" aria-hidden="true">03</p>
+        <h2 id="proceso-title" class="section-title" data-i18n="s3-title">Mi proceso</h2>
+        <p class="body-text" data-i18n="s3-p1">
+          Antes de diseñar nada, fui al service center. No hay forma de entender este tipo de trabajo sin verlo en primera persona — las entrevistas no capturan la presión, el ritmo ni las microinteracciones que ocurren cuando alguien clasifica paquetes durante horas seguidas.
+        </p>
+
+        <div class="process-steps">
+          <div class="process-step">
+            <div class="step-number" aria-hidden="true">01</div>
+            <div class="step-title" data-i18n="step1-title">Research en el service center</div>
+            <p class="step-desc" data-i18n="step1-desc">Observación directa de los reps durante su jornada real. El objetivo era entender cómo tomaban la decisión de clasificación, dónde dudaban y qué señales buscaban en la pantalla para confirmar que habían hecho bien su trabajo.</p>
+          </div>
+          <div class="process-step">
+            <div class="step-number" aria-hidden="true">02</div>
+            <div class="step-title" data-i18n="step2-title">Mapeo de tipos de clasificación</div>
+            <p class="step-desc" data-i18n="step2-desc">Definir con precisión las tres categorías — mercancía normal, voluminoso, anomalía — y qué criterios determinaban cada una. Esta claridad conceptual fue el prerequisito para cualquier decisión de diseño.</p>
+          </div>
+          <div class="process-step">
+            <div class="step-number" aria-hidden="true">03</div>
+            <div class="step-title" data-i18n="step3-title">Diseño de soluciones</div>
+            <p class="step-desc" data-i18n="step3-desc">Con el problema bien definido, se diseñaron tres intervenciones concretas: una etiqueta para paquetes con anomalía, pictogramas animados para indicar posicionamiento y una reestructuración completa de la pantalla.</p>
+          </div>
+          <div class="process-step">
+            <div class="step-number" aria-hidden="true">04</div>
+            <div class="step-title" data-i18n="step4-title">Validación e implementación</div>
+            <p class="step-desc" data-i18n="step4-desc">Las soluciones se validaron con reps reales antes de implementarse. El feedback del campo determinó ajustes en el tamaño, la velocidad de las animaciones y la jerarquía visual de la pantalla restructurada.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DECISIONES CLAVE -->
+    <section class="case-section" aria-labelledby="decisiones-title">
+      <div class="content-col">
+        <p class="section-label" aria-hidden="true">04</p>
+        <h2 id="decisiones-title" class="section-title" data-i18n="s4-title">Decisiones clave</h2>
+        <p class="body-text" data-i18n="s4-p1">
+          Tres decisiones de diseño concretas, cada una respondiendo a un problema específico que observamos en campo.
+        </p>
+
+        <div class="decision-cards">
+          <div class="decision-card">
+            <div class="decision-number" data-i18n="d1-label">Decisión 01</div>
+            <div class="decision-title" data-i18n="d1-title">Etiqueta para paquetes con anomalía</div>
+            <p class="decision-desc" data-i18n-html="d1-desc">Creamos una <strong>etiqueta visual diferenciada</strong> que se genera para los paquetes que no deben ir a entrega. El rep la ve en la handheld al escanear el paquete y sabe inmediatamente que debe separarlo del flujo normal, sin necesidad de leer texto ni interpretar nada. La señal es inconfundible.</p>
+          </div>
+          <div class="decision-card">
+            <div class="decision-number" data-i18n="d2-label">Decisión 02</div>
+            <div class="decision-title" data-i18n="d2-title">Pictogramas animados de posicionamiento</div>
+            <p class="decision-desc" data-i18n-html="d2-desc">En lugar de texto que indica dónde acomodar el paquete, diseñamos <strong>pictogramas animados</strong> que muestran el movimiento exacto. La animación elimina la ambigüedad de instrucciones escritas y funciona de forma más rápida y universal — independientemente del idioma o la experiencia del rep.</p>
+          </div>
+          <div class="decision-card">
+            <div class="decision-number" data-i18n="d3-label">Decisión 03</div>
+            <div class="decision-title" data-i18n="d3-title">Restructuración de la pantalla</div>
+            <p class="decision-desc" data-i18n-html="d3-desc">La pantalla original estaba saturada de información que el rep no necesitaba en el momento de clasificar. <strong>Redujimos a lo esencial</strong>: el tipo de paquete, la acción a tomar y la confirmación. Todo lo demás fue reubicado o eliminado. Menos información visible significa menos tiempo de procesamiento y menos errores.</p>
+          </div>
+        </div>
+
+        <figure style="margin: var(--space-md) 0;">
+          <img src="assets/etiqueta.gif" alt="Etiqueta visual para paquetes con anomalía que no deben ir a entrega" style="width: 60%; display: block; margin: 0 auto; border-radius: var(--radius); border: 1px solid var(--color-border);" />
+          <figcaption style="margin-top: var(--space-xs); font-size: 13px; color: var(--color-text-muted); text-align: center;" data-i18n="img-label-caption">Etiqueta generada para identificar paquetes con anomalía</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- RESULTADOS Y APRENDIZAJES -->
+    <section class="case-section" aria-labelledby="resultados-title">
+      <div class="content-col">
+        <p class="section-label" aria-hidden="true">05</p>
+        <h2 id="resultados-title" class="section-title" data-i18n="s5-title">Resultados y aprendizajes</h2>
+        <p class="body-text" data-i18n="s5-p1">
+          Por acuerdo de confidencialidad no puedo compartir métricas específicas del producto. Lo que sí puedo compartir es lo que aprendí y cómo cambió mi forma de diseñar.
+        </p>
+
+        <div class="learnings-list" role="list" aria-label="Aprendizajes clave">
+          <div class="learning-item" role="listitem">
+            <div class="learning-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 7l3.5 3.5L12 3" stroke="#F472B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <p class="learning-text" data-i18n-html="learn1"><strong>Ir al campo no es opcional, es el diseño.</strong> Sin visitar el service center habría diseñado para un usuario imaginario. La presión, el ritmo y el entorno físico no se capturan en una entrevista — hay que verlos.</p>
+          </div>
+          <div class="learning-item" role="listitem">
+            <div class="learning-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 7l3.5 3.5L12 3" stroke="#F472B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <p class="learning-text" data-i18n-html="learn2"><strong>Una señal visual clara vale más que mil palabras en una instrucción.</strong> La etiqueta de anomalía y los pictogramas animados funcionan porque eliminan la necesidad de interpretar. Cuando el usuario está bajo presión, no puede permitirse leer.</p>
+          </div>
+          <div class="learning-item" role="listitem">
+            <div class="learning-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 7l3.5 3.5L12 3" stroke="#F472B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <p class="learning-text" data-i18n-html="learn3"><strong>Quitar información también es diseño.</strong> La reestructuración de pantalla no añadió nada nuevo — reorganizó y eliminó. A veces la decisión de diseño más valiosa es decidir qué no mostrar.</p>
+          </div>
+          <div class="learning-item" role="listitem">
+            <div class="learning-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 7l3.5 3.5L12 3" stroke="#F472B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <p class="learning-text" data-i18n-html="learn4"><strong>Los errores de clasificación tienen consecuencias en el mundo real.</strong> Diseñar para logística me enseñó a pensar en el impacto aguas abajo de cada decisión de interfaz. Un error de diseño no es solo un problema de UX — puede ser un paquete perdido o una entrega fallida.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MÁS PROYECTOS -->
+  <div class="container">
+    <div class="more-projects">
+      <p class="more-projects-label" data-i18n="more-label">Más proyectos</p>
+      <div class="more-projects-grid">
+        <a href="ui-kit.html" class="more-project-card">
+          <span class="mp-company">albo · 2021</span>
+          <span class="mp-title">UI KIT &amp; Design System</span>
+          <span class="mp-arrow">→</span>
+        </a>
+        <a href="espacios.html" class="more-project-card">
+          <span class="mp-company">albo · 2020</span>
+          <span class="mp-title">Espacios</span>
+          <span class="mp-arrow">→</span>
+        </a>
+        <a href="accenture.html" class="more-project-card">
+          <span class="mp-company">Accenture · 2019</span>
+          <span class="mp-title">Plataforma financiera</span>
+          <span class="mp-arrow">→</span>
+        </a>
+      </div>
+      <a href="index.html#casos" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M13 8H3M3 8L7 4M3 8L7 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span data-i18n="back-link">Volver al portfolio</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <p>Diseñado con ❤️ por <a href="index.html" aria-label="Adrivette — portfolio principal">Adrivette</a> · <span aria-hidden="true">2026</span></p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const gate = document.getElementById('pw-gate');
+      const input = document.getElementById('pw-input');
+      const error = document.getElementById('pw-error');
+      const form = document.getElementById('pw-form');
+      const KEY = 'pw_meli_ok';
+
+      if (sessionStorage.getItem(KEY)) {
+        gate.style.display = 'none';
+        return;
+      }
+
+      function unlock() {
+        if (input.value.trim().toLowerCase() === 'adrivette') {
+          sessionStorage.setItem(KEY, '1');
+          gate.style.display = 'none';
+          input.value = '';
+          error.textContent = '';
+        } else {
+          error.textContent = document.documentElement.lang === 'en' ? 'Wrong password.' : 'Contraseña incorrecta.';
+          input.classList.add('error');
+          input.addEventListener('animationend', () => input.classList.remove('error'), { once: true });
+          input.select();
+        }
+      }
+
+      form.addEventListener('submit', unlock);
+      document.getElementById('pw-submit').addEventListener('click', unlock);
+    }());
+  </script>
+
+  <script>
+  (function() {
+    const translations = {
+      es: {
+        'nav-back': 'Proyectos',
+        'nav-about': 'Sobre mí',
+        'nav-work': 'Proyectos',
+        'nav-contact': 'Hablemos',
+        'pw-title': 'Contenido protegido',
+        'pw-desc': 'Este caso de estudio contiene información confidencial. Introduce la contraseña para continuar.',
+        'pw-btn': 'Acceder',
+        'pw-back': 'Volver al portfolio',
+        'nda-badge': 'Confidencial — Proceso y aprendizajes',
+        'hero-title': 'Inbound & Sorting — Clasificación en tiempo real',
+        'hero-summary': 'Rediseño de la herramienta handheld que usan los reps para clasificar paquetes al momento de llegar al service center. El objetivo: que en segundos pudieran identificar si un paquete era normal, voluminoso o tenía una anomalía que lo bloqueara.',
+        'nda-disclaimer': 'Por acuerdo de confidencialidad no puedo mostrar pantallas ni datos específicos del producto. Este caso de estudio se centra en el proceso, las decisiones de diseño y los aprendizajes.',
+        'chip-logistics': 'Logística',
+        'chip-research': 'Research contextual',
+        'next-project': 'Ver siguiente proyecto',
+        's1-title': 'El reto',
+        's1-p1': 'Cuando un paquete llega al service center, el rep tiene que tomar una decisión rápida: ¿es mercancía normal, es voluminoso, o tiene una anomalía que impide que salga a entrega? Una clasificación incorrecta tiene consecuencias directas — el paquete llega tarde, se pierde, o peor: es entregado cuando no debería serlo.',
+        's1-quote': '"Una mala clasificación no se nota en el service center. Se nota cuando el paquete llega al lugar equivocado o no llega nunca."',
+        's1-p2': 'La herramienta handheld que usaban los reps para hacer esta tarea no estaba diseñada para ayudarlos a tomar esa decisión. La pantalla estaba saturada de información, no había señales visuales claras para distinguir los tipos de paquete y los casos con anomalía no tenían un tratamiento diferenciado. El rep tenía que interpretar — y en un service center con presión de tiempo, ruido y movimiento constante, eso generaba errores.',
+        's1-p3': 'Mi rol como <strong>Product Designer</strong> incluyó el research contextual en campo y el diseño de las soluciones que transformaron esa herramienta.',
+        's2-title': 'El usuario',
+        's2-p1': 'El usuario principal de esta herramienta es el <strong>rep de inbound</strong>: la persona que recibe los paquetes en el service center y los clasifica usando una handheld con escáner. No es un usuario nuevo en tecnología — la handheld es su herramienta de trabajo principal y la usa todo el día.',
+        'th-aspect': 'Aspecto',
+        'th-reality': 'Realidad del rep de inbound',
+        'tr1-aspect': 'Entorno',
+        'tr1-reality': 'Service center con alto flujo de paquetes, ruido constante y presión de tiempo.',
+        'tr2-aspect': 'Herramienta',
+        'tr2-reality': 'Handheld con escáner. Familiar para él — es su dispositivo de trabajo habitual.',
+        'tr3-aspect': 'Tarea crítica',
+        'tr3-reality': 'Clasificar cada paquete como normal, voluminoso o con anomalía. Decisión rápida, consecuencias altas.',
+        'tr4-aspect': 'Condición física',
+        'tr4-reality': 'De pie, en movimiento, con las manos ocupadas. No puede detenerse a leer.',
+        's3-title': 'Mi proceso',
+        's3-p1': 'Antes de diseñar nada, fui al service center. No hay forma de entender este tipo de trabajo sin verlo en primera persona — las entrevistas no capturan la presión, el ritmo ni las microinteracciones que ocurren cuando alguien clasifica paquetes durante horas seguidas.',
+        'step1-title': 'Research en el service center',
+        'step1-desc': 'Observación directa de los reps durante su jornada real. El objetivo era entender cómo tomaban la decisión de clasificación, dónde dudaban y qué señales buscaban en la pantalla para confirmar que habían hecho bien su trabajo.',
+        'step2-title': 'Mapeo de tipos de clasificación',
+        'step2-desc': 'Definir con precisión las tres categorías — mercancía normal, voluminoso, anomalía — y qué criterios determinaban cada una. Esta claridad conceptual fue el prerequisito para cualquier decisión de diseño.',
+        'step3-title': 'Diseño de soluciones',
+        'step3-desc': 'Con el problema bien definido, se diseñaron tres intervenciones concretas: una etiqueta para paquetes con anomalía, pictogramas animados para indicar posicionamiento y una reestructuración completa de la pantalla.',
+        'step4-title': 'Validación e implementación',
+        'step4-desc': 'Las soluciones se validaron con reps reales antes de implementarse. El feedback del campo determinó ajustes en el tamaño, la velocidad de las animaciones y la jerarquía visual de la pantalla restructurada.',
+        's4-title': 'Decisiones clave',
+        's4-p1': 'Tres decisiones de diseño concretas, cada una respondiendo a un problema específico que observamos en campo.',
+        'd1-label': 'Decisión 01',
+        'd1-title': 'Etiqueta para paquetes con anomalía',
+        'd1-desc': 'Creamos una <strong>etiqueta visual diferenciada</strong> que se genera para los paquetes que no deben ir a entrega. El rep la ve en la handheld al escanear el paquete y sabe inmediatamente que debe separarlo del flujo normal, sin necesidad de leer texto ni interpretar nada. La señal es inconfundible.',
+        'd2-label': 'Decisión 02',
+        'd2-title': 'Pictogramas animados de posicionamiento',
+        'd2-desc': 'En lugar de texto que indica dónde acomodar el paquete, diseñamos <strong>pictogramas animados</strong> que muestran el movimiento exacto. La animación elimina la ambigüedad de instrucciones escritas y funciona de forma más rápida y universal — independientemente del idioma o la experiencia del rep.',
+        'd3-label': 'Decisión 03',
+        'd3-title': 'Restructuración de la pantalla',
+        'd3-desc': 'La pantalla original estaba saturada de información que el rep no necesitaba en el momento de clasificar. <strong>Redujimos a lo esencial</strong>: el tipo de paquete, la acción a tomar y la confirmación. Todo lo demás fue reubicado o eliminado. Menos información visible significa menos tiempo de procesamiento y menos errores.',
+        'img-label-caption': 'Etiqueta generada para identificar paquetes con anomalía',
+        's5-title': 'Resultados y aprendizajes',
+        's5-p1': 'Por acuerdo de confidencialidad no puedo compartir métricas específicas del producto. Lo que sí puedo compartir es lo que aprendí y cómo cambió mi forma de diseñar.',
+        'learn1': '<strong>Ir al campo no es opcional, es el diseño.</strong> Sin visitar el service center habría diseñado para un usuario imaginario. La presión, el ritmo y el entorno físico no se capturan en una entrevista — hay que verlos.',
+        'learn2': '<strong>Una señal visual clara vale más que mil palabras en una instrucción.</strong> La etiqueta de anomalía y los pictogramas animados funcionan porque eliminan la necesidad de interpretar. Cuando el usuario está bajo presión, no puede permitirse leer.',
+        'learn3': '<strong>Quitar información también es diseño.</strong> La reestructuración de pantalla no añadió nada nuevo — reorganizó y eliminó. A veces la decisión de diseño más valiosa es decidir qué no mostrar.',
+        'learn4': '<strong>Los errores de clasificación tienen consecuencias en el mundo real.</strong> Diseñar para logística me enseñó a pensar en el impacto aguas abajo de cada decisión de interfaz. Un error de diseño no es solo un problema de UX — puede ser un paquete perdido o una entrega fallida.',
+        'back-link': 'Volver al portfolio',
+        'more-label': 'Más proyectos',
+      },
+      en: {
+        'nav-back': 'Projects',
+        'nav-about': 'About',
+        'nav-work': 'Work',
+        'nav-contact': "Let's talk",
+        'pw-title': 'Protected content',
+        'pw-desc': 'This case study contains confidential information. Enter the password to continue.',
+        'pw-btn': 'Access',
+        'pw-back': '← Back to portfolio',
+        'nda-badge': 'Confidential — Process & learnings',
+        'hero-title': 'Inbound & Sorting — Real-time classification',
+        'hero-summary': 'Redesign of the handheld tool reps use to sort packages as they arrive at the service center. The goal: enable them to identify in seconds whether a package was standard, oversized, or had an anomaly blocking delivery.',
+        'nda-disclaimer': 'Due to an NDA I cannot share screenshots or specific product data. This case study focuses on the process, design decisions, and learnings.',
+        'chip-logistics': 'Logistics',
+        'chip-research': 'Contextual research',
+        'next-project': 'Next project',
+        's1-title': 'The challenge',
+        's1-p1': 'When a package arrives at the service center, the rep has to make a fast decision: is it standard merchandise, oversized, or does it have an anomaly that prevents it from going out for delivery? An incorrect classification has direct consequences — the package arrives late, gets lost, or worse: gets delivered when it shouldn\'t.',
+        's1-quote': '"A bad classification isn\'t visible at the service center. You notice it when the package ends up in the wrong place or never arrives."',
+        's1-p2': "The handheld tool reps used for this task wasn't designed to help them make that decision. The screen was saturated with information, there were no clear visual signals to distinguish package types, and anomaly cases had no differentiated treatment. The rep had to interpret — and in a service center with time pressure, noise, and constant movement, that caused errors.",
+        's1-p3': 'My role as <strong>Product Designer</strong> included contextual field research and designing the solutions that transformed that tool.',
+        's2-title': 'The user',
+        's2-p1': 'The primary user of this tool is the <strong>inbound rep</strong>: the person who receives packages at the service center and sorts them using a handheld scanner. They are not new to technology — the handheld is their main work device and they use it all day.',
+        'th-aspect': 'Aspect',
+        'th-reality': 'Reality for the inbound rep',
+        'tr1-aspect': 'Environment',
+        'tr1-reality': 'Service center with high package volume, constant noise, and time pressure.',
+        'tr2-aspect': 'Tool',
+        'tr2-reality': 'Handheld scanner. Familiar to them — it\'s their regular work device.',
+        'tr3-aspect': 'Critical task',
+        'tr3-reality': 'Classify each package as standard, oversized, or anomaly. Fast decision, high consequences.',
+        'tr4-aspect': 'Physical condition',
+        'tr4-reality': 'Standing, in motion, hands occupied. Cannot stop to read.',
+        's3-title': 'My process',
+        's3-p1': "Before designing anything, I went to the service center. There's no way to understand this kind of work without seeing it firsthand — interviews don't capture the pressure, the pace, or the micro-interactions that happen when someone sorts packages for hours on end.",
+        'step1-title': 'On-site research at the service center',
+        'step1-desc': "Direct observation of reps during their actual shift. The goal was to understand how they made the classification decision, where they hesitated, and what signals they looked for on the screen to confirm they'd done their job correctly.",
+        'step2-title': 'Classification type mapping',
+        'step2-desc': 'Precisely defining the three categories — standard merchandise, oversized, anomaly — and what criteria determined each one. This conceptual clarity was a prerequisite for any design decision.',
+        'step3-title': 'Solution design',
+        'step3-desc': 'With the problem well defined, three concrete interventions were designed: a label for packages with anomalies, animated pictograms for positioning guidance, and a complete screen restructuring.',
+        'step4-title': 'Validation & implementation',
+        'step4-desc': 'Solutions were validated with real reps before implementation. Field feedback drove adjustments to size, animation speed, and the visual hierarchy of the restructured screen.',
+        's4-title': 'Key decisions',
+        's4-p1': 'Three concrete design decisions, each responding to a specific problem observed in the field.',
+        'd1-label': 'Decision 01',
+        'd1-title': 'Label for packages with anomalies',
+        'd1-desc': 'We created a <strong>differentiated visual label</strong> generated for packages that must not go out for delivery. The rep sees it on the handheld when scanning the package and immediately knows to separate it from the normal flow — no need to read text or interpret anything. The signal is unmistakable.',
+        'd2-label': 'Decision 02',
+        'd2-title': 'Animated positioning pictograms',
+        'd2-desc': 'Instead of text indicating where to place the package, we designed <strong>animated pictograms</strong> showing the exact movement. The animation eliminates the ambiguity of written instructions and works faster and more universally — regardless of the rep\'s language or experience level.',
+        'd3-label': 'Decision 03',
+        'd3-title': 'Screen restructuring',
+        'd3-desc': "The original screen was saturated with information the rep didn't need at the moment of classification. <strong>We reduced it to the essentials</strong>: the package type, the action to take, and the confirmation. Everything else was relocated or removed. Less visible information means less processing time and fewer errors.",
+        'img-label-caption': 'Label generated to identify packages with anomalies',
+        's5-title': 'Results & learnings',
+        's5-p1': "Due to an NDA I cannot share specific product metrics. What I can share is what I learned and how it changed my approach to design.",
+        'learn1': "<strong>Going to the field isn't optional — it is the design.</strong> Without visiting the service center I would have designed for an imaginary user. The pressure, the pace, and the physical environment can't be captured in an interview — you have to see them.",
+        'learn2': '<strong>A clear visual signal is worth more than a thousand words in an instruction.</strong> The anomaly label and animated pictograms work because they eliminate the need to interpret. When users are under pressure, they cannot afford to read.',
+        'learn3': '<strong>Removing information is also design.</strong> The screen restructuring added nothing new — it reorganized and eliminated. Sometimes the most valuable design decision is deciding what not to show.',
+        'learn4': '<strong>Classification errors have real-world consequences.</strong> Designing for logistics taught me to think about the downstream impact of every interface decision. A design error is not just a UX problem — it can be a lost package or a failed delivery.',
+        'back-link': 'Back to portfolio',
+        'more-label': 'More projects',
+      }
+    };
+
+    let currentLang = 'es';
+
+    window.setLang = function(lang) {
+      currentLang = lang;
+      const t = translations[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) el.textContent = t[key];
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const key = el.getAttribute('data-i18n-html');
+        if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+      document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.getElementById('btn-es').setAttribute('aria-pressed', lang === 'es');
+      document.getElementById('btn-en').setAttribute('aria-pressed', lang === 'en');
+      document.documentElement.lang = lang;
+    };
+  }());
+  </script>
+</body>
+</html>

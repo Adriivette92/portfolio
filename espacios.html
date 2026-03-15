@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Espacios — Caso de estudio · Adrivette</title>
+  <meta name="description" content="Caso de estudio: Espacios, la funcionalidad de albo que permite a las personas organizar su dinero de forma visual para reducir la ansiedad financiera. Product Designer: Adriana Romero." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== TOKENS (idénticos al portfolio principal) ===== */
+    :root {
+      --color-bg: #0f0f0f;
+      --color-bg-card: #1a1a1a;
+      --color-bg-tag: #242424;
+      --color-text: #f5f5f5;
+      --color-text-muted: rgba(245,245,245,0.55);
+      --color-accent: #F472B6;
+      --color-accent-2: #67E8F9;
+      --color-border: rgba(255,255,255,0.08);
+      --font: 'Red Hat Text', sans-serif;
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 24px;
+      --space-lg: 40px;
+      --space-xl: 80px;
+      --space-2xl: 128px;
+      --radius: 16px;
+      --radius-sm: 8px;
+      --max-w: 1100px;
+      --content-w: 760px;
+      --transition: 200ms ease;
+    }
+
+    /* ===== RESET ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+
+    /* ===== SKIP LINK ===== */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: var(--space-sm);
+      background: var(--color-accent);
+      color: #0f0f0f;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 14px;
+      z-index: 1000;
+      transition: top var(--transition);
+    }
+    .skip-link:focus { top: var(--space-sm); }
+
+    /* ===== NAV ===== */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: var(--space-sm) var(--space-lg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15,15,15,0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    .nav-back:hover, .nav-back:focus-visible { color: var(--color-text); }
+    .nav-back svg { flex-shrink: 0; }
+    .nav-divider {
+      width: 1px;
+      height: 20px;
+      background: var(--color-border);
+    }
+    .nav-logo {
+      font-weight: 800;
+      font-size: 18px;
+      text-decoration: none;
+      background: linear-gradient(135deg, var(--color-accent), var(--color-accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-links {
+      display: flex;
+      gap: var(--space-lg);
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      transition: color var(--transition);
+    }
+    .nav-links a:hover,
+    .nav-links a:focus-visible { color: var(--color-text); }
+    .nav-cta {
+      background: var(--color-accent);
+      color: #0f0f0f !important;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: 100px;
+      font-weight: 700 !important;
+      transition: opacity var(--transition) !important;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ===== LANG SWITCH ===== */
+    .lang-switch {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      background: var(--color-bg-tag);
+      border: 1px solid var(--color-border);
+      border-radius: 100px;
+      padding: 3px;
+    }
+    .lang-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      padding: 4px 10px;
+      border-radius: 100px;
+      transition: background var(--transition), color var(--transition);
+    }
+    .lang-btn.active {
+      background: var(--color-accent);
+      color: #0f0f0f;
+    }
+
+    /* ===== LAYOUT ===== */
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+    }
+    .content-col {
+      max-width: var(--content-w);
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+    }
+
+    /* ===== ACCESIBILIDAD ===== */
+    :focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+    }
+
+    /* ===== HERO DEL CASO ===== */
+    .case-hero {
+      padding: clamp(48px, 8vh, 100px) 0 clamp(40px, 6vh, 80px);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .case-hero-meta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      margin-bottom: var(--space-sm);
+    }
+    .company-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background: rgba(103,232,249,0.08);
+      border: 1px solid rgba(103,232,249,0.2);
+      color: var(--color-accent-2);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 100px;
+    }
+    .year-badge {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--color-text-muted);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 100px;
+    }
+    .case-hero h1 {
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: var(--space-sm);
+    }
+    .case-summary {
+      font-size: 19px;
+      color: var(--color-text-muted);
+      line-height: 1.7;
+      max-width: 600px;
+      margin-bottom: var(--space-md);
+    }
+    .meta-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      margin-bottom: var(--space-lg);
+    }
+    .meta-chip {
+      background: var(--color-bg-tag);
+      border: 1px solid var(--color-border);
+      padding: 5px 14px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+    }
+    .meta-chip.highlight {
+      background: rgba(244,114,182,0.1);
+      border-color: rgba(244,114,182,0.25);
+      color: var(--color-accent);
+    }
+    .next-project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      text-decoration: none;
+      transition: color var(--transition), gap var(--transition);
+    }
+    .next-project-link:hover, .next-project-link:focus-visible {
+      color: var(--color-text);
+      gap: 10px;
+    }
+
+    /* ===== MOCKUP PLACEHOLDER ===== */
+    .mockup-placeholder {
+      border: 2px dashed rgba(255,255,255,0.12);
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      color: var(--color-text-muted);
+      font-size: 14px;
+      font-weight: 500;
+      background: var(--color-bg-card);
+    }
+    .mockup-placeholder svg { opacity: 0.4; }
+    .mockup-placeholder-lg {
+      height: 400px;
+      margin: var(--space-xl) 0;
+    }
+    .mockup-placeholder-sm {
+      height: 240px;
+      margin: var(--space-md) 0;
+    }
+
+    /* ===== SECCIONES DE CONTENIDO ===== */
+    .case-section {
+      padding: var(--space-xl) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .case-section:last-of-type {
+      border-bottom: none;
+    }
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-accent);
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      margin-bottom: var(--space-sm);
+    }
+    .section-title {
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      line-height: 1.25;
+      margin-bottom: var(--space-md);
+    }
+    .body-text {
+      color: var(--color-text-muted);
+      font-size: 16px;
+      line-height: 1.85;
+      margin-bottom: var(--space-md);
+    }
+    .body-text strong { color: var(--color-text); }
+    .body-text:last-child { margin-bottom: 0; }
+
+    /* ===== BLOCKQUOTE ===== */
+    blockquote {
+      border-left: 3px solid var(--color-accent);
+      padding: var(--space-md) var(--space-lg);
+      background: rgba(244,114,182,0.05);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: var(--space-lg) 0;
+    }
+    blockquote p {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.65;
+      color: var(--color-text);
+      font-style: italic;
+    }
+    blockquote cite {
+      display: block;
+      margin-top: var(--space-xs);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      font-style: normal;
+    }
+
+    /* ===== TABLA DE USUARIOS ===== */
+    .user-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: var(--space-md) 0;
+      font-size: 14px;
+    }
+    .user-table th {
+      text-align: left;
+      padding: var(--space-xs) var(--space-sm);
+      color: var(--color-accent);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .user-table td {
+      padding: var(--space-sm);
+      border-bottom: 1px solid var(--color-border);
+      color: var(--color-text-muted);
+      vertical-align: top;
+    }
+    .user-table td:first-child {
+      font-weight: 700;
+      color: var(--color-text);
+      white-space: nowrap;
+    }
+    .user-table tr:last-child td { border-bottom: none; }
+    .user-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ===== PASOS DEL PROCESO ===== */
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-sm);
+      margin: var(--space-md) 0;
+    }
+    .process-step {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--space-md);
+      position: relative;
+      overflow: hidden;
+    }
+    .process-step::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--color-accent), var(--color-accent-2));
+      opacity: 0.4;
+    }
+    .step-number {
+      font-size: clamp(40px, 5vw, 56px);
+      font-weight: 800;
+      color: var(--color-accent-2);
+      opacity: 0.2;
+      line-height: 1;
+      margin-bottom: var(--space-xs);
+      letter-spacing: -2px;
+    }
+    .step-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .step-desc {
+      font-size: 14px;
+      color: var(--color-text-muted);
+      line-height: 1.65;
+    }
+
+    /* ===== TARJETAS DE DECISIONES ===== */
+    .decision-cards {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      margin: var(--space-md) 0;
+    }
+    .decision-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--space-md) var(--space-lg);
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .decision-card:hover {
+      border-color: rgba(255,255,255,0.18);
+      transform: translateX(4px);
+    }
+    .decision-number {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--color-accent);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .decision-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: var(--space-xs);
+      line-height: 1.3;
+    }
+    .decision-desc {
+      font-size: 15px;
+      color: var(--color-text-muted);
+      line-height: 1.75;
+    }
+    .decision-desc strong { color: var(--color-text); }
+
+    /* ===== MÉTRICAS ===== */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-sm);
+      margin: var(--space-md) 0;
+    }
+    .metric-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--space-md);
+      text-align: center;
+    }
+    .metric-value {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800;
+      color: var(--color-accent-2);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .metric-value.placeholder {
+      color: rgba(103,232,249,0.35);
+      font-size: 24px;
+    }
+    .metric-label {
+      font-size: 13px;
+      color: var(--color-text-muted);
+      line-height: 1.4;
+    }
+
+    /* ===== APRENDIZAJES ===== */
+    .learnings-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      margin: var(--space-md) 0;
+    }
+    .learning-item {
+      display: flex;
+      gap: var(--space-sm);
+      align-items: flex-start;
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .learning-item:last-child { border-bottom: none; }
+    .learning-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(244,114,182,0.12);
+      border: 1px solid rgba(244,114,182,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .learning-text {
+      font-size: 15px;
+      color: var(--color-text-muted);
+      line-height: 1.7;
+    }
+    .learning-text strong { color: var(--color-text); }
+
+    /* ===== IMÁGENES DEL CASO ===== */
+    .case-img {
+      margin: var(--space-lg) 0;
+    }
+    .case-img img {
+      width: 100%;
+      border-radius: var(--radius);
+      border: 1px solid var(--color-border);
+      display: block;
+    }
+    .case-img figcaption {
+      text-align: center;
+      font-size: 13px;
+      color: var(--color-text-muted);
+      margin-top: var(--space-xs);
+      line-height: 1.5;
+    }
+
+    /* ===== FOOTER DEL CASO ===== */
+    .case-footer-section {
+      padding: var(--space-xl) 0;
+      border-top: 1px solid var(--color-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      text-decoration: none;
+      transition: color var(--transition), gap var(--transition);
+    }
+    .back-link:hover, .back-link:focus-visible {
+      color: var(--color-text);
+      gap: 10px;
+    }
+
+    /* ===== MÁS PROYECTOS ===== */
+    .more-projects {
+      padding: var(--space-xl) 0;
+      border-top: 1px solid var(--color-border);
+    }
+    .more-projects-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-accent);
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      margin-bottom: var(--space-md);
+    }
+    .more-projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+    }
+    .more-project-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--space-md);
+      text-decoration: none;
+      transition: border-color var(--transition), transform var(--transition);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .more-project-card:hover, .more-project-card:focus-visible {
+      border-color: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+    .mp-company {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+    .mp-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--color-text);
+      line-height: 1.3;
+    }
+    .mp-arrow {
+      font-size: 13px;
+      color: var(--color-accent);
+      margin-top: 4px;
+    }
+    @media (max-width: 600px) {
+      .more-projects-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ===== FOOTER PÁGINA ===== */
+    footer {
+      padding: var(--space-lg) 0;
+      border-top: 1px solid var(--color-border);
+      text-align: center;
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+    footer a { color: var(--color-accent); text-decoration: none; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      :root { --space-xl: 48px; }
+      nav {
+        padding: var(--space-sm);
+      }
+      .nav-links { display: none; }
+      .process-steps { grid-template-columns: 1fr; }
+      .metrics-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .metrics-grid { grid-template-columns: 1fr; }
+      .case-footer-section { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Saltar al contenido principal</a>
+
+  <!-- NAV -->
+  <nav aria-label="Navegación principal">
+    <div class="nav-left">
+      <a href="index.html#casos" class="nav-back" aria-label="Volver a Proyectos">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M13 8H3M3 8L7 4M3 8L7 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span data-i18n="nav-back">Proyectos</span>
+      </a>
+      <div class="nav-divider" aria-hidden="true"></div>
+      <a href="index.html" class="nav-logo" aria-label="Adrivette — inicio">Adrivette</a>
+    </div>
+    <ul class="nav-links" role="list">
+      <li><a href="index.html#sobre-mi" data-i18n="nav-about">Sobre mí</a></li>
+      <li><a href="index.html#casos" data-i18n="nav-work">Proyectos</a></li>
+      <li><a href="index.html#contacto" data-i18n="nav-contact">Hablemos</a></li>
+      <li><a href="index.html#cv" class="nav-cta">CV</a></li>
+    </ul>
+    <div class="lang-switch" role="group" aria-label="Select language">
+      <button class="lang-btn active" id="btn-es" onclick="setLang('es')" aria-pressed="true">🇲🇽 ES</button>
+      <button class="lang-btn" id="btn-en" onclick="setLang('en')" aria-pressed="false">🇺🇸 EN</button>
+    </div>
+  </nav>
+
+  <main id="main">
+
+    <!-- HERO DEL CASO -->
+    <header class="case-hero">
+      <div class="content-col">
+        <div class="case-hero-meta">
+          <div class="company-badge">albo</div>
+          <div class="year-badge">2020</div>
+        </div>
+        <h1>Espacios</h1>
+        <p class="case-summary" data-i18n="hero-summary">La primera herramienta de ahorro por metas de albo. Diseñada desde un insight cultural: los mexicanos no ahorran en abstracto — ahorran cuando tienen una meta concreta que recordar.</p>
+        <div class="meta-chips" role="list" aria-label="Metadatos del proyecto">
+          <span class="meta-chip" role="listitem">Fintech</span>
+          <span class="meta-chip" role="listitem">Mobile · iOS &amp; Android</span>
+          <span class="meta-chip" role="listitem">UX Research</span>
+          <span class="meta-chip highlight" role="listitem" data-i18n="chip-role">Product Designer</span>
+        </div>
+        <a href="ui-kit.html" class="next-project-link" aria-label="Ver siguiente proyecto: UI Kit &amp; Design System — albo">
+          <span data-i18n="next-project">Ver siguiente proyecto</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </header>
+
+    <!-- MOCKUP PRINCIPAL -->
+    <div class="content-col">
+      <figure class="case-img">
+        <img src="assets/Space%20screens.png" alt="Pantallas finales de Espacios — flujo de creación y vista del espacio en albo" loading="lazy" />
+        <figcaption data-i18n="img-screens">Pantallas finales — flujo de creación y vista del espacio</figcaption>
+      </figure>
+    </div>
+
+    <!-- EL RETO -->
+    <section class="case-section" aria-labelledby="reto-title">
+      <div class="content-col">
+        <p class="section-label" aria-hidden="true">01</p>
+        <h2 id="reto-title" class="section-title" data-i18n="s1-title">El reto</h2>
+        <p class="body-text" data-i18n="s1-p1">
+          En 2020, México no tenía muchas plataformas financieras de ahorro locales. Las que lideraban el mercado eran internacionales — Revolut, N26 — y no estaban diseñadas para el contexto mexicano. En albo vimos la oportunidad de ser los primeros en ofrecer una herramienta de ahorro local, con la limitante de trabajar con los componentes de diseño que existían en ese momento, que eran pocos.
+        </p>
+
+        <blockquote>
+          <p data-i18n="s1-quote">"Empiezo a ahorrar cuando tengo una meta. Si no sé para qué es, no lo hago."</p>
+          <cite data-i18n="s1-cite">— Insight recurrente en las entrevistas con usuarios de albo</cite>
+        </blockquote>
+
+        <p class="body-text" data-i18n-html="s1-p2">
+          El reto no era solo diseñar un apartado de dinero — era entender <strong>cómo piensan los mexicanos el ahorro</strong> y traducir ese modelo mental a una app. El research reveló que el ahorro sin meta no existe para la mayoría: la motivación llega cuando hay algo concreto a lo que aspirar, con nombre y con imagen.
+        </p>
+        <p class="body-text" data-i18n-html="s1-p3">
+          Mi rol como <strong>Product Designer</strong> — única diseñadora del squad de ahorro — abarcó desde las entrevistas con usuarios hasta el handoff a desarrollo, trabajando junto a PM, data science, QAs y el equipo de ingeniería.
+        </p>
+      </div>
+    </section>
+
+    <!-- USUARIOS -->
+    <section class="case-section" aria-labelledby="usuarios-title">
+      <div class="content-col">
+        <p class="section-label" aria-hidden="true">02</p>
+        <h2 id="usuarios-title" class="section-title" data-i18n="s2-title">Research</h2>
+        <p class="body-text" data-i18n="s2-p1">
+          Realizamos entrevistas telefónicas con más de 10 usuarios actuales de albo que tenían al menos 10,000 pesos depositados en la cuenta — una señal de que ya tenían cierta intención de ahorro. No eran usuarios nuevos: conocían la app y la usaban activamente.
+        </p>
+        <p class="body-text" data-i18n="s2-p2">
+          El hallazgo central que guió todo el diseño:
+        </p>
+
+        <blockquote>
+          <p data-i18n="s2-quote">El ahorro sin meta no existe. La motivación aparece cuando hay algo concreto — un viaje, unos tenis, una emergencia — con nombre y con imagen que lo haga real.</p>
+        </blockquote>
+
+        <table class="user-table" aria-label="Hallazgos del research">
+          <thead>
+            <tr>
+              <th scope="col" data-i18n="th-behavior">Comportamiento observado</th>
+              <th scope="col" data-i18n="th-implication">Implicación de diseño</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-i18n="tr1-behavior">Ahorran cuando tienen una meta concreta</td>
+              <td data-i18n="tr1-implication">Cada espacio necesita nombre y foto para anclar la motivación</td>
+            </tr>
+            <tr>
+              <td data-i18n="tr2-behavior">Separan el dinero mentalmente, no en la app</td>
+              <td data-i18n="tr2-implication">El apartado debe ser visible y separado del saldo principal</td>
+            </tr>
+            <tr>
+              <td data-i18n="tr3-behavior">Quieren saber cuánto han avanzado</td>
+              <td data-i18n="tr3-implication">El historial de movimientos dentro del espacio es parte del valor</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <figure class="case-img">
+          <img src="assets/Space%20sitemap.png" alt="Sitemap de Espacios — arquitectura de información y estructura de la funcionalidad" loading="lazy" />
+          <figcaption data-i18n="img-sitemap">Sitemap — arquitectura de información</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- MI PROCESO -->
+    <section class="case-section" aria-labelledby="proceso-title">
+      <div class="content-col">
+        <p class="section-label" aria-hidden="true">03</p>
+        <h2 id="proceso-title" class="section-title" data-i18n="s3-title">Mi proceso</h2>
+        <p class="body-text" data-i18n="s3-p1">
+          Con el insight claro, el proceso fue definir qué tenía que hacer el producto exactamente y después diseñarlo dentro de las limitaciones reales: los componentes existentes del Design System de albo, que en ese momento eran pocos.
+        </p>
+
+        <div class="process-steps">
+          <div class="process-step">
+            <div class="step-number" aria-hidden="true">01</div>
+            <div class="step-title" data-i18n="step1-title">Entrevistas con usuarios</div>
+            <p class="step-desc" data-i18n="step1-desc">Llamadas telefónicas con más de 10 usuarios con depósitos significativos. El objetivo era entender su modelo mental del ahorro, no validar una solución. Escuchar antes de proponer.</p>
+          </div>
+          <div class="process-step">
+            <div class="step-number" aria-hidden="true">02</div>
+            <div class="step-title" data-i18n="step2-title">Definición del producto</div>
+            <p class="step-desc" data-i18n="step2-desc">Con el squad definimos el alcance: un apartado separado del saldo principal, con nombre, foto y registro de movimientos. Sin monto meta ni fecha límite en la primera versión — foco en lo esencial.</p>
+          </div>
+          <div class="process-step">
+            <div class="step-number" aria-hidden="true">03</div>
+            <div class="step-title" data-i18n="step3-title">Diseño con restricciones</div>
+            <p class="step-desc" data-i18n="step3-desc">El diseño se construyó reutilizando los componentes existentes. La restricción fue un ejercicio de creatividad: cómo hacer algo nuevo y significativo con lo que ya había, sin crear deuda de diseño.</p>
+          </div>
+          <div class="process-step">
+            <div class="step-number" aria-hidden="true">04</div>
+            <div class="step-title" data-i18n="step4-title">Handoff y lanzamiento</div>
+            <p class="step-desc" data-i18n="step4-desc">Documentación detallada para el equipo de desarrollo y QA. Definición de los criterios de aceptación junto con el PM y data science para medir la adopción desde el primer día.</p>
+          </div>
+        </div>
+
+        <figure class="case-img">
+          <img src="assets/Space%20flow.png" alt="User flow de Espacios — recorrido del usuario desde el inicio hasta crear un espacio" loading="lazy" />
+          <figcaption data-i18n="img-flow">User flow — recorrido de creación de un espacio</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- DECISIONES CLAVE -->
+    <section class="case-section" aria-labelledby="decisiones-title">
+      <div class="content-col">
+        <p class="section-label" aria-hidden="true">04</p>
+        <h2 id="decisiones-title" class="section-title" data-i18n="s4-title">Decisiones clave</h2>
+        <p class="body-text" data-i18n="s4-p1">
+          Tres decisiones que derivaron directamente del research y de la restricción de trabajar con componentes existentes.
+        </p>
+
+        <div class="decision-cards">
+          <div class="decision-card">
+            <div class="decision-number" data-i18n="d1-label">Decisión 01</div>
+            <div class="decision-title" data-i18n="d1-title">Nombre y foto como ancla de la meta</div>
+            <p class="decision-desc" data-i18n-html="d1-desc">El insight central del research: <strong>el ahorro necesita una meta visible para existir</strong>. Darle nombre y foto a cada espacio no era decorativo — era el mecanismo que convertía "ahorrar dinero" en "ahorrar para mis vacaciones a Japón". Sin esa conexión emocional, la funcionalidad perdía su razón de ser.</p>
+          </div>
+          <div class="decision-card">
+            <div class="decision-number" data-i18n="d2-label">Decisión 02</div>
+            <div class="decision-title" data-i18n="d2-title">Saldo separado y visible del monto principal</div>
+            <p class="decision-desc" data-i18n-html="d2-desc">El dinero de cada espacio se aparta del saldo principal de la cuenta. En todo momento el usuario ve cuánto tiene libre y cuánto está reservado. <strong>Esa separación visual elimina la ansiedad</strong> de "¿puedo gastar esto?". Es la diferencia entre saber que tienes $5,000 y saber que tienes $5,000 de los cuales $2,000 son para la meta.</p>
+          </div>
+          <div class="decision-card">
+            <div class="decision-number" data-i18n="d3-label">Decisión 03</div>
+            <div class="decision-title" data-i18n="d3-title">Historial de movimientos dentro del espacio</div>
+            <p class="decision-desc" data-i18n-html="d3-desc">Cada depósito y retiro del espacio queda registrado. No es solo un contador de saldo — es una <strong>historia de tu progreso hacia la meta</strong>. Ver cuántas veces has aportado, y cuánto llevas ahorrado, refuerza el hábito y hace tangible el esfuerzo acumulado.</p>
+          </div>
+        </div>
+
+        <figure class="case-img">
+          <img src="assets/Space%20wireframes.png" alt="Wireframes de Espacios — exploración de layouts y jerarquía visual antes del diseño final" loading="lazy" />
+          <figcaption data-i18n="img-wireframes">Wireframes — exploración de layouts y jerarquía visual</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- RESULTADOS Y APRENDIZAJES -->
+    <section class="case-section" aria-labelledby="resultados-title">
+      <div class="content-col">
+        <p class="section-label" aria-hidden="true">05</p>
+        <h2 id="resultados-title" class="section-title" data-i18n="s5-title">Resultados y aprendizajes</h2>
+        <p class="body-text" data-i18n="s5-p1">
+          El primer día después del lanzamiento, con 450,000 usuarios activos en albo, se crearon aproximadamente 1,000 espacios. Sin campaña de activación, sin notificaciones push, sin onboarding forzado — adopción orgánica desde el primer día.
+        </p>
+
+        <div class="metrics-grid" role="list" aria-label="Métricas del proyecto">
+          <div class="metric-card" role="listitem">
+            <div class="metric-value">~1k</div>
+            <div class="metric-label" data-i18n="metric1-label">Espacios creados el primer día de lanzamiento</div>
+          </div>
+          <div class="metric-card" role="listitem">
+            <div class="metric-value">450k</div>
+            <div class="metric-label" data-i18n="metric2-label">Usuarios activos en albo al momento del lanzamiento</div>
+          </div>
+          <div class="metric-card" role="listitem">
+            <div class="metric-value">2020</div>
+            <div class="metric-label" data-i18n="metric3-label">Primera herramienta de ahorro por metas de una fintech mexicana</div>
+          </div>
+        </div>
+
+        <div class="learnings-list" role="list" aria-label="Aprendizajes clave">
+          <div class="learning-item" role="listitem">
+            <div class="learning-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 7l3.5 3.5L12 3" stroke="#F472B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <p class="learning-text" data-i18n-html="learn1"><strong>El insight cultural lo cambia todo.</strong> No diseñamos una herramienta de ahorro genérica — diseñamos para cómo los mexicanos entienden el ahorro. Esa especificidad fue la diferencia entre una feature más y algo que la gente usó desde el primer día.</p>
+          </div>
+          <div class="learning-item" role="listitem">
+            <div class="learning-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 7l3.5 3.5L12 3" stroke="#F472B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <p class="learning-text" data-i18n-html="learn2"><strong>Las restricciones son parte del diseño, no obstáculos.</strong> Trabajar con los componentes existentes nos obligó a ser más creativos y a priorizar mejor. El resultado fue más coherente con el producto que si hubiéramos empezado desde cero.</p>
+          </div>
+          <div class="learning-item" role="listitem">
+            <div class="learning-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 7l3.5 3.5L12 3" stroke="#F472B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <p class="learning-text" data-i18n-html="learn3"><strong>La adopción orgánica es la mejor validación.</strong> Que 1,000 personas crearan un espacio el primer día sin que nadie se los pidiera confirmó que el producto respondía a una necesidad real. El research había dado en el clavo.</p>
+          </div>
+          <div class="learning-item" role="listitem">
+            <div class="learning-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 7l3.5 3.5L12 3" stroke="#F472B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <p class="learning-text" data-i18n-html="learn4"><strong>Ser la única diseñadora del squad tiene sus ventajas.</strong> Tener criterio sobre todas las decisiones de diseño — desde el flujo hasta el detalle visual — genera consistencia. Y obliga a comunicar mejor, porque no hay otro diseñador que entienda el contexto sin que lo expliques.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MÁS PROYECTOS -->
+  <div class="container">
+    <div class="more-projects">
+      <p class="more-projects-label" data-i18n="more-label">Más proyectos</p>
+      <div class="more-projects-grid">
+        <a href="mercado-libre.html" class="more-project-card">
+          <span class="mp-company">Mercado Libre · 2026</span>
+          <span class="mp-title">Inbound &amp; Sorting</span>
+          <span class="mp-arrow">→</span>
+        </a>
+        <a href="ui-kit.html" class="more-project-card">
+          <span class="mp-company">albo · 2021</span>
+          <span class="mp-title">UI KIT &amp; Design System</span>
+          <span class="mp-arrow">→</span>
+        </a>
+        <a href="accenture.html" class="more-project-card">
+          <span class="mp-company">Accenture · 2019</span>
+          <span class="mp-title">Plataforma financiera</span>
+          <span class="mp-arrow">→</span>
+        </a>
+      </div>
+      <a href="index.html#casos" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M13 8H3M3 8L7 4M3 8L7 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span data-i18n="back-link">Volver al portfolio</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <p>Diseñado con ❤️ por <a href="index.html" aria-label="Adrivette — portfolio principal">Adrivette</a> · <span aria-hidden="true">2026</span></p>
+    </div>
+  </footer>
+
+  <script>
+  (function() {
+    const translations = {
+      es: {
+        'nav-back': 'Proyectos',
+        'nav-about': 'Sobre mí',
+        'nav-work': 'Proyectos',
+        'nav-contact': 'Hablemos',
+        'hero-summary': 'La primera herramienta de ahorro por metas de albo. Diseñada desde un insight cultural: los mexicanos no ahorran en abstracto — ahorran cuando tienen una meta concreta que recordar.',
+        'chip-role': 'Product Designer',
+        'next-project': 'Ver siguiente proyecto',
+        'img-screens': 'Pantallas finales — flujo de creación y vista del espacio',
+        's1-title': 'El reto',
+        's1-p1': 'En 2020, México no tenía muchas plataformas financieras de ahorro locales. Las que lideraban el mercado eran internacionales — Revolut, N26 — y no estaban diseñadas para el contexto mexicano. En albo vimos la oportunidad de ser los primeros en ofrecer una herramienta de ahorro local, con la limitante de trabajar con los componentes de diseño que existían en ese momento, que eran pocos.',
+        's1-quote': '"Empiezo a ahorrar cuando tengo una meta. Si no sé para qué es, no lo hago."',
+        's1-cite': '— Insight recurrente en las entrevistas con usuarios de albo',
+        's1-p2': 'El reto no era solo diseñar un apartado de dinero — era entender <strong>cómo piensan los mexicanos el ahorro</strong> y traducir ese modelo mental a una app. El research reveló que el ahorro sin meta no existe para la mayoría: la motivación llega cuando hay algo concreto a lo que aspirar, con nombre y con imagen.',
+        's1-p3': 'Mi rol como <strong>Product Designer</strong> — única diseñadora del squad de ahorro — abarcó desde las entrevistas con usuarios hasta el handoff a desarrollo, trabajando junto a PM, data science, QAs y el equipo de ingeniería.',
+        's2-title': 'Research',
+        's2-p1': 'Realizamos entrevistas telefónicas con más de 10 usuarios actuales de albo que tenían al menos 10,000 pesos depositados en la cuenta — una señal de que ya tenían cierta intención de ahorro. No eran usuarios nuevos: conocían la app y la usaban activamente.',
+        's2-p2': 'El hallazgo central que guió todo el diseño:',
+        's2-quote': 'El ahorro sin meta no existe. La motivación aparece cuando hay algo concreto — un viaje, unos tenis, una emergencia — con nombre y con imagen que lo haga real.',
+        'th-behavior': 'Comportamiento observado',
+        'th-implication': 'Implicación de diseño',
+        'tr1-behavior': 'Ahorran cuando tienen una meta concreta',
+        'tr1-implication': 'Cada espacio necesita nombre y foto para anclar la motivación',
+        'tr2-behavior': 'Separan el dinero mentalmente, no en la app',
+        'tr2-implication': 'El apartado debe ser visible y separado del saldo principal',
+        'tr3-behavior': 'Quieren saber cuánto han avanzado',
+        'tr3-implication': 'El historial de movimientos dentro del espacio es parte del valor',
+        'img-sitemap': 'Sitemap — arquitectura de información',
+        's3-title': 'Mi proceso',
+        's3-p1': 'Con el insight claro, el proceso fue definir qué tenía que hacer el producto exactamente y después diseñarlo dentro de las limitaciones reales: los componentes existentes del Design System de albo, que en ese momento eran pocos.',
+        'step1-title': 'Entrevistas con usuarios',
+        'step1-desc': 'Llamadas telefónicas con más de 10 usuarios con depósitos significativos. El objetivo era entender su modelo mental del ahorro, no validar una solución. Escuchar antes de proponer.',
+        'step2-title': 'Definición del producto',
+        'step2-desc': 'Con el squad definimos el alcance: un apartado separado del saldo principal, con nombre, foto y registro de movimientos. Sin monto meta ni fecha límite en la primera versión — foco en lo esencial.',
+        'step3-title': 'Diseño con restricciones',
+        'step3-desc': 'El diseño se construyó reutilizando los componentes existentes. La restricción fue un ejercicio de creatividad: cómo hacer algo nuevo y significativo con lo que ya había, sin crear deuda de diseño.',
+        'step4-title': 'Handoff y lanzamiento',
+        'step4-desc': 'Documentación detallada para el equipo de desarrollo y QA. Definición de los criterios de aceptación junto con el PM y data science para medir la adopción desde el primer día.',
+        'img-flow': 'User flow — recorrido de creación de un espacio',
+        's4-title': 'Decisiones clave',
+        's4-p1': 'Tres decisiones que derivaron directamente del research y de la restricción de trabajar con componentes existentes.',
+        'd1-label': 'Decisión 01',
+        'd1-title': 'Nombre y foto como ancla de la meta',
+        'd1-desc': 'El insight central del research: <strong>el ahorro necesita una meta visible para existir</strong>. Darle nombre y foto a cada espacio no era decorativo — era el mecanismo que convertía "ahorrar dinero" en "ahorrar para mis vacaciones a Japón". Sin esa conexión emocional, la funcionalidad perdía su razón de ser.',
+        'd2-label': 'Decisión 02',
+        'd2-title': 'Saldo separado y visible del monto principal',
+        'd2-desc': 'El dinero de cada espacio se aparta del saldo principal de la cuenta. En todo momento el usuario ve cuánto tiene libre y cuánto está reservado. <strong>Esa separación visual elimina la ansiedad</strong> de "¿puedo gastar esto?". Es la diferencia entre saber que tienes $5,000 y saber que tienes $5,000 de los cuales $2,000 son para la meta.',
+        'd3-label': 'Decisión 03',
+        'd3-title': 'Historial de movimientos dentro del espacio',
+        'd3-desc': 'Cada depósito y retiro del espacio queda registrado. No es solo un contador de saldo — es una <strong>historia de tu progreso hacia la meta</strong>. Ver cuántas veces has aportado, y cuánto llevas ahorrado, refuerza el hábito y hace tangible el esfuerzo acumulado.',
+        'img-wireframes': 'Wireframes — exploración de layouts y jerarquía visual',
+        's5-title': 'Resultados y aprendizajes',
+        's5-p1': 'El primer día después del lanzamiento, con 450,000 usuarios activos en albo, se crearon aproximadamente 1,000 espacios. Sin campaña de activación, sin notificaciones push, sin onboarding forzado — adopción orgánica desde el primer día.',
+        'metric1-label': 'Espacios creados el primer día de lanzamiento',
+        'metric2-label': 'Usuarios activos en albo al momento del lanzamiento',
+        'metric3-label': 'Primera herramienta de ahorro por metas de una fintech mexicana',
+        'learn1': '<strong>El insight cultural lo cambia todo.</strong> No diseñamos una herramienta de ahorro genérica — diseñamos para cómo los mexicanos entienden el ahorro. Esa especificidad fue la diferencia entre una feature más y algo que la gente usó desde el primer día.',
+        'learn2': '<strong>Las restricciones son parte del diseño, no obstáculos.</strong> Trabajar con los componentes existentes nos obligó a ser más creativos y a priorizar mejor. El resultado fue más coherente con el producto que si hubiéramos empezado desde cero.',
+        'learn3': '<strong>La adopción orgánica es la mejor validación.</strong> Que 1,000 personas crearan un espacio el primer día sin que nadie se los pidiera confirmó que el producto respondía a una necesidad real. El research había dado en el clavo.',
+        'learn4': '<strong>Ser la única diseñadora del squad tiene sus ventajas.</strong> Tener criterio sobre todas las decisiones de diseño — desde el flujo hasta el detalle visual — genera consistencia. Y obliga a comunicar mejor, porque no hay otro diseñador que entienda el contexto sin que lo expliques.',
+        'back-link': 'Volver al portfolio',
+        'more-label': 'Más proyectos',
+      },
+      en: {
+        'nav-back': 'Projects',
+        'nav-about': 'About',
+        'nav-work': 'Work',
+        'nav-contact': "Let's talk",
+        'hero-summary': "The first goal-based savings feature at albo. Designed from a cultural insight: Mexicans don't save in the abstract — they save when they have a concrete goal to work toward.",
+        'chip-role': 'Product Designer',
+        'next-project': 'Next project',
+        'img-screens': 'Final screens — creation flow and space view',
+        's1-title': 'The challenge',
+        's1-p1': 'In 2020, Mexico had very few local financial savings platforms. The market leaders were international — Revolut, N26 — and not designed for the Mexican context. At albo we saw the opportunity to be the first to offer a local savings tool, with the constraint of working with the existing design components at the time, which were limited.',
+        's1-quote': '"I start saving when I have a goal. If I don\'t know what it\'s for, I just don\'t."',
+        's1-cite': '— Recurring insight from interviews with albo users',
+        's1-p2': "The challenge wasn't just to design a money pocket — it was to understand <strong>how Mexicans think about saving</strong> and translate that mental model into an app. Research revealed that saving without a goal simply doesn't exist for most people: motivation kicks in only when there's something concrete to aspire to, with a name and an image.",
+        's1-p3': 'My role as <strong>Product Designer</strong> — the sole designer on the savings squad — spanned from user interviews through to developer handoff, working alongside the PM, data science, QA, and engineering teams.',
+        's2-title': 'Research',
+        's2-p1': 'We conducted phone interviews with over 10 active albo users who had at least 10,000 pesos deposited in their account — a signal that they already had some savings intent. These weren\'t new users: they knew the app and used it regularly.',
+        's2-p2': 'The core finding that guided the entire design:',
+        's2-quote': 'Saving without a goal doesn\'t exist. Motivation appears when there\'s something concrete — a trip, a pair of sneakers, an emergency — with a name and an image that makes it real.',
+        'th-behavior': 'Observed behavior',
+        'th-implication': 'Design implication',
+        'tr1-behavior': 'They save when they have a concrete goal',
+        'tr1-implication': 'Each space needs a name and photo to anchor motivation',
+        'tr2-behavior': 'They mentally separate money, not in the app',
+        'tr2-implication': 'The pocket must be visible and separate from the main balance',
+        'tr3-behavior': 'They want to know how much they\'ve progressed',
+        'tr3-implication': 'The transaction history within the space is part of the value',
+        'img-sitemap': 'Sitemap — information architecture',
+        's3-title': 'My process',
+        's3-p1': "With a clear insight, the process was to define exactly what the product needed to do, then design it within real constraints: the existing components from albo's Design System, which were limited at the time.",
+        'step1-title': 'User interviews',
+        'step1-desc': 'Phone calls with over 10 users with significant deposits. The goal was to understand their mental model of saving — not to validate a solution. Listen before proposing.',
+        'step2-title': 'Product definition',
+        'step2-desc': "With the squad we defined the scope: a pocket separate from the main balance, with a name, photo, and transaction log. No target amount or deadline in the first version — focus on the essential.",
+        'step3-title': 'Design within constraints',
+        'step3-desc': 'The design was built by reusing existing components. The constraint was a creative exercise: how to make something new and meaningful with what already existed, without accumulating design debt.',
+        'step4-title': 'Handoff & launch',
+        'step4-desc': 'Detailed documentation for the development and QA teams. Acceptance criteria defined together with the PM and data science to measure adoption from day one.',
+        'img-flow': 'User flow — creating a space',
+        's4-title': 'Key decisions',
+        's4-p1': 'Three decisions that came directly from research and from the constraint of working with existing components.',
+        'd1-label': 'Decision 01',
+        'd1-title': 'Name and photo as goal anchors',
+        'd1-desc': 'The core insight from research: <strong>saving needs a visible goal to exist</strong>. Giving each space a name and photo wasn\'t decorative — it was the mechanism that turned "saving money" into "saving for my trip to Japan." Without that emotional connection, the feature lost its purpose.',
+        'd2-label': 'Decision 02',
+        'd2-title': 'Balance separated and visible from the main amount',
+        'd2-desc': "The money in each space is set aside from the account's main balance. At any moment the user sees how much is free and how much is reserved. <strong>That visual separation eliminates the anxiety</strong> of 'can I spend this?'. It's the difference between knowing you have $5,000 and knowing you have $5,000, of which $2,000 are earmarked for a goal.",
+        'd3-label': 'Decision 03',
+        'd3-title': 'Transaction history within the space',
+        'd3-desc': 'Every deposit and withdrawal from the space is logged. It\'s not just a balance counter — it\'s a <strong>story of your progress toward the goal</strong>. Seeing how many times you\'ve contributed, and how much you\'ve saved, reinforces the habit and makes accumulated effort tangible.',
+        'img-wireframes': 'Wireframes — layout exploration and visual hierarchy',
+        's5-title': 'Results & learnings',
+        's5-p1': 'On the first day after launch, with 450,000 active users at albo, approximately 1,000 spaces were created. No activation campaign, no push notifications, no forced onboarding — organic adoption from day one.',
+        'metric1-label': 'Spaces created on launch day',
+        'metric2-label': 'Active albo users at the time of launch',
+        'metric3-label': 'First goal-based savings feature from a Mexican fintech',
+        'learn1': "<strong>Cultural insight changes everything.</strong> We didn't design a generic savings tool — we designed for how Mexicans understand saving. That specificity was the difference between another feature and something people used from day one.",
+        'learn2': '<strong>Constraints are part of the design, not obstacles.</strong> Working with existing components forced us to be more creative and to prioritize better. The result was more coherent with the product than if we had started from scratch.',
+        'learn3': '<strong>Organic adoption is the best validation.</strong> That 1,000 people created a space on the first day without anyone asking them to confirmed that the product addressed a real need. The research had nailed it.',
+        'learn4': "<strong>Being the sole designer on the squad has its advantages.</strong> Having ownership over all design decisions — from flows to visual details — creates consistency. And it forces you to communicate better, because there's no other designer who understands the context without you explaining it.",
+        'back-link': 'Back to portfolio',
+        'more-label': 'More projects',
+      }
+    };
+
+    let currentLang = 'es';
+
+    window.setLang = function(lang) {
+      currentLang = lang;
+      const t = translations[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) el.textContent = t[key];
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const key = el.getAttribute('data-i18n-html');
+        if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+      document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.getElementById('btn-es').setAttribute('aria-pressed', lang === 'es');
+      document.getElementById('btn-en').setAttribute('aria-pressed', lang === 'en');
+      document.documentElement.lang = lang;
+    };
+  }());
+  </script>
+
+</body>
+</html>

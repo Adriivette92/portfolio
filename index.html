@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adrivette — Product Designer</title>
+  <meta name="description" content="Adriana Romero, Product Designer especializada en experiencias centradas en el usuario. Proyectos en fintech, logística y bienestar corporativo." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== TOKENS ===== */
+    :root {
+      --color-bg: #0f0f0f;
+      --color-bg-card: #1a1a1a;
+      --color-bg-tag: #242424;
+      --color-text: #f5f5f5;
+      --color-text-muted: rgba(245,245,245,0.55);
+      --color-accent: #F472B6;
+      --color-accent-2: #67E8F9;
+      --color-border: rgba(255,255,255,0.08);
+      --font: 'Red Hat Text', sans-serif;
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 24px;
+      --space-lg: 40px;
+      --space-xl: 80px;
+      --space-2xl: 128px;
+      --radius: 16px;
+      --radius-sm: 8px;
+      --max-w: 1100px;
+      --transition: 200ms ease;
+    }
+
+    /* ===== RESET ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+
+    /* ===== SKIP LINK (accesibilidad) ===== */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: var(--space-sm);
+      background: var(--color-accent);
+      color: #0f0f0f;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 14px;
+      z-index: 1000;
+      transition: top var(--transition);
+    }
+    .skip-link:focus { top: var(--space-sm); }
+
+    /* ===== NAV ===== */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: var(--space-sm) var(--space-lg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15,15,15,0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .nav-logo {
+      font-weight: 800;
+      font-size: 18px;
+      text-decoration: none;
+      background: linear-gradient(135deg, var(--color-accent), var(--color-accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-links {
+      display: flex;
+      gap: var(--space-lg);
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      transition: color var(--transition);
+    }
+    .nav-links a:hover,
+    .nav-links a:focus-visible { color: var(--color-text); }
+    .nav-cta {
+      background: var(--color-accent);
+      color: #0f0f0f !important;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: 100px;
+      font-weight: 700 !important;
+      transition: opacity var(--transition) !important;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ===== LAYOUT ===== */
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+    }
+    section { padding: var(--space-2xl) 0; }
+
+    /* ===== HERO ===== */
+    .hero {
+      padding-top: clamp(40px, 7vh, 100px);
+      padding-bottom: clamp(40px, 7vh, 100px);
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+    }
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+      align-items: center;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background: var(--color-bg-tag);
+      border: 1px solid var(--color-border);
+      padding: 6px var(--space-sm);
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      margin-bottom: clamp(12px, 2vh, 24px);
+    }
+    .hero-tag span { color: var(--color-accent); }
+    .hero h1 {
+      font-size: clamp(32px, 3.2vw, 48px);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: clamp(12px, 2vh, 24px);
+      letter-spacing: -0.5px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--color-accent), var(--color-accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-desc {
+      font-size: 18px;
+      color: var(--color-text-muted);
+      line-height: 1.7;
+      margin-bottom: clamp(16px, 3vh, 40px);
+      max-width: 480px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background: var(--color-accent);
+      color: #0f0f0f;
+      padding: 14px var(--space-md);
+      border-radius: 100px;
+      font-weight: 700;
+      font-size: 15px;
+      text-decoration: none;
+      transition: opacity var(--transition), transform var(--transition);
+    }
+    .btn-primary:hover, .btn-primary:focus-visible {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background: transparent;
+      color: var(--color-text);
+      padding: 14px var(--space-md);
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 15px;
+      text-decoration: none;
+      border: 1px solid var(--color-border);
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .btn-secondary:hover, .btn-secondary:focus-visible {
+      border-color: rgba(255,255,255,0.3);
+      transform: translateY(-1px);
+    }
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--space-lg);
+      width: 100%;
+      max-width: 380px;
+    }
+    .hero-card-name {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .hero-card-role {
+      color: var(--color-accent);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: var(--space-sm);
+    }
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xs);
+      margin-bottom: var(--space-sm);
+    }
+    .hero-stat {
+      background: var(--color-bg-tag);
+      border-radius: var(--radius-sm);
+      padding: 10px var(--space-sm);
+    }
+    .hero-stat-value {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--color-accent-2);
+    }
+    .hero-stat-label {
+      font-size: 11px;
+      color: var(--color-text-muted);
+      margin-top: 2px;
+    }
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag {
+      background: var(--color-bg-tag);
+      border: 1px solid var(--color-border);
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+    }
+
+    /* ===== SOBRE MÍ ===== */
+    .section-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-accent);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: var(--space-sm);
+    }
+    .section-title {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+      margin-bottom: var(--space-md);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+      align-items: start;
+    }
+    .about-text p {
+      color: var(--color-text-muted);
+      font-size: 17px;
+      line-height: 1.8;
+      margin-bottom: var(--space-md);
+    }
+    .about-text p strong { color: var(--color-text); }
+    .skills-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .skill-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-sm) var(--space-md);
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+    }
+    .skill-name { font-weight: 600; font-size: 14px; }
+    .skill-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 100px;
+      background: rgba(244,114,182,0.15);
+      color: var(--color-accent);
+    }
+    .skill-badge.cyan {
+      background: rgba(103,232,249,0.12);
+      color: var(--color-accent-2);
+    }
+
+    /* ===== CASOS ===== */
+    #casos { background: var(--color-bg); }
+    .casos-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: var(--space-xl);
+    }
+    .casos-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-md);
+    }
+    .caso-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--space-lg);
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      transition: border-color var(--transition), transform var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .caso-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--color-accent), var(--color-accent-2));
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .caso-card:hover, .caso-card:focus-visible {
+      border-color: rgba(255,255,255,0.2);
+      transform: translateY(-4px);
+    }
+    .caso-card:hover::before, .caso-card:focus-visible::before { opacity: 1; }
+    .caso-card.nda { border-style: dashed; }
+    .caso-empresa {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: var(--space-xs);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .caso-year {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      opacity: 0.6;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+    .caso-titulo {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: var(--space-xs);
+      line-height: 1.3;
+    }
+    .caso-desc {
+      color: var(--color-text-muted);
+      font-size: 15px;
+      line-height: 1.7;
+      flex: 1;
+      margin-bottom: var(--space-md);
+    }
+    .caso-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .caso-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .caso-arrow {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--color-bg-tag);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background var(--transition);
+    }
+    .caso-card:hover .caso-arrow { background: var(--color-accent); }
+    .caso-nda-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-accent-2);
+      padding: 4px 12px;
+      border-radius: 100px;
+      background: rgba(103,232,249,0.1);
+      border: 1px solid rgba(103,232,249,0.2);
+      margin-bottom: var(--space-sm);
+    }
+
+    /* ===== CONTACTO ===== */
+    #contacto { background: var(--color-bg-card); border-top: 1px solid var(--color-border); }
+    .contacto-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+      align-items: center;
+    }
+    .contacto-text p {
+      color: var(--color-text-muted);
+      font-size: 17px;
+      line-height: 1.8;
+      margin-bottom: var(--space-lg);
+    }
+    .social-links {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .social-link:hover, .social-link:focus-visible {
+      border-color: rgba(255,255,255,0.25);
+      transform: translateX(4px);
+    }
+    .social-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      background: var(--color-bg-tag);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .social-name { color: var(--color-text); font-weight: 600; }
+    .social-handle { color: var(--color-text-muted); font-size: 13px; }
+    .contacto-cta {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--space-lg);
+    }
+    .contacto-cta h3 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: var(--space-sm);
+    }
+    .contacto-cta p {
+      color: var(--color-text-muted);
+      font-size: 15px;
+      margin-bottom: var(--space-lg);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      padding: var(--space-lg) 0;
+      border-top: 1px solid var(--color-border);
+      text-align: center;
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+    footer a { color: var(--color-accent); text-decoration: none; }
+
+    /* ===== SCROLL OFFSET (nav fija) ===== */
+    section { scroll-margin-top: 80px; }
+    @media (max-width: 768px) {
+      section { scroll-margin-top: 64px; }
+    }
+
+    /* ===== ACCESIBILIDAD ===== */
+    :focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+    }
+
+    /* ===== SECCIÓN CONTACTO NUEVA ===== */
+    .section-subtitle {
+      color: var(--color-text-muted);
+      font-size: 17px;
+      line-height: 1.8;
+      margin-bottom: var(--space-lg);
+      max-width: 600px;
+    }
+    .social-links-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-sm);
+    }
+
+    /* ===== SECCIÓN CV ===== */
+    #cv { background: var(--color-bg-card); border-top: 1px solid var(--color-border); }
+    #contacto, #cv { position: relative; z-index: 1; isolation: isolate; }
+    .cv-section-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-xl);
+    }
+    .cv-btns { display: flex; gap: var(--space-sm); flex-shrink: 0; }
+    @media (max-width: 768px) {
+      .cv-section-inner { flex-direction: column; align-items: flex-start; }
+      .social-links-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ===== HERO ROTATING TEXT ===== */
+    .hero-rotating {
+      display: inline-block;
+      position: relative;
+      background: linear-gradient(135deg, var(--color-accent), var(--color-accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .hero-rotating.fade-out {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    .hero-rotating.fade-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== LANG SWITCH ===== */
+    .lang-switch {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      background: var(--color-bg-tag);
+      border: 1px solid var(--color-border);
+      border-radius: 100px;
+      padding: 3px;
+    }
+    .lang-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      padding: 4px 10px;
+      border-radius: 100px;
+      transition: background var(--transition), color var(--transition);
+    }
+    .lang-btn.active {
+      background: var(--color-accent);
+      color: #0f0f0f;
+    }
+
+    /* ===== PANTALLAS GRANDES (1800px+) ===== */
+    @media (min-width: 1800px) {
+      :root {
+        --max-w: 1400px;
+        --space-xl: 72px;
+        --space-2xl: 100px;
+      }
+      .hero h1 { font-size: clamp(36px, 2.8vw, 48px); }
+      .hero-desc { font-size: 20px; }
+      .hero-stat-value { font-size: 28px; }
+      .section-title { font-size: clamp(36px, 3vw, 52px); }
+      .caso-card-title { font-size: 24px; }
+    }
+
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      :root { --space-xl: 48px; --space-2xl: 80px; }
+      nav {
+        padding: var(--space-sm);
+        position: sticky;
+        top: 0;
+        z-index: 200;
+      }
+      .nav-links { display: none; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .about-grid { grid-template-columns: 1fr; }
+      .casos-grid { grid-template-columns: 1fr; }
+      .contacto-inner { grid-template-columns: 1fr; }
+      .casos-header { flex-direction: column; align-items: flex-start; gap: var(--space-sm); }
+      .caso-card { z-index: 0; }
+      .social-links-grid { grid-template-columns: 1fr; }
+      .cv-section-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main" class="skip-link" data-i18n="skip">Saltar al contenido principal</a>
+
+  <!-- NAV -->
+  <nav aria-label="Navegación principal">
+    <a href="#" class="nav-logo" aria-label="Adrivette — inicio">
+      <img src="assets/logo-adrivette.svg" alt="Adrivette" height="32" />
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="#sobre-mi" data-i18n="nav-about">Sobre mí</a></li>
+      <li><a href="#casos" data-i18n="nav-work">Proyectos</a></li>
+      <li><a href="#contacto" data-i18n="nav-contact">Hablemos</a></li>
+      <li><a href="#cv" class="nav-cta" data-i18n="nav-cv">CV</a></li>
+    </ul>
+    <div class="lang-switch" role="group" aria-label="Seleccionar idioma">
+      <button class="lang-btn active" id="btn-es" onclick="setLang('es')" aria-pressed="true">🇲🇽 ES</button>
+      <button class="lang-btn" id="btn-en" onclick="setLang('en')" aria-pressed="false">🇺🇸 EN</button>
+    </div>
+  </nav>
+
+  <main id="main">
+
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container">
+        <div class="hero-inner">
+          <div class="hero-content">
+            <div class="hero-tag" aria-hidden="true">
+              <span>●</span> <span data-i18n="hero-available">Disponible para nuevas oportunidades</span>
+            </div>
+            <h1 id="hero-title">
+              <span id="hero-static" data-i18n="hero-static">Diseño que convierte la complejidad en</span> <em id="rotating-text" class="hero-rotating">claridad</em>
+            </h1>
+            <p class="hero-desc" data-i18n="hero-desc">
+              Soy Adriana, Product Designer &amp; Design Ops con 10 años de experiencia en tecnología. Diseño soluciones que optimizan procesos y generan impacto real en las personas.
+            </p>
+            <div class="hero-actions">
+              <a href="#casos" class="btn-primary" data-i18n="hero-cta">Ver proyectos</a>
+              <a id="cv-download" href="assets/CV-Adrivette-Español.pdf" class="btn-secondary" download>
+                <span data-i18n="cv-btn">Descargar CV</span>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M8 10.5L4.5 7M8 10.5L11.5 7M8 10.5V2.5M3 13.5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="hero-visual" aria-hidden="true">
+            <div class="hero-card">
+              <div class="hero-card-name">Adriana Romero</div>
+              <div class="hero-card-role">Product Designer</div>
+              <div class="hero-stats">
+                <div class="hero-stat">
+                  <div class="hero-stat-value">10+</div>
+                  <div class="hero-stat-label">Años de experiencia</div>
+                </div>
+                <div class="hero-stat">
+                  <div class="hero-stat-value">4</div>
+                  <div class="hero-stat-label">Empresas</div>
+                </div>
+                <div class="hero-stat">
+                  <div class="hero-stat-value">DS</div>
+                  <div class="hero-stat-label">Design Ops</div>
+                </div>
+                <div class="hero-stat">
+                  <div class="hero-stat-value">IA</div>
+                  <div class="hero-stat-label">Herramientas avanzadas</div>
+                </div>
+              </div>
+              <div class="hero-tags">
+                <span class="tag">UX Research</span>
+                <span class="tag">UI Design</span>
+                <span class="tag">Figma</span>
+                <span class="tag">Design Systems</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOBRE MÍ -->
+    <section id="sobre-mi" aria-labelledby="sobre-title">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-text">
+            <p class="section-label" aria-hidden="true" data-i18n="about-label">Sobre mí</p>
+            <h2 id="sobre-title" class="section-title" data-i18n="about-title">Energética, curiosa y centrada en el usuario</h2>
+            <p data-i18n="about-p1">Con 10 años de experiencia en tecnología, me especializo en diseñar soluciones que optimizan procesos y mejoran la experiencia del usuario. He trabajado en <strong>fintech (albo)</strong>, <strong>plataformas financieras (Accenture)</strong>, <strong>consultoría de producto (Bambú Mobile)</strong> y <strong>logística de última milla (Mercado Libre)</strong>.</p>
+            <p data-i18n="about-p2">En albo fui la primera Product Designer del equipo: establecí estándares de diseño, cofundé el equipo de Design Ops y reduje el tiempo de creación de pantallas un 25% con un Design System. En Mercado Libre aprendí que cuando el usuario está bajo presión, la escaneabilidad y los fallbacks no son nice-to-have — son el diseño.</p>
+            <p data-i18n="about-p3">Además, integro <strong>herramientas de IA en mi flujo de trabajo</strong>: desde síntesis de research hasta generación de propuestas y edición directa en Figma con Claude Code.</p>
+          </div>
+          <div>
+            <p class="section-label" aria-hidden="true">Habilidades</p>
+            <div class="skills-list" role="list">
+              <div class="skill-item" role="listitem">
+                <span class="skill-name">Product Design &amp; UX Research</span>
+                <span class="skill-badge">Senior</span>
+              </div>
+              <div class="skill-item" role="listitem">
+                <span class="skill-name">Design Ops &amp; Design Systems</span>
+                <span class="skill-badge">Especialidad</span>
+              </div>
+              <div class="skill-item" role="listitem">
+                <span class="skill-name">Design Sprint &amp; User Centered Design</span>
+                <span class="skill-badge">Senior</span>
+              </div>
+              <div class="skill-item" role="listitem">
+                <span class="skill-name">Diseño para alta presión</span>
+                <span class="skill-badge">Especialidad</span>
+              </div>
+              <div class="skill-item" role="listitem">
+                <span class="skill-name">IA aplicada al diseño</span>
+                <span class="skill-badge cyan">Avanzado</span>
+              </div>
+              <div class="skill-item" role="listitem">
+                <span class="skill-name">Figma &amp; Prototipado</span>
+                <span class="skill-badge">Senior</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CASOS DE ESTUDIO -->
+    <section id="casos" aria-labelledby="casos-title">
+      <div class="container">
+        <div class="casos-header">
+          <div>
+            <p class="section-label" aria-hidden="true" data-i18n="work-label">Proyectos</p>
+            <h2 id="casos-title" class="section-title" data-i18n="work-title">Casos de estudio</h2>
+          </div>
+        </div>
+        <div class="casos-grid">
+
+          <!-- Mercado Libre - NDA -->
+          <a href="mercado-libre.html" class="caso-card nda" aria-labelledby="caso-meli" aria-describedby="caso-meli-nda">
+            <div id="caso-meli-nda" class="caso-nda-badge">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <rect x="2" y="5" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
+                <path d="M4 5V3.5a2 2 0 1 1 4 0V5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+              Confidencial — Proceso y aprendizajes
+            </div>
+            <div class="caso-empresa">Mercado Libre <span class="caso-year">· 2026</span></div>
+            <h3 id="caso-meli" class="caso-titulo">Inbound &amp; Sorting</h3>
+            <p class="caso-desc">Rediseño de la herramienta handheld que usan los reps para clasificar paquetes al llegar al service center. El objetivo: identificar en segundos si un paquete era normal, voluminoso o tenía una anomalía.</p>
+            <div class="caso-footer">
+              <div class="caso-tags">
+                <span class="tag">Logística</span>
+                <span class="tag">Handheld</span>
+                <span class="tag">Research contextual</span>
+              </div>
+              <div class="caso-arrow" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </a>
+
+          <!-- UI KIT -->
+          <a href="ui-kit.html" class="caso-card" aria-labelledby="caso-uikit">
+            <div class="caso-empresa">albo <span class="caso-year">· 2021</span></div>
+            <h3 id="caso-uikit" class="caso-titulo">UI Kit &amp; Design System</h3>
+            <p class="caso-desc">Guía de componentes para mejorar la comunicación entre diseño y desarrollo, y acelerar la construcción de producto sin sacrificar consistencia.</p>
+            <div class="caso-footer">
+              <div class="caso-tags">
+                <span class="tag">Design Systems</span>
+                <span class="tag">Design Ops</span>
+                <span class="tag">Atomic Design</span>
+              </div>
+              <div class="caso-arrow" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </a>
+
+          <!-- Espacios -->
+          <a href="espacios.html" class="caso-card" aria-labelledby="caso-espacios">
+            <div class="caso-empresa">albo <span class="caso-year">· 2020</span></div>
+            <h3 id="caso-espacios" class="caso-titulo">Espacios</h3>
+            <p class="caso-desc">La primera herramienta de ahorro por metas de albo. Diseñada desde un insight cultural: los mexicanos no ahorran en abstracto — ahorran cuando tienen una meta concreta que recordar.</p>
+            <div class="caso-footer">
+              <div class="caso-tags">
+                <span class="tag">Fintech</span>
+                <span class="tag">Mobile · iOS &amp; Android</span>
+                <span class="tag">UX Research</span>
+              </div>
+              <div class="caso-arrow" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </a>
+
+          <!-- Accenture - Confidencial -->
+          <a href="accenture.html" class="caso-card nda" aria-labelledby="caso-accenture" aria-describedby="caso-accenture-conf">
+            <div id="caso-accenture-conf" class="caso-nda-badge">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <rect x="2" y="5" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
+                <path d="M4 5V3.5a2 2 0 1 1 4 0V5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+              Confidencial — Proceso y aprendizajes
+            </div>
+            <div class="caso-empresa">Accenture <span class="caso-year">· 2019</span></div>
+            <h3 id="caso-accenture" class="caso-titulo">Plataforma financiera</h3>
+            <p class="caso-desc">Rediseño del onboarding de cuenta nómina: el research de campo reveló que el producto estaba construido para el usuario equivocado. Proceso completo rediseñado desde cero.</p>
+            <div class="caso-footer">
+              <div class="caso-tags">
+                <span class="tag">Fintech</span>
+                <span class="tag">Arquitectura de información</span>
+                <span class="tag">B2B</span>
+              </div>
+              <div class="caso-arrow" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section id="contacto" aria-labelledby="contacto-title">
+      <div class="container">
+        <p class="section-label" aria-hidden="true" data-i18n="contact-label">Contacto</p>
+        <h2 id="contacto-title" class="section-title" data-i18n="contact-title">¿Hablamos?</h2>
+        <p class="section-subtitle" data-i18n="contact-desc">Estoy disponible para nuevas oportunidades, proyectos freelance y colaboraciones. Si crees que podemos hacer algo bueno juntos, escríbeme.</p>
+        <nav aria-label="Redes sociales" class="social-links-grid">
+          <a href="mailto:ciira818@gmail.com" class="social-link">
+            <div class="social-icon" aria-hidden="true">✉️</div>
+            <div>
+              <div class="social-name">Email</div>
+              <div class="social-handle">ciira818@gmail.com</div>
+            </div>
+          </a>
+          <a href="https://linkedin.com/in/adriivette92/" class="social-link" target="_blank" rel="noopener noreferrer">
+            <div class="social-icon" aria-hidden="true">💼</div>
+            <div>
+              <div class="social-name">LinkedIn</div>
+              <div class="social-handle">adriivette92</div>
+            </div>
+          </a>
+          <a href="https://behance.net/Adriivette92" class="social-link" target="_blank" rel="noopener noreferrer">
+            <div class="social-icon" aria-hidden="true">🎨</div>
+            <div>
+              <div class="social-name">Behance</div>
+              <div class="social-handle">Adriivette92</div>
+            </div>
+          </a>
+          <a href="https://dribbble.com/adriivette92" class="social-link" target="_blank" rel="noopener noreferrer">
+            <div class="social-icon" aria-hidden="true">🏀</div>
+            <div>
+              <div class="social-name">Dribbble</div>
+              <div class="social-handle">adriivette92</div>
+            </div>
+          </a>
+        </nav>
+      </div>
+    </section>
+
+    <!-- CV -->
+    <section id="cv" aria-labelledby="cv-title">
+      <div class="container cv-section-inner">
+        <div>
+          <p class="section-label" aria-hidden="true" data-i18n="cv-label">Currículum</p>
+          <h2 id="cv-title" class="section-title" data-i18n="cv-title-h2">Descarga mi CV</h2>
+          <p class="section-subtitle" data-i18n="cv-desc">Versión actualizada con mis proyectos más recientes y experiencia en IA aplicada al diseño.</p>
+        </div>
+        <div class="cv-btns">
+          <a id="cv-download-2" href="assets/CV-Adrivette-Español.pdf" class="btn-primary" download>
+            <span data-i18n="cv-btn">Descargar CV</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M8 10.5L4.5 7M8 10.5L11.5 7M8 10.5V2.5M3 13.5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <p>Diseñado con ❤️ por <a href="#" aria-label="Adrivette, inicio de página">Adrivette</a> · <span aria-hidden="true">2026</span></p>
+    </div>
+  </footer>
+
+  <script>
+    const translations = {
+      es: {
+        'skip': 'Saltar al contenido principal',
+        'nav-about': 'Sobre mí',
+        'nav-work': 'Proyectos',
+        'nav-contact': 'Hablemos',
+        'hero-available': 'Disponible para nuevas oportunidades',
+        'hero-static': 'Diseño que convierte la complejidad en',
+        'hero-desc': 'Soy Adriana, Product Designer con experiencia en fintech, logística de última milla y bienestar corporativo. Creo experiencias que funcionan en el mundo real.',
+        'hero-cta': 'Ver proyectos',
+        'cv-btn': 'Descargar CV',
+        'cv-file': 'CV-Adrivette-Español.pdf',
+        'about-label': 'Sobre mí',
+        'about-title': 'Energética, curiosa y centrada en el usuario',
+        'about-p1': 'Soy Product Designer con experiencia en productos a gran escala. He trabajado en <strong>fintech (albo)</strong>, <strong>bienestar corporativo (Bambú Mobile)</strong> y <strong>logística de última milla (Mercado Libre)</strong>, lo que me ha dado una perspectiva muy amplia sobre cómo diseñar para contextos y usuarios radicalmente distintos.',
+        'about-p2': 'En Mercado Libre aprendí algo que cambió mi forma de diseñar: cuando el usuario está bajo presión, cada decisión de diseño tiene que ganarse su lugar. La escaneabilidad, la jerarquía y los fallbacks no son nice-to-have — son el diseño.',
+        'about-p3': 'Además, integro <strong>herramientas de IA en mi flujo de trabajo</strong>: desde síntesis de research hasta generación de propuestas y edición directa en Figma con Claude Code.',
+        'work-label': 'Proyectos',
+        'work-title': 'Casos de estudio',
+        'contact-label': 'Contacto',
+        'contact-title': '¿Hablamos?',
+        'contact-desc': 'Estoy disponible para nuevas oportunidades, proyectos freelance y colaboraciones. Si crees que podemos hacer algo bueno juntos, escríbeme.',
+        'nav-cv': 'CV',
+        'cv-label': 'Currículum',
+        'cv-title-h2': 'Descarga mi CV',
+        'cv-title': 'Descarga mi CV',
+        'cv-desc': 'Versión actualizada con mis proyectos más recientes y experiencia en IA aplicada al diseño.',
+      },
+      en: {
+        'skip': 'Skip to main content',
+        'nav-about': 'About',
+        'nav-work': 'Work',
+        'nav-contact': "Let's talk",
+        'hero-available': 'Available for new opportunities',
+        'hero-static': 'Design that turns complexity into',
+        'hero-desc': "I'm Adriana, a Product Designer & Design Ops with 10 years of experience in tech. I design solutions that optimize processes and create real impact for people.",
+        'hero-cta': 'View projects',
+        'cv-btn': 'Download CV',
+        'cv-file': 'CV-Adrivette-Inglés.pdf',
+        'about-label': 'About me',
+        'about-title': 'Energetic, curious, and user-centered',
+        'about-p1': "With 10 years in tech, I specialize in designing solutions that optimize processes and improve user experience. I've worked in <strong>fintech (albo)</strong>, <strong>financial platforms (Accenture)</strong>, <strong>product consulting (Bambú Mobile)</strong>, and <strong>last-mile logistics (Mercado Libre)</strong>.",
+        'about-p2': "At albo I was the first Product Designer on the team: I set design standards, co-founded the Design Ops team, and reduced screen creation time by 25% with a Design System. At Mercado Libre I learned that when users are under pressure, scannability and fallbacks aren't nice-to-have — they are the design.",
+        'about-p3': 'I also integrate <strong>AI tools into my workflow</strong>: from research synthesis to design proposals and direct Figma editing with Claude Code.',
+        'work-label': 'Work',
+        'work-title': 'Case studies',
+        'contact-label': 'Contact',
+        'contact-title': "Let's talk",
+        'contact-desc': "I'm available for new opportunities, freelance projects, and collaborations. If you think we can build something great together, reach out.",
+        'nav-cv': 'CV',
+        'cv-label': 'Résumé',
+        'cv-title-h2': 'Download my CV',
+        'cv-title': 'Download my CV',
+        'cv-desc': 'Updated with my latest projects and experience with AI-powered design tools.',
+      }
+    };
+
+    // Rotating hero text
+    const phrases = {
+      es: ['claridad', 'decisiones', 'mejores productos', 'sistemas escalables'],
+      en: ['clarity', 'decisions', 'better products', 'scalable systems']
+    };
+    let currentLang = 'es';
+    let currentIndex = 0;
+    const rotatingEl = document.getElementById('rotating-text');
+
+    function rotateText() {
+      rotatingEl.classList.add('fade-out');
+      setTimeout(() => {
+        currentIndex = (currentIndex + 1) % phrases[currentLang].length;
+        rotatingEl.textContent = phrases[currentLang][currentIndex];
+        rotatingEl.classList.remove('fade-out');
+      }, 400);
+    }
+
+    setInterval(rotateText, 1500);
+
+    function setLang(lang) {
+      currentLang = lang;
+      rotatingEl.textContent = phrases[lang][currentIndex];
+      const t = translations[lang];
+
+      // Textos simples
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) el.textContent = t[key];
+      });
+
+      // Textos con HTML (strong, em...)
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const key = el.getAttribute('data-i18n-html');
+        const htmlKey = key + '-html';
+        if (t[htmlKey]) el.innerHTML = t[htmlKey];
+      });
+
+      // Párrafos con HTML interno
+      ['about-p1','about-p2','about-p3'].forEach(key => {
+        const el = document.querySelector(`[data-i18n="${key}"]`);
+        if (el && t[key]) el.innerHTML = t[key];
+      });
+
+      // CV links
+      const cvFile = t['cv-file'];
+      document.getElementById('cv-download').href = cvFile;
+      document.getElementById('cv-download').download = cvFile;
+      document.getElementById('cv-download-2').href = cvFile;
+      document.getElementById('cv-download-2').download = cvFile;
+
+      // Botones switch
+      document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.getElementById('btn-es').setAttribute('aria-pressed', lang === 'es');
+      document.getElementById('btn-en').setAttribute('aria-pressed', lang === 'en');
+
+      // Lang del documento
+      document.documentElement.lang = lang;
+    }
+
+  </script>
+</body>
+</html>

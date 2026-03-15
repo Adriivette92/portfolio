@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Samba Smoothie — Caso de estudio · Adrivette</title>
+  <meta name="description" content="Caso de estudio: Samba Smoothie, plataforma de bienestar corporativo que conecta empresas con opciones de alimentación saludable y permite a los empleados pagar por nómina. Product Designer: Adriana Romero." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== TOKENS (idénticos al portfolio principal) ===== */
+    :root {
+      --color-bg: #0f0f0f;
+      --color-bg-card: #1a1a1a;
+      --color-bg-tag: #242424;
+      --color-text: #f5f5f5;
+      --color-text-muted: rgba(245,245,245,0.55);
+      --color-accent: #F472B6;
+      --color-accent-2: #67E8F9;
+      --color-border: rgba(255,255,255,0.08);
+      --font: 'Red Hat Text', sans-serif;
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 24px;
+      --space-lg: 40px;
+      --space-xl: 80px;
+      --space-2xl: 128px;
+      --radius: 16px;
+      --radius-sm: 8px;
+      --max-w: 1100px;
+      --content-w: 760px;
+      --transition: 200ms ease;
+    }
+
+    /* ===== RESET ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+
+    /* ===== SKIP LINK ===== */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: var(--space-sm);
+      background: var(--color-accent);
+      color: #0f0f0f;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 14px;
+      z-index: 1000;
+      transition: top var(--transition);
+    }
+    .skip-link:focus { top: var(--space-sm); }
+
+    /* ===== NAV ===== */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: var(--space-sm) var(--space-lg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15,15,15,0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    .nav-back:hover, .nav-back:focus-visible { color: var(--color-text); }
+    .nav-back svg { flex-shrink: 0; }
+    .nav-divider {
+      width: 1px;
+      height: 20px;
+      background: var(--color-border);
+    }
+    .nav-logo {
+      font-weight: 800;
+      font-size: 18px;
+      text-decoration: none;
+      background: linear-gradient(135deg, var(--color-accent), var(--color-accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-links {
+      display: flex;
+      gap: var(--space-lg);
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      transition: color var(--transition);
+    }
+    .nav-links a:hover,
+    .nav-links a:focus-visible { color: var(--color-text); }
+    .nav-cta {
+      background: var(--color-accent);
+      color: #0f0f0f !important;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: 100px;
+      font-weight: 700 !important;
+      transition: opacity var(--transition) !important;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ===== LANG SWITCH ===== */
+    .lang-switch {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      background: var(--color-bg-tag);
+      border: 1px solid var(--color-border);
+      border-radius: 100px;
+      padding: 3px;
+    }
+    .lang-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      padding: 4px 10px;
+      border-radius: 100px;
+      transition: background var(--transition), color var(--transition);
+    }
+    .lang-btn.active {
+      background: var(--color-accent);
+      color: #0f0f0f;
+    }
+
+    /* ===== LAYOUT ===== */
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+    }
+    .content-col {
+      max-width: var(--content-w);
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+    }
+
+    /* ===== ACCESIBILIDAD ===== */
+    :focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+    }
+
+    /* ===== HERO DEL CASO ===== */
+    .case-hero {
+      padding: clamp(48px, 8vh, 100px) 0 clamp(40px, 6vh, 80px);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .company-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background: rgba(103,232,249,0.08);
+      border: 1px solid rgba(103,232,249,0.2);
+      color: var(--color-accent-2);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: var(--space-sm);
+    }
+    .case-hero h1 {
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: var(--space-sm);
+    }
+    .case-summary {
+      font-size: 19px;
+      color: var(--color-text-muted);
+      line-height: 1.7;
+      max-width: 600px;
+      margin-bottom: var(--space-md);
+    }
+    .meta-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      margin-bottom: var(--space-lg);
+    }
+    .meta-chip {
+      background: var(--color-bg-tag);
+      border: 1px solid var(--color-border);
+      padding: 5px 14px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+    }
+    .meta-chip.highlight {
+      background: rgba(244,114,182,0.1);
+      border-color: rgba(244,114,182,0.25);
+      color: var(--color-accent);
+    }
+    .next-project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      text-decoration: none;
+      transition: color var(--transition), gap var(--transition);
+    }
+    .next-project-link:hover, .next-project-link:focus-visible {
+      color: var(--color-text);
+      gap: 10px;
+    }
+
+    /* ===== MOCKUP PLACEHOLDER ===== */
+    .mockup-placeholder {
+      border: 2px dashed rgba(255,255,255,0.12);
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      color: var(--color-text-muted);
+      font-size: 14px;
+      font-weight: 500;
+      background: var(--color-bg-card);
+    }
+    .mockup-placeholder svg { opacity: 0.4; }
+    .mockup-placeholder-lg {
+      height: 400px;
+      margin: var(--space-xl) 0;
+    }
+    .mockup-placeholder-sm {
+      height: 240px;
+      margin: var(--space-md) 0;
+    }
+
+    /* ===== SECCIONES DE CONTENIDO ===== */
+    .case-section {
+      padding: var(--space-xl) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .case-section:last-of-type {
+      border-bottom: none;
+    }
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-accent);
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      margin-bottom: var(--space-sm);
+    }
+    .section-title {
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      line-height: 1.25;
+      margin-bottom: var(--space-md);
+    }
+    .body-text {
+      color: var(--color-text-muted);
+      font-size: 16px;
+      line-height: 1.85;
+      margin-bottom: var(--space-md);
+    }
+    .body-text strong { color: var(--color-text); }
+    .body-text:last-child { margin-bottom: 0; }
+
+    /* ===== BLOCKQUOTE ===== */
+    blockquote {
+      border-left: 3px solid var(--color-accent);
+      padding: var(--space-md) var(--space-lg);
+      background: rgba(244,114,182,0.05);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: var(--space-lg) 0;
+    }
+    blockquote p {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.65;
+      color: var(--color-text);
+      font-style: italic;
+    }
+    blockquote cite {
+      display: block;
+      margin-top: var(--space-xs);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      font-style: normal;
+    }
+
+    /* ===== TABLA DE USUARIOS ===== */
+    .user-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: var(--space-md) 0;
+      font-size: 14px;
+    }
+    .user-table th {
+      text-align: left;
+      padding: var(--space-xs) var(--space-sm);
+      color: var(--color-accent);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .user-table td {
+      padding: var(--space-sm);
+      border-bottom: 1px solid var(--color-border);
+      color: var(--color-text-muted);
+      vertical-align: top;
+    }
+    .user-table td:first-child {
+      font-weight: 700;
+      color: var(--color-text);
+      white-space: nowrap;
+    }
+    .user-table tr:last-child td { border-bottom: none; }
+    .user-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ===== PASOS DEL PROCESO ===== */
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-sm);
+      margin: var(--space-md) 0;
+    }
+    .process-step {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--space-md);
+      position: relative;
+      overflow: hidden;
+    }
+    .process-step::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--color-accent), var(--color-accent-2));
+      opacity: 0.4;
+    }
+    .step-number {
+      font-size: clamp(40px, 5vw, 56px);
+      font-weight: 800;
+      color: var(--color-accent-2);
+      opacity: 0.2;
+      line-height: 1;
+      margin-bottom: var(--space-xs);
+      letter-spacing: -2px;
+    }
+    .step-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .step-desc {
+      font-size: 14px;
+      color: var(--color-text-muted);
+      line-height: 1.65;
+    }
+
+    /* ===== TARJETAS DE DECISIONES ===== */
+    .decision-cards {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      margin: var(--space-md) 0;
+    }
+    .decision-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--space-md) var(--space-lg);
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .decision-card:hover {
+      border-color: rgba(255,255,255,0.18);
+      transform: translateX(4px);
+    }
+    .decision-number {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--color-accent);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .decision-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: var(--space-xs);
+      line-height: 1.3;
+    }
+    .decision-desc {
+      font-size: 15px;
+      color: var(--color-text-muted);
+      line-height: 1.75;
+    }
+    .decision-desc strong { color: var(--color-text); }
+
+    /* ===== MÉTRICAS ===== */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-sm);
+      margin: var(--space-md) 0;
+    }
+    .metric-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--space-md);
+      text-align: center;
+    }
+    .metric-value {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800;
+      color: var(--color-accent-2);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .metric-value.placeholder {
+      color: rgba(103,232,249,0.35);
+      font-size: 24px;
+    }
+    .metric-label {
+      font-size: 13px;
+      color: var(--color-text-muted);
+      line-height: 1.4;
+    }
+
+    /* ===== APRENDIZAJES ===== */
+    .learnings-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      margin: var(--space-md) 0;
+    }
+    .learning-item {
+      display: flex;
+      gap: var(--space-sm);
+      align-items: flex-start;
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .learning-item:last-child { border-bottom: none; }
+    .learning-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(244,114,182,0.12);
+      border: 1px solid rgba(244,114,182,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .learning-text {
+      font-size: 15px;
+      color: var(--color-text-muted);
+      line-height: 1.7;
+    }
+    .learning-text strong { color: var(--color-text); }
+
+    /* ===== FOOTER DEL CASO ===== */
+    .case-footer-section {
+      padding: var(--space-xl) 0;
+      border-top: 1px solid var(--color-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      text-decoration: none;
+      transition: color var(--transition), gap var(--transition);
+    }
+    .back-link:hover, .back-link:focus-visible {
+      color: var(--color-text);
+      gap: 10px;
+    }
+
+    /* ===== FOOTER PÁGINA ===== */
+    footer {
+      padding: var(--space-lg) 0;
+      border-top: 1px solid var(--color-border);
+      text-align: center;
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+    footer a { color: var(--color-accent); text-decoration: none; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      :root { --space-xl: 48px; }
+      nav {
+        padding: var(--space-sm);
+      }
+      .nav-links { display: none; }
+      .process-steps { grid-template-columns: 1fr; }
+      .metrics-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .metrics-grid { grid-template-columns: 1fr; }
+      .case-footer-section { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Saltar al contenido principal</a>
+
+  <!-- NAV -->
+  <nav aria-label="Navegación principal">
+    <div class="nav-left">
+      <a href="index.html#casos" class="nav-back" aria-label="Volver a Proyectos">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M13 8H3M3 8L7 4M3 8L7 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span data-i18n="nav-back">Proyectos</span>
+      </a>
+      <div class="nav-divider" aria-hidden="true"></div>
+      <a href="index.html" class="nav-logo" aria-label="Adrivette — inicio">Adrivette</a>
+    </div>
+    <ul class="nav-links" role="list">
+      <li><a href="index.html#sobre-mi" data-i18n="nav-about">Sobre mí</a></li>
+      <li><a href="index.html#casos" data-i18n="nav-work">Proyectos</a></li>
+      <li><a href="index.html#contacto" data-i18n="nav-contact">Hablemos</a></li>
+      <li><a href="index.html#cv" class="nav-cta">CV</a></li>
+    </ul>
+    <div class="lang-switch" role="group" aria-label="Select language">
+      <button class="lang-btn active" id="btn-es" onclick="setLang('es')" aria-pressed="true">ES</button>
+      <button class="lang-btn" id="btn-en" onclick="setLang('en')" aria-pressed="false">EN</button>
+    </div>
+  </nav>
+
+  <main id="main">
+
+    <!-- HERO DEL CASO -->
+    <header class="case-hero">
+      <div class="content-col">
+        <div class="company-badge">Bambú Mobile</div>
+        <h1>Samba Smoothie</h1>
+        <p class="case-summary" data-i18n="hero-summary">Plataforma de bienestar corporativo que conecta empresas con opciones de alimentación saludable y permite a los empleados pagar por nómina.</p>
+        <div class="meta-chips" role="list" aria-label="Metadatos del proyecto">
+          <span class="meta-chip" role="listitem" data-i18n="chip-consulting">Consultoría</span>
+          <span class="meta-chip" role="listitem">Mobile</span>
+          <span class="meta-chip" role="listitem">B2B</span>
+          <span class="meta-chip" role="listitem" data-i18n="chip-wellness">Bienestar corporativo</span>
+          <span class="meta-chip" role="listitem">2020</span>
+          <span class="meta-chip highlight" role="listitem">Product Designer</span>
+        </div>
+        <a href="accenture.html" class="next-project-link" aria-label="Ver siguiente proyecto: Plataforma financiera Accenture">
+          <span data-i18n="next-project">Ver siguiente proyecto</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </header>
+
+    <!-- MOCKUP PRINCIPAL -->
+    <div class="content-col">
+      <div class="mockup-placeholder mockup-placeholder-lg" aria-label="Espacio para imagen o mockup principal del proyecto">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+          <rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" stroke-width="2"/>
+          <circle cx="16" cy="20" r="4" stroke="currentColor" stroke-width="2"/>
+          <path d="M4 32l10-8 8 6 8-10 14 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span data-i18n="mockup-main">Imagen / mockup de la app</span>
+      </div>
+    </div>
+
+    <!-- EL RETO -->
+    <section class="case-section" aria-labelledby="reto-title">
+      <div class="content-col">
+        <p class="section-label" aria-hidden="true">01</p>
+        <h2 id="reto-title" class="section-title" data-i18n="s1-title">El reto</h2>
+        <p class="body-text" data-i18n-html="s1-p1">
+          El cliente tenía una propuesta de valor compleja: <strong>las empresas ofrecen el beneficio, los empleados eligen y pagan por nómina, los proveedores de comida reciben los pedidos</strong>. Tres tipos de usuario distintos, una sola plataforma. Cada uno con necesidades, contextos y niveles de adopción tecnológica diferentes.
+        </p>
+
+        <blockquote>
+          <p data-i18n="s1-quote">"La complejidad es del sistema, no del usuario. El usuario solo tiene que pedir su smoothie."</p>
+        </blockquote>
+
+        <p class="body-text" data-i18n-html="s1-p2">
+          El reto de diseño era hacer que <strong>cada flujo fuera obvio para quien lo usara, sin exponer la complejidad del sistema subyacente</strong>. El empleado no necesita saber cómo funciona el descuento por nómina; solo necesita pedir su comida. El proveedor no necesita entender los acuerdos corporativos; solo necesita recibir el pedido claro.
+        </p>
+        <p class="body-text" data-i18n-html="s1-p3">
+          Mi rol como <strong>Product Designer en Bambú Mobile</strong> cubrió el research con los tres tipos de usuario, el diseño del flujo principal del empleado y la validación con usuarios reales antes de la entrega al cliente.
+        </p>
+      </div>
+    </section>
+
+    <!-- USUARIOS -->
+    <section class="case-section" aria-labelledby="usuarios-title">
+      <div class="content-col">
+        <p class="section-label" aria-hidden="true">02</p>
+        <h2 id="usuarios-title" class="section-title" data-i18n="s2-title">Usuarios</h2>
+        <p class="body-text" data-i18n="s2-p1">
+          Tres perfiles con objetivos completamente distintos que comparten la misma plataforma. La clave fue diseñar experiencias separadas para cada perfil sin que el sistema se fragmentara en tres productos distintos.
+        </p>
+
+        <table class="user-table" aria-label="Perfiles de usuario identificados">
+          <thead>
+            <tr>
+              <th scope="col" data-i18n="th-profile">Perfil</th>
+              <th scope="col" data-i18n="th-need">Necesidad principal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-i18n="tr1-profile">Empleado (usuario final)</td>
+              <td data-i18n="tr1-need">Quiere pedir comida saludable rápido, sin fricción, sin tener que pensar en el pago. El proceso de descuento por nómina tiene que ser invisible para él.</td>
+            </tr>
+            <tr>
+              <td data-i18n="tr2-profile">RRHH / Empresa</td>
+              <td data-i18n="tr2-need">Necesita activar el beneficio, gestionar el presupuesto por empleado y ver reportes de uso. Requiere control y visibilidad sin complejidad operativa.</td>
+            </tr>
+            <tr>
+              <td data-i18n="tr3-profile">Proveedor de comida</td>
+              <td data-i18n="tr3-need">Necesita recibir pedidos de forma clara y gestionar su menú. La interfaz tiene que ser lo suficientemente simple para usarla en el punto de venta.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="mockup-placeholder mockup-placeholder-sm" aria-label="Espacio para mapa de flujos por perfil de usuario">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <rect x="2" y="2" width="28" height="28" rx="3" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M2 12h28M12 12v18" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="22" cy="22" r="3" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          <span data-i18n="mockup-flows">Mapa de flujos por perfil de usuario</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- MI PROCESO -->
+    <section class="case-section" aria-labelledby="proceso-title">
+      <div class="content-col">
+        <p class="section-label" aria-hidden="true">03</p>
+        <h2 id="proceso-title" class="section-title" data-i18n="s3-title">Mi proceso</h2>
+        <p class="body-text" data-i18n="s3-p1">
+          Con tres tipos de usuario distintos, la fase de research fue crítica para no diseñar desde suposiciones. Priorizamos el flujo del empleado como MVP, dado que su adopción era el indicador de éxito del producto.
+        </p>
+
+        <div class="process-steps">
+          <div class="process-step">
+            <div class="step-number" aria-hidden="true">01</div>
+            <div class="step-title" data-i18n="step1-title">Research con los 3 perfiles</div>
+            <p class="step-desc" data-i18n="step1-desc">Entrevistas con empleados, responsables de RRHH y proveedores. El objetivo era entender no solo qué necesitaban, sino en qué contexto usarían el producto y qué fricción eran capaces de tolerar.</p>
+          </div>
+          <div class="process-step">
+            <div class="step-number" aria-hidden="true">02</div>
+            <div class="step-title" data-i18n="step2-title">Mapeo de flujos por perfil</div>
+            <p class="step-desc" data-i18n="step2-desc">Cada perfil tiene un user journey propio. Mapear los tres en paralelo permitió identificar los puntos de intersección y los puntos donde los flujos podían entrar en conflicto.</p>
+          </div>
+          <div class="process-step">
+            <div class="step-number" aria-hidden="true">03</div>
+            <div class="step-title" data-i18n="step3-title">Diseño del flujo del empleado</div>
+            <p class="step-desc" data-i18n="step3-desc">Diseño completo del flujo de pedido para el empleado: exploración de menú, selección, confirmación y feedback post-pedido. Especial atención al momento de pago para hacer el descuento por nómina transparente y comprensible.</p>
+          </div>
+          <div class="process-step">
+            <div class="step-number" aria-hidden="true">04</div>
+            <div class="step-title" data-i18n="step4-title">Validación con usuarios reales</div>
+            <p class="step-desc" data-i18n="step4-desc">Sesiones de testing con empleados de empresas piloto. Las iteraciones se centraron en reducir la fricción en el proceso de selección y en hacer el saldo de beneficio disponible más visible y comprensible.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DECISIONES CLAVE -->
+    <section class="case-section" aria-labelledby="decisiones-title">
+      <div class="content-col">
+        <p class="section-label" aria-hidden="true">04</p>
+        <h2 id="decisiones-title" class="section-title" data-i18n="s4-title">Decisiones clave</h2>
+        <p class="body-text" data-i18n="s4-p1">
+          Tres decisiones que definieron la experiencia del empleado y el éxito del producto en las empresas piloto.
+        </p>
+
+        <div class="decision-cards">
+          <div class="decision-card">
+            <div class="decision-number" data-i18n="d1-label">Decisión 01</div>
+            <div class="decision-title" data-i18n="d1-title">Diseñar para el empleado primero</div>
+            <p class="decision-desc" data-i18n-html="d1-desc">El producto fallaba o triunfaba según la adopción del usuario final. Con recursos limitados, <strong>el flujo del empleado fue el primero en diseñarse y el más depurado</strong>. Los flujos de RRHH y proveedor se diseñaron funcionales pero sin el mismo nivel de refinamiento en la primera versión.</p>
+          </div>
+          <div class="decision-card">
+            <div class="decision-number" data-i18n="d2-label">Decisión 02</div>
+            <div class="decision-title" data-i18n="d2-title">Ocultar la complejidad de pago</div>
+            <p class="decision-desc" data-i18n-html="d2-desc">El sistema de descuento por nómina involucra lógica contable y acuerdos corporativos complejos. Se decidió <strong>mostrarlo solo como confirmación final</strong>, no como parte del flujo de pedido. El empleado pide como si fuera gratis; ve el descuento solo en la pantalla de confirmación.</p>
+          </div>
+          <div class="decision-card">
+            <div class="decision-number" data-i18n="d3-label">Decisión 03</div>
+            <div class="decision-title" data-i18n="d3-title">Menú con restricciones visibles</div>
+            <p class="decision-desc" data-i18n-html="d3-desc">Los empleados pueden ver <strong>qué pueden pedir según su saldo de beneficio disponible</strong>. Los ítems fuera de su saldo se muestran desactivados con el precio visible. Esta transparencia reduce el abandono en checkout porque el usuario ya sabe antes de seleccionar si puede pagarlo con el beneficio.</p>
+          </div>
+        </div>
+
+        <div class="mockup-placeholder mockup-placeholder-sm" aria-label="Espacio para mockup del flujo de pedido del empleado">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <rect x="2" y="4" width="18" height="24" rx="2" stroke="currentColor" stroke-width="1.5"/>
+            <rect x="6" y="8" width="10" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M6 18h10M6 22h7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <rect x="22" y="4" width="8" height="10" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+            <rect x="22" y="17" width="8" height="10" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          <span data-i18n="mockup-order">Flujo de pedido del empleado</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULTADOS Y APRENDIZAJES -->
+    <section class="case-section" aria-labelledby="resultados-title">
+      <div class="content-col">
+        <p class="section-label" aria-hidden="true">05</p>
+        <h2 id="resultados-title" class="section-title" data-i18n="s5-title">Resultados y aprendizajes</h2>
+        <p class="body-text" data-i18n="s5-p1">
+          El producto se lanzó con empresas piloto y se validaron los flujos principales con usuarios reales antes de la entrega final al cliente.
+        </p>
+
+        <div class="metrics-grid" role="list" aria-label="Métricas del proyecto">
+          <div class="metric-card" role="listitem">
+            <div class="metric-value placeholder" aria-label="Dato real pendiente">[dato real]%</div>
+            <div class="metric-label" data-i18n="metric1-label">Tasa de adopción en empresas piloto tras el lanzamiento</div>
+          </div>
+          <div class="metric-card" role="listitem">
+            <div class="metric-value placeholder" aria-label="Dato real pendiente">[dato real]</div>
+            <div class="metric-label" data-i18n="metric2-label">Pasos en el flujo de pedido completo (del menú al checkout)</div>
+          </div>
+          <div class="metric-card" role="listitem">
+            <div class="metric-value placeholder" aria-label="Dato real pendiente">[dato real]</div>
+            <div class="metric-label" data-i18n="metric3-label">Usuarios en sesiones de testing previas al lanzamiento</div>
+          </div>
+        </div>
+
+        <div class="learnings-list" role="list" aria-label="Aprendizajes clave">
+          <div class="learning-item" role="listitem">
+            <div class="learning-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 7l3.5 3.5L12 3" stroke="#F472B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <p class="learning-text" data-i18n-html="learn1"><strong>En productos B2B2C, el usuario final tiene que ganar siempre.</strong> La empresa paga, pero si el empleado no usa el beneficio, el cliente (empresa) se va. Diseñar para el empleado es diseñar para el negocio.</p>
+          </div>
+          <div class="learning-item" role="listitem">
+            <div class="learning-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 7l3.5 3.5L12 3" stroke="#F472B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <p class="learning-text" data-i18n-html="learn2"><strong>La complejidad técnica no tiene que ser visible.</strong> Cuanto más complejo es el backend, más simple tiene que ser la interfaz. El usuario no necesita entender el sistema; necesita conseguir su objetivo.</p>
+          </div>
+          <div class="learning-item" role="listitem">
+            <div class="learning-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 7l3.5 3.5L12 3" stroke="#F472B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <p class="learning-text" data-i18n-html="learn3"><strong>La restricción visible es mejor que la sorpresa en checkout.</strong> Mostrar qué puede pedir el usuario con su saldo antes de que lo seleccione reduce la fricción mucho más que permitirle seleccionar y recibir un error al pagar.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER DEL CASO -->
+  <div class="content-col">
+    <div class="case-footer-section">
+      <a href="index.html#casos" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M13 8H3M3 8L7 4M3 8L7 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span data-i18n="back-link">Volver al portfolio</span>
+      </a>
+      <span style="font-size:13px; color: var(--color-text-muted);">Adrivette &copy; 2026</span>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <p>Diseñado con ❤️ por <a href="index.html" aria-label="Adrivette — portfolio principal">Adrivette</a> · <span aria-hidden="true">2026</span></p>
+    </div>
+  </footer>
+
+  <script>
+  (function() {
+    const translations = {
+      es: {
+        'nav-back': 'Proyectos',
+        'nav-about': 'Sobre mí',
+        'nav-work': 'Proyectos',
+        'nav-contact': 'Hablemos',
+        'hero-summary': 'Plataforma de bienestar corporativo que conecta empresas con opciones de alimentación saludable y permite a los empleados pagar por nómina.',
+        'chip-consulting': 'Consultoría',
+        'chip-wellness': 'Bienestar corporativo',
+        'next-project': 'Ver siguiente proyecto',
+        'mockup-main': 'Imagen / mockup de la app',
+        's1-title': 'El reto',
+        's1-p1': 'El cliente tenía una propuesta de valor compleja: <strong>las empresas ofrecen el beneficio, los empleados eligen y pagan por nómina, los proveedores de comida reciben los pedidos</strong>. Tres tipos de usuario distintos, una sola plataforma. Cada uno con necesidades, contextos y niveles de adopción tecnológica diferentes.',
+        's1-quote': '"La complejidad es del sistema, no del usuario. El usuario solo tiene que pedir su smoothie."',
+        's1-p2': 'El reto de diseño era hacer que <strong>cada flujo fuera obvio para quien lo usara, sin exponer la complejidad del sistema subyacente</strong>. El empleado no necesita saber cómo funciona el descuento por nómina; solo necesita pedir su comida. El proveedor no necesita entender los acuerdos corporativos; solo necesita recibir el pedido claro.',
+        's1-p3': 'Mi rol como <strong>Product Designer en Bambú Mobile</strong> cubrió el research con los tres tipos de usuario, el diseño del flujo principal del empleado y la validación con usuarios reales antes de la entrega al cliente.',
+        's2-title': 'Usuarios',
+        's2-p1': 'Tres perfiles con objetivos completamente distintos que comparten la misma plataforma. La clave fue diseñar experiencias separadas para cada perfil sin que el sistema se fragmentara en tres productos distintos.',
+        'th-profile': 'Perfil',
+        'th-need': 'Necesidad principal',
+        'tr1-profile': 'Empleado (usuario final)',
+        'tr1-need': 'Quiere pedir comida saludable rápido, sin fricción, sin tener que pensar en el pago. El proceso de descuento por nómina tiene que ser invisible para él.',
+        'tr2-profile': 'RRHH / Empresa',
+        'tr2-need': 'Necesita activar el beneficio, gestionar el presupuesto por empleado y ver reportes de uso. Requiere control y visibilidad sin complejidad operativa.',
+        'tr3-profile': 'Proveedor de comida',
+        'tr3-need': 'Necesita recibir pedidos de forma clara y gestionar su menú. La interfaz tiene que ser lo suficientemente simple para usarla en el punto de venta.',
+        'mockup-flows': 'Mapa de flujos por perfil de usuario',
+        's3-title': 'Mi proceso',
+        's3-p1': 'Con tres tipos de usuario distintos, la fase de research fue crítica para no diseñar desde suposiciones. Priorizamos el flujo del empleado como MVP, dado que su adopción era el indicador de éxito del producto.',
+        'step1-title': 'Research con los 3 perfiles',
+        'step1-desc': 'Entrevistas con empleados, responsables de RRHH y proveedores. El objetivo era entender no solo qué necesitaban, sino en qué contexto usarían el producto y qué fricción eran capaces de tolerar.',
+        'step2-title': 'Mapeo de flujos por perfil',
+        'step2-desc': 'Cada perfil tiene un user journey propio. Mapear los tres en paralelo permitió identificar los puntos de intersección y los puntos donde los flujos podían entrar en conflicto.',
+        'step3-title': 'Diseño del flujo del empleado',
+        'step3-desc': 'Diseño completo del flujo de pedido para el empleado: exploración de menú, selección, confirmación y feedback post-pedido. Especial atención al momento de pago para hacer el descuento por nómina transparente y comprensible.',
+        'step4-title': 'Validación con usuarios reales',
+        'step4-desc': 'Sesiones de testing con empleados de empresas piloto. Las iteraciones se centraron en reducir la fricción en el proceso de selección y en hacer el saldo de beneficio disponible más visible y comprensible.',
+        's4-title': 'Decisiones clave',
+        's4-p1': 'Tres decisiones que definieron la experiencia del empleado y el éxito del producto en las empresas piloto.',
+        'd1-label': 'Decisión 01',
+        'd1-title': 'Diseñar para el empleado primero',
+        'd1-desc': 'El producto fallaba o triunfaba según la adopción del usuario final. Con recursos limitados, <strong>el flujo del empleado fue el primero en diseñarse y el más depurado</strong>. Los flujos de RRHH y proveedor se diseñaron funcionales pero sin el mismo nivel de refinamiento en la primera versión.',
+        'd2-label': 'Decisión 02',
+        'd2-title': 'Ocultar la complejidad de pago',
+        'd2-desc': 'El sistema de descuento por nómina involucra lógica contable y acuerdos corporativos complejos. Se decidió <strong>mostrarlo solo como confirmación final</strong>, no como parte del flujo de pedido. El empleado pide como si fuera gratis; ve el descuento solo en la pantalla de confirmación.',
+        'd3-label': 'Decisión 03',
+        'd3-title': 'Menú con restricciones visibles',
+        'd3-desc': 'Los empleados pueden ver <strong>qué pueden pedir según su saldo de beneficio disponible</strong>. Los ítems fuera de su saldo se muestran desactivados con el precio visible. Esta transparencia reduce el abandono en checkout porque el usuario ya sabe antes de seleccionar si puede pagarlo con el beneficio.',
+        'mockup-order': 'Flujo de pedido del empleado',
+        's5-title': 'Resultados y aprendizajes',
+        's5-p1': 'El producto se lanzó con empresas piloto y se validaron los flujos principales con usuarios reales antes de la entrega final al cliente.',
+        'metric1-label': 'Tasa de adopción en empresas piloto tras el lanzamiento',
+        'metric2-label': 'Pasos en el flujo de pedido completo (del menú al checkout)',
+        'metric3-label': 'Usuarios en sesiones de testing previas al lanzamiento',
+        'learn1': '<strong>En productos B2B2C, el usuario final tiene que ganar siempre.</strong> La empresa paga, pero si el empleado no usa el beneficio, el cliente (empresa) se va. Diseñar para el empleado es diseñar para el negocio.',
+        'learn2': '<strong>La complejidad técnica no tiene que ser visible.</strong> Cuanto más complejo es el backend, más simple tiene que ser la interfaz. El usuario no necesita entender el sistema; necesita conseguir su objetivo.',
+        'learn3': '<strong>La restricción visible es mejor que la sorpresa en checkout.</strong> Mostrar qué puede pedir el usuario con su saldo antes de que lo seleccione reduce la fricción mucho más que permitirle seleccionar y recibir un error al pagar.',
+        'back-link': 'Volver al portfolio',
+      },
+      en: {
+        'nav-back': 'Projects',
+        'nav-about': 'About',
+        'nav-work': 'Work',
+        'nav-contact': "Let's talk",
+        'hero-summary': 'A corporate wellness platform that connects companies with healthy food options and lets employees pay through payroll deductions.',
+        'chip-consulting': 'Consulting',
+        'chip-wellness': 'Corporate wellness',
+        'next-project': 'Next project',
+        'mockup-main': 'Image / app mockup',
+        's1-title': 'The challenge',
+        's1-p1': 'The client had a complex value proposition: <strong>companies offer the benefit, employees choose and pay via payroll, food vendors receive the orders</strong>. Three different user types, one single platform. Each with different needs, contexts, and levels of technology adoption.',
+        's1-quote': '"The complexity belongs to the system, not the user. The user just has to order their smoothie."',
+        's1-p2': 'The design challenge was to make <strong>each flow feel obvious to whoever was using it, without exposing the underlying system complexity</strong>. The employee doesn\'t need to know how payroll deduction works; they just need to order food. The vendor doesn\'t need to understand the corporate agreements; they just need to receive a clear order.',
+        's1-p3': 'My role as <strong>Product Designer at Bambú Mobile</strong> covered research with all three user types, designing the primary employee flow, and validating with real users before delivery to the client.',
+        's2-title': 'Users',
+        's2-p1': 'Three profiles with completely different goals sharing the same platform. The key was to design separate experiences for each profile without fragmenting the system into three distinct products.',
+        'th-profile': 'Profile',
+        'th-need': 'Primary need',
+        'tr1-profile': 'Employee (end user)',
+        'tr1-need': 'Wants to order healthy food quickly, without friction, without having to think about payment. The payroll deduction process must be invisible to them.',
+        'tr2-profile': 'HR / Company',
+        'tr2-need': 'Needs to activate the benefit, manage per-employee budgets, and view usage reports. Requires control and visibility without operational complexity.',
+        'tr3-profile': 'Food vendor',
+        'tr3-need': 'Needs to receive orders clearly and manage their menu. The interface must be simple enough to use at the point of sale.',
+        'mockup-flows': 'Flow map by user profile',
+        's3-title': 'My process',
+        's3-p1': 'With three different user types, the research phase was critical to avoid designing from assumptions. We prioritized the employee flow as the MVP, since their adoption was the key indicator of product success.',
+        'step1-title': 'Research across all 3 profiles',
+        'step1-desc': 'Interviews with employees, HR managers, and food vendors. The goal was to understand not only what they needed, but in what context they would use the product and how much friction they could tolerate.',
+        'step2-title': 'Flow mapping by profile',
+        'step2-desc': 'Each profile has its own user journey. Mapping all three in parallel revealed the intersection points and where flows could conflict with each other.',
+        'step3-title': 'Employee flow design',
+        'step3-desc': 'Full design of the ordering flow for the employee: menu exploration, selection, confirmation, and post-order feedback. Special attention to the payment moment to make the payroll deduction transparent and understandable.',
+        'step4-title': 'Validation with real users',
+        'step4-desc': 'Testing sessions with employees from pilot companies. Iterations focused on reducing friction in the selection process and making the available benefit balance more visible and understandable.',
+        's4-title': 'Key decisions',
+        's4-p1': 'Three decisions that defined the employee experience and product success across pilot companies.',
+        'd1-label': 'Decision 01',
+        'd1-title': 'Design for the employee first',
+        'd1-desc': 'The product would succeed or fail based on end-user adoption. With limited resources, <strong>the employee flow was the first to be designed and the most thoroughly refined</strong>. The HR and vendor flows were designed as functional but without the same level of polish in version one.',
+        'd2-label': 'Decision 02',
+        'd2-title': 'Hide the payment complexity',
+        'd2-desc': 'The payroll deduction system involves accounting logic and complex corporate agreements. The decision was to <strong>show it only as a final confirmation</strong>, not as part of the ordering flow. The employee orders as if it were free; they see the deduction only on the confirmation screen.',
+        'd3-label': 'Decision 03',
+        'd3-title': 'Menu with visible restrictions',
+        'd3-desc': 'Employees can see <strong>what they can order based on their available benefit balance</strong>. Items outside their balance appear disabled with the price visible. This transparency reduces checkout abandonment because users know before selecting whether they can pay for it with their benefit.',
+        'mockup-order': 'Employee ordering flow',
+        's5-title': 'Results & learnings',
+        's5-p1': 'The product launched with pilot companies and the primary flows were validated with real users prior to final delivery to the client.',
+        'metric1-label': 'Adoption rate at pilot companies after launch',
+        'metric2-label': 'Steps in the full ordering flow (menu to checkout)',
+        'metric3-label': 'Users in pre-launch testing sessions',
+        'learn1': '<strong>In B2B2C products, the end user has to win every time.</strong> The company pays, but if the employee doesn\'t use the benefit, the client (company) leaves. Designing for the employee is designing for the business.',
+        'learn2': "<strong>Technical complexity doesn't have to be visible.</strong> The more complex the backend, the simpler the interface needs to be. Users don't need to understand the system; they need to achieve their goal.",
+        'learn3': '<strong>Visible restrictions beat checkout surprises.</strong> Showing users what they can order with their balance before they select it reduces friction far more than letting them choose and then hitting an error at payment.',
+        'back-link': 'Back to portfolio',
+      }
+    };
+
+    let currentLang = 'es';
+
+    window.setLang = function(lang) {
+      currentLang = lang;
+      const t = translations[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) el.textContent = t[key];
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const key = el.getAttribute('data-i18n-html');
+        if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+      document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.getElementById('btn-es').setAttribute('aria-pressed', lang === 'es');
+      document.getElementById('btn-en').setAttribute('aria-pressed', lang === 'en');
+      document.documentElement.lang = lang;
+    };
+  }());
+  </script>
+
+</body>
+</html>

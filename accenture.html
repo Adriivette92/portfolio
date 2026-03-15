@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plataforma financiera — Caso de estudio · Adrivette</title>
+  <meta name="description" content="Caso de estudio: Rediseño del onboarding de cuenta nómina para un banco en México. Descubrimiento del usuario real mediante research de campo. Accenture · Product Designer: Adriana Romero." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== TOKENS (idénticos al portfolio principal) ===== */
+    :root {
+      --color-bg: #0f0f0f;
+      --color-bg-card: #1a1a1a;
+      --color-bg-tag: #242424;
+      --color-text: #f5f5f5;
+      --color-text-muted: rgba(245,245,245,0.55);
+      --color-accent: #F472B6;
+      --color-accent-2: #67E8F9;
+      --color-border: rgba(255,255,255,0.08);
+      --font: 'Red Hat Text', sans-serif;
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 24px;
+      --space-lg: 40px;
+      --space-xl: 80px;
+      --space-2xl: 128px;
+      --radius: 16px;
+      --radius-sm: 8px;
+      --max-w: 1100px;
+      --content-w: 760px;
+      --transition: 200ms ease;
+    }
+
+    /* ===== RESET ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+
+    /* ===== SKIP LINK ===== */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: var(--space-sm);
+      background: var(--color-accent);
+      color: #0f0f0f;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 14px;
+      z-index: 1000;
+      transition: top var(--transition);
+    }
+    .skip-link:focus { top: var(--space-sm); }
+
+    /* ===== NAV ===== */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: var(--space-sm) var(--space-lg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15,15,15,0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    .nav-back:hover, .nav-back:focus-visible { color: var(--color-text); }
+    .nav-back svg { flex-shrink: 0; }
+    .nav-divider {
+      width: 1px;
+      height: 20px;
+      background: var(--color-border);
+    }
+    .nav-logo {
+      font-weight: 800;
+      font-size: 18px;
+      text-decoration: none;
+      background: linear-gradient(135deg, var(--color-accent), var(--color-accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-links {
+      display: flex;
+      gap: var(--space-lg);
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      transition: color var(--transition);
+    }
+    .nav-links a:hover,
+    .nav-links a:focus-visible { color: var(--color-text); }
+    .nav-cta {
+      background: var(--color-accent);
+      color: #0f0f0f !important;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: 100px;
+      font-weight: 700 !important;
+      transition: opacity var(--transition) !important;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ===== LANG SWITCH ===== */
+    .lang-switch {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      background: var(--color-bg-tag);
+      border: 1px solid var(--color-border);
+      border-radius: 100px;
+      padding: 3px;
+    }
+    .lang-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      padding: 4px 10px;
+      border-radius: 100px;
+      transition: background var(--transition), color var(--transition);
+    }
+    .lang-btn.active {
+      background: var(--color-accent);
+      color: #0f0f0f;
+    }
+
+    /* ===== LAYOUT ===== */
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+    }
+    .content-col {
+      max-width: var(--content-w);
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+    }
+
+    /* ===== ACCESIBILIDAD ===== */
+    :focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+    }
+
+    /* ===== HERO DEL CASO ===== */
+    .caso-nda-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-accent-2);
+      padding: 4px 12px;
+      border-radius: 100px;
+      background: rgba(103,232,249,0.1);
+      border: 1px solid rgba(103,232,249,0.2);
+      margin-bottom: var(--space-sm);
+    }
+    .case-hero {
+      padding: clamp(48px, 8vh, 100px) 0 clamp(40px, 6vh, 80px);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .case-hero-meta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      margin-bottom: var(--space-sm);
+    }
+    .company-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background: rgba(103,232,249,0.08);
+      border: 1px solid rgba(103,232,249,0.2);
+      color: var(--color-accent-2);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 100px;
+    }
+    .year-badge {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--color-text-muted);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 100px;
+    }
+    .case-hero h1 {
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: var(--space-sm);
+    }
+    .case-summary {
+      font-size: 19px;
+      color: var(--color-text-muted);
+      line-height: 1.7;
+      max-width: 600px;
+      margin-bottom: var(--space-md);
+    }
+    .meta-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      margin-bottom: var(--space-lg);
+    }
+    .meta-chip {
+      background: var(--color-bg-tag);
+      border: 1px solid var(--color-border);
+      padding: 5px 14px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+    }
+    .meta-chip.highlight {
+      background: rgba(244,114,182,0.1);
+      border-color: rgba(244,114,182,0.25);
+      color: var(--color-accent);
+    }
+    .next-project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      text-decoration: none;
+      transition: color var(--transition), gap var(--transition);
+    }
+    .next-project-link:hover, .next-project-link:focus-visible {
+      color: var(--color-text);
+      gap: 10px;
+    }
+
+    /* ===== IMÁGENES DEL CASO ===== */
+    .case-img {
+      margin: var(--space-lg) 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .case-img img {
+      width: 60%;
+      border-radius: var(--radius);
+      border: 1px solid var(--color-border);
+      display: block;
+    }
+    .case-img figcaption {
+      text-align: center;
+      font-size: 13px;
+      color: var(--color-text-muted);
+      margin-top: var(--space-xs);
+      line-height: 1.5;
+    }
+
+    /* ===== MOCKUP PLACEHOLDER ===== */
+    .mockup-placeholder {
+      border: 2px dashed rgba(255,255,255,0.12);
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      color: var(--color-text-muted);
+      font-size: 14px;
+      font-weight: 500;
+      background: var(--color-bg-card);
+    }
+    .mockup-placeholder svg { opacity: 0.4; }
+    .mockup-placeholder-lg {
+      height: 400px;
+      margin: var(--space-xl) 0;
+    }
+    .mockup-placeholder-sm {
+      height: 240px;
+      margin: var(--space-md) 0;
+    }
+
+    /* ===== SECCIONES DE CONTENIDO ===== */
+    .case-section {
+      padding: var(--space-xl) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .case-section:last-of-type {
+      border-bottom: none;
+    }
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-accent);
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      margin-bottom: var(--space-sm);
+    }
+    .section-title {
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      line-height: 1.25;
+      margin-bottom: var(--space-md);
+    }
+    .body-text {
+      color: var(--color-text-muted);
+      font-size: 16px;
+      line-height: 1.85;
+      margin-bottom: var(--space-md);
+    }
+    .body-text strong { color: var(--color-text); }
+    .body-text:last-child { margin-bottom: 0; }
+
+    /* ===== BLOCKQUOTE ===== */
+    blockquote {
+      border-left: 3px solid var(--color-accent);
+      padding: var(--space-md) var(--space-lg);
+      background: rgba(244,114,182,0.05);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: var(--space-lg) 0;
+    }
+    blockquote p {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.65;
+      color: var(--color-text);
+      font-style: italic;
+    }
+    blockquote cite {
+      display: block;
+      margin-top: var(--space-xs);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      font-style: normal;
+    }
+
+    /* ===== TABLA DE USUARIOS ===== */
+    .user-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: var(--space-md) 0;
+      font-size: 14px;
+    }
+    .user-table th {
+      text-align: left;
+      padding: var(--space-xs) var(--space-sm);
+      color: var(--color-accent);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .user-table td {
+      padding: var(--space-sm);
+      border-bottom: 1px solid var(--color-border);
+      color: var(--color-text-muted);
+      vertical-align: top;
+    }
+    .user-table td:first-child {
+      font-weight: 700;
+      color: var(--color-text);
+      white-space: nowrap;
+    }
+    .user-table tr:last-child td { border-bottom: none; }
+    .user-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ===== PASOS DEL PROCESO ===== */
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-sm);
+      margin: var(--space-md) 0;
+    }
+    .process-step {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--space-md);
+      position: relative;
+      overflow: hidden;
+    }
+    .process-step::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--color-accent), var(--color-accent-2));
+      opacity: 0.4;
+    }
+    .step-number {
+      font-size: clamp(40px, 5vw, 56px);
+      font-weight: 800;
+      color: var(--color-accent-2);
+      opacity: 0.2;
+      line-height: 1;
+      margin-bottom: var(--space-xs);
+      letter-spacing: -2px;
+    }
+    .step-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .step-desc {
+      font-size: 14px;
+      color: var(--color-text-muted);
+      line-height: 1.65;
+    }
+
+    /* ===== TARJETAS DE DECISIONES ===== */
+    .decision-cards {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      margin: var(--space-md) 0;
+    }
+    .decision-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--space-md) var(--space-lg);
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .decision-card:hover {
+      border-color: rgba(255,255,255,0.18);
+      transform: translateX(4px);
+    }
+    .decision-number {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--color-accent);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .decision-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: var(--space-xs);
+      line-height: 1.3;
+    }
+    .decision-desc {
+      font-size: 15px;
+      color: var(--color-text-muted);
+      line-height: 1.75;
+    }
+    .decision-desc strong { color: var(--color-text); }
+
+    /* ===== MÉTRICAS ===== */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-sm);
+      margin: var(--space-md) 0;
+    }
+    .metric-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--space-md);
+      text-align: center;
+    }
+    .metric-value {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800;
+      color: var(--color-accent-2);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .metric-value.placeholder {
+      color: rgba(103,232,249,0.35);
+      font-size: 24px;
+    }
+    .metric-label {
+      font-size: 13px;
+      color: var(--color-text-muted);
+      line-height: 1.4;
+    }
+
+    /* ===== APRENDIZAJES ===== */
+    .learnings-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      margin: var(--space-md) 0;
+    }
+    .learning-item {
+      display: flex;
+      gap: var(--space-sm);
+      align-items: flex-start;
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .learning-item:last-child { border-bottom: none; }
+    .learning-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(244,114,182,0.12);
+      border: 1px solid rgba(244,114,182,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .learning-text {
+      font-size: 15px;
+      color: var(--color-text-muted);
+      line-height: 1.7;
+    }
+    .learning-text strong { color: var(--color-text); }
+
+    /* ===== FOOTER DEL CASO ===== */
+    .case-footer-section {
+      padding: var(--space-xl) 0;
+      border-top: 1px solid var(--color-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      text-decoration: none;
+      transition: color var(--transition), gap var(--transition);
+    }
+    .back-link:hover, .back-link:focus-visible {
+      color: var(--color-text);
+      gap: 10px;
+    }
+
+    /* ===== MÁS PROYECTOS ===== */
+    .more-projects {
+      padding: var(--space-xl) 0;
+      border-top: 1px solid var(--color-border);
+    }
+    .more-projects-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-accent);
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      margin-bottom: var(--space-md);
+    }
+    .more-projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+    }
+    .more-project-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--space-md);
+      text-decoration: none;
+      transition: border-color var(--transition), transform var(--transition);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .more-project-card:hover, .more-project-card:focus-visible {
+      border-color: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+    .mp-company {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+    .mp-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--color-text);
+      line-height: 1.3;
+    }
+    .mp-arrow {
+      font-size: 13px;
+      color: var(--color-accent);
+      margin-top: 4px;
+    }
+    @media (max-width: 600px) {
+      .more-projects-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ===== FOOTER PÁGINA ===== */
+    footer {
+      padding: var(--space-lg) 0;
+      border-top: 1px solid var(--color-border);
+      text-align: center;
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+    footer a { color: var(--color-accent); text-decoration: none; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      :root { --space-xl: 48px; }
+      nav {
+        padding: var(--space-sm);
+      }
+      .nav-links { display: none; }
+      .process-steps { grid-template-columns: 1fr; }
+      .metrics-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .metrics-grid { grid-template-columns: 1fr; }
+      .case-footer-section { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* ===== PASSWORD GATE ===== */
+    .pw-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: var(--color-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-lg);
+    }
+    .pw-gate-box {
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+    .pw-gate-lock {
+      width: 48px;
+      height: 48px;
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--space-md);
+    }
+    .pw-gate-box h2 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: var(--space-xs);
+    }
+    .pw-gate-box p {
+      font-size: 15px;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-lg);
+      line-height: 1.6;
+    }
+    .pw-gate-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .pw-input {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      padding: 12px var(--space-md);
+      font-family: var(--font);
+      font-size: 15px;
+      color: var(--color-text);
+      width: 100%;
+      transition: border-color var(--transition);
+      text-align: center;
+      letter-spacing: 2px;
+    }
+    .pw-input:focus {
+      outline: none;
+      border-color: var(--color-accent);
+    }
+    .pw-input.error {
+      border-color: #f87171;
+      animation: shake 300ms ease;
+    }
+    .pw-error {
+      font-size: 13px;
+      color: #f87171;
+      min-height: 18px;
+    }
+    .pw-btn {
+      background: var(--color-accent);
+      color: #0f0f0f;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 12px var(--space-md);
+      font-family: var(--font);
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity var(--transition);
+    }
+    .pw-btn:hover { opacity: 0.85; }
+    .pw-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--color-text-muted);
+      text-decoration: none;
+      margin-top: var(--space-md);
+      transition: color var(--transition);
+    }
+    .pw-back:hover { color: var(--color-text); }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PASSWORD GATE -->
+  <div class="pw-gate" id="pw-gate" role="dialog" aria-modal="true" aria-labelledby="pw-title">
+    <div class="pw-gate-box">
+      <div class="pw-gate-lock" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <rect x="3" y="9" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M6.5 9V6.5a3.5 3.5 0 1 1 7 0V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h2 id="pw-title" data-i18n="pw-title">Contenido protegido</h2>
+      <p data-i18n="pw-desc">Este caso de estudio contiene información confidencial. Introduce la contraseña para continuar.</p>
+      <form class="pw-gate-form" id="pw-form" onsubmit="return false;">
+        <input class="pw-input" id="pw-input" type="password" placeholder="Contraseña" autocomplete="off" aria-label="Contraseña" />
+        <p class="pw-error" id="pw-error" role="alert" aria-live="polite"></p>
+        <button class="pw-btn" type="submit" id="pw-submit" data-i18n="pw-btn">Acceder</button>
+      </form>
+      <a href="index.html#casos" class="pw-back">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M11 7H3M3 7l3.5-3.5M3 7l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span data-i18n="pw-back">Volver al portfolio</span>
+      </a>
+    </div>
+  </div>
+
+  <a href="#main" class="skip-link">Saltar al contenido principal</a>
+
+  <!-- NAV -->
+  <nav aria-label="Navegación principal">
+    <div class="nav-left">
+      <a href="index.html#casos" class="nav-back" aria-label="Volver a Proyectos">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M13 8H3M3 8L7 4M3 8L7 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span data-i18n="nav-back">Proyectos</span>
+      </a>
+      <div class="nav-divider" aria-hidden="true"></div>
+      <a href="index.html" class="nav-logo" aria-label="Adrivette — inicio">Adrivette</a>
+    </div>
+    <ul class="nav-links" role="list">
+      <li><a href="index.html#sobre-mi" data-i18n="nav-about">Sobre mí</a></li>
+      <li><a href="index.html#casos" data-i18n="nav-work">Proyectos</a></li>
+      <li><a href="index.html#contacto" data-i18n="nav-contact">Hablemos</a></li>
+      <li><a href="index.html#cv" class="nav-cta">CV</a></li>
+    </ul>
+    <div class="lang-switch" role="group" aria-label="Select language">
+      <button class="lang-btn active" id="btn-es" onclick="setLang('es')" aria-pressed="true">🇲🇽 ES</button>
+      <button class="lang-btn" id="btn-en" onclick="setLang('en')" aria-pressed="false">🇺🇸 EN</button>
+    </div>
+  </nav>
+
+  <main id="main">
+
+    <!-- HERO DEL CASO -->
+    <header class="case-hero">
+      <div class="content-col">
+        <div class="caso-nda-badge" aria-label="Proyecto confidencial">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <rect x="2" y="5" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M4 5V3.5a2 2 0 1 1 4 0V5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+          <span data-i18n="nda-badge">Confidencial — Proceso y aprendizajes</span>
+        </div>
+        <div class="case-hero-meta">
+          <div class="company-badge">Accenture</div>
+          <div class="year-badge">2019</div>
+        </div>
+        <h1 data-i18n="hero-title">Plataforma financiera</h1>
+        <p class="case-summary" data-i18n="hero-summary">Rediseño del onboarding de cuenta nómina para un banco en México: del flujo de autoservicio al modelo real asistido por asesor bancario, descubierto en campo.</p>
+        <div class="meta-chips" role="list" aria-label="Metadatos del proyecto">
+          <span class="meta-chip" role="listitem">Fintech</span>
+          <span class="meta-chip" role="listitem" data-i18n="chip-ia">Arquitectura de información</span>
+          <span class="meta-chip" role="listitem">B2B</span>
+          <span class="meta-chip highlight" role="listitem">Product Designer</span>
+        </div>
+        <a href="mercado-libre.html" class="next-project-link" aria-label="Ver siguiente proyecto: Mercado Libre">
+          <span data-i18n="next-project">Ver siguiente proyecto</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </header>
+
+    <!-- MOCKUP PRINCIPAL -->
+    <div class="content-col">
+      <figure class="case-img">
+        <img src="assets/Accenture%20-%20Screen%201.png" alt="Simulación de la vista del asesor en el flujo rediseñado de apertura de cuenta nómina" loading="lazy" />
+        <figcaption>Simulación de la vista del asesor — referencia conceptual</figcaption>
+      </figure>
+    </div>
+
+    <!-- EL RETO -->
+    <section class="case-section" aria-labelledby="reto-title">
+      <div class="content-col">
+        <p class="section-label" aria-hidden="true">01</p>
+        <h2 id="reto-title" class="section-title" data-i18n="s1-title">El reto</h2>
+        <p class="body-text" data-i18n-html="s1-p1">
+          Cuando me incorporé al proyecto, el equipo llevaba meses desarrollando una plataforma de apertura de cuenta nómina para un banco en México. La premisa que guiaba el diseño: el empleado abriría su cuenta de forma digital y autónoma, sin ir a sucursal. Una premisa razonable... <strong>que resultó ser incorrecta</strong>.
+        </p>
+
+        <blockquote>
+          <p data-i18n="s1-quote">"Diseñamos para el usuario equivocado. Lo descubrimos en campo, no en la sala de reuniones."</p>
+        </blockquote>
+
+        <p class="body-text" data-i18n-html="s1-p2">
+          La investigación de campo reveló lo que realmente pasaba: <strong>asesores bancarios se desplazaban a las instalaciones de las empresas para abrir las cuentas de nómina de cada nuevo empleado</strong>. El asesor controlaba todo el flujo y solo cedía el celular al cliente en momentos específicos de firma o validación de identidad. Además, las oficinas corporativas tenían conectividad inestable, lo que hacía el proceso aún más caótico.
+        </p>
+        <p class="body-text" data-i18n-html="s1-p3">
+          Con este hallazgo, el reto dejó de ser "mejorar la interfaz" y se convirtió en <strong>rediseñar todo el onboarding desde la perspectiva del usuario correcto: el asesor bancario</strong>.
+        </p>
+      </div>
+    </section>
+
+    <!-- USUARIOS -->
+    <section class="case-section" aria-labelledby="usuarios-title">
+      <div class="content-col">
+        <p class="section-label" aria-hidden="true">02</p>
+        <h2 id="usuarios-title" class="section-title" data-i18n="s2-title">Usuarios</h2>
+        <p class="body-text" data-i18n="s2-p1">
+          La investigación de campo reveló que el flujo de apertura tenía tres actores con roles muy distintos — y que la plataforma original solo había contemplado a uno de ellos.
+        </p>
+
+        <table class="user-table" aria-label="Perfiles de usuario de la plataforma">
+          <thead>
+            <tr>
+              <th scope="col" data-i18n="th-profile">Perfil</th>
+              <th scope="col" data-i18n="th-context">Contexto de uso</th>
+              <th scope="col" data-i18n="th-need">Necesidad principal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-i18n="tr1-profile">Asesor bancario</td>
+              <td data-i18n="tr1-context">Conduce todo el proceso en las instalaciones de la empresa cliente. Usuario activo durante toda la sesión, con conectividad inestable.</td>
+              <td data-i18n="tr1-need">Fluidez y control total del flujo. Necesita saber en qué paso está y cuándo ceder el celular al empleado.</td>
+            </tr>
+            <tr>
+              <td data-i18n="tr2-profile">Empleado / Nominado</td>
+              <td data-i18n="tr2-context">Recibe el celular en pasos específicos: validación de identidad y firma biométrica. Sin contexto previo de la plataforma.</td>
+              <td data-i18n="tr2-need">Instrucciones claras en segundos. Tiene que completar su parte sin fricción ni contexto adicional.</td>
+            </tr>
+            <tr>
+              <td data-i18n="tr3-profile">RRHH de la empresa</td>
+              <td data-i18n="tr3-context">Coordina las aperturas masivas para nuevos empleados. No interactúa directamente con la plataforma.</td>
+              <td data-i18n="tr3-need">Visibilidad del estado de cada apertura y coordinación fluida con el asesor.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <figure class="case-img">
+          <img src="assets/Accenture%20-%20Wireframes.png" alt="Wireframes del flujo rediseñado: vista del asesor, momento de handoff y pantalla del empleado para KYC" loading="lazy" style="width: 100%;" />
+          <figcaption>Wireframes del flujo rediseñado — referencia conceptual</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- MI PROCESO -->
+    <section class="case-section" aria-labelledby="proceso-title">
+      <div class="content-col">
+        <p class="section-label" aria-hidden="true">03</p>
+        <h2 id="proceso-title" class="section-title" data-i18n="s3-title">Mi proceso</h2>
+        <p class="body-text" data-i18n="s3-p1">
+          Un proceso que cambió de dirección a mitad de camino. Primero entender lo que realmente pasaba — y solo después diseñar.
+        </p>
+
+        <div class="process-steps">
+          <div class="process-step">
+            <div class="step-number" aria-hidden="true">01</div>
+            <div class="step-title" data-i18n="step1-title">Research de campo con asesores</div>
+            <p class="step-desc" data-i18n="step1-desc">Sesiones de observación y entrevistas con asesores bancarios en su contexto real: oficinas de empresas clientes. Aquí descubrimos el mismatch fundamental: la plataforma asumía autoservicio del empleado cuando la realidad era un flujo completamente asistido por el asesor.</p>
+          </div>
+          <div class="process-step">
+            <div class="step-number" aria-hidden="true">02</div>
+            <div class="step-title" data-i18n="step2-title">Reframing del usuario y alineación</div>
+            <p class="step-desc" data-i18n="step2-desc">Con los datos de campo, presentamos el hallazgo al equipo: el flujo estaba diseñado para el usuario equivocado. Conseguir alineación de stakeholders antes de diseñar fue tan importante como el diseño mismo.</p>
+          </div>
+          <div class="process-step">
+            <div class="step-number" aria-hidden="true">03</div>
+            <div class="step-title" data-i18n="step3-title">Rediseño del onboarding para el asesor</div>
+            <p class="step-desc" data-i18n="step3-desc">Nuevo flujo construido desde la perspectiva del asesor como actor principal. Se diseñaron explícitamente los momentos de handoff: los pasos donde el asesor cede el celular al empleado para firma o validación de identidad.</p>
+          </div>
+          <div class="process-step">
+            <div class="step-number" aria-hidden="true">04</div>
+            <div class="step-title" data-i18n="step4-title">Lanzamiento F&amp;F y validación en campo</div>
+            <p class="step-desc" data-i18n="step4-desc">Lanzamiento con grupo cerrado de asesores para validar el flujo rediseñado en condiciones reales, incluyendo conectividad inestable. Los datos confirmaron el rediseño y justificaron la siguiente fase del proyecto.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DECISIONES CLAVE -->
+    <section class="case-section" aria-labelledby="decisiones-title">
+      <div class="content-col">
+        <p class="section-label" aria-hidden="true">04</p>
+        <h2 id="decisiones-title" class="section-title" data-i18n="s4-title">Decisiones clave</h2>
+        <p class="body-text" data-i18n="s4-p1">
+          Tres decisiones que definieron el rediseño — y que solo fueron posibles gracias a lo que vimos en campo.
+        </p>
+
+        <div class="decision-cards">
+          <div class="decision-card">
+            <div class="decision-number" data-i18n="d1-label">Decisión 01</div>
+            <div class="decision-title" data-i18n="d1-title">Rediseñar para el asesor, no para el cliente</div>
+            <p class="decision-desc" data-i18n-html="d1-desc">El hallazgo más crítico del research fue que el actor principal del flujo no era el empleado, sino el asesor bancario. <strong>Cambiar esta premisa implicó rediseñar la arquitectura completa del onboarding</strong>: los estados, la navegación y el lenguaje pasaron a estar construidos para alguien que gestiona el proceso en nombre de otra persona.</p>
+          </div>
+          <div class="decision-card">
+            <div class="decision-number" data-i18n="d2-label">Decisión 02</div>
+            <div class="decision-title" data-i18n="d2-title">Handoff explícito en la interfaz</div>
+            <p class="decision-desc" data-i18n-html="d2-desc">El momento en que el asesor cede el celular al empleado es un punto crítico del flujo. Si no está bien señalizado, genera confusión en ambas partes. Se diseñaron <strong>transiciones claras que marcan qué tipo de usuario está activo</strong> en cada paso: el asesor nunca duda de cuándo pasar el celular ni de qué tiene que hacer el empleado con él.</p>
+          </div>
+          <div class="decision-card">
+            <div class="decision-number" data-i18n="d3-label">Decisión 03</div>
+            <div class="decision-title" data-i18n="d3-title">Diseñar para conectividad inestable</div>
+            <p class="decision-desc" data-i18n-html="d3-desc">Las aperturas se hacen en oficinas corporativas donde el WiFi raramente es fiable. <strong>El flujo no podía depender de una conexión estable</strong>. Se priorizó el guardado progresivo del estado de la apertura y mensajes de error que guían al asesor para retomar sin perder el progreso.</p>
+          </div>
+        </div>
+
+        <figure class="case-img">
+          <img src="assets/Accenture%20-%20Screen%202.png" alt="Simulación del momento de handoff: pantalla de transición del asesor al empleado para validación de identidad" loading="lazy" />
+          <figcaption>Momento de handoff — el asesor cede el celular al empleado para validación de identidad</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- RESULTADOS Y APRENDIZAJES -->
+    <section class="case-section" aria-labelledby="resultados-title">
+      <div class="content-col">
+        <p class="section-label" aria-hidden="true">05</p>
+        <h2 id="resultados-title" class="section-title" data-i18n="s5-title">Resultados y aprendizajes</h2>
+        <p class="body-text" data-i18n="s5-p1">
+          El lanzamiento F&amp;F con asesores validó que el rediseño reducía drásticamente el tiempo de apertura y eliminaba los puntos de abandono más críticos. Los datos justificaron continuar el rediseño hacia el resto de los flujos de la plataforma.
+        </p>
+
+        <div class="metrics-grid" role="list" aria-label="Métricas del proyecto">
+          <div class="metric-card" role="listitem">
+            <div class="metric-value">+70%</div>
+            <div class="metric-label" data-i18n="metric1-label">Reducción en el tiempo de apertura de una cuenta nómina tras el rediseño</div>
+          </div>
+          <div class="metric-card" role="listitem">
+            <div class="metric-value">18</div>
+            <div class="metric-label" data-i18n="metric2-label">Entrevistas externas de campo con clientes, empleados y empresas de distintos segmentos</div>
+          </div>
+          <div class="metric-card" role="listitem">
+            <div class="metric-value">44</div>
+            <div class="metric-label" data-i18n="metric3-label">Entrevistas internas con áreas del banco para mapear el flujo existente</div>
+          </div>
+        </div>
+
+        <div class="learnings-list" role="list" aria-label="Aprendizajes clave">
+          <div class="learning-item" role="listitem">
+            <div class="learning-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 7l3.5 3.5L12 3" stroke="#F472B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <p class="learning-text" data-i18n-html="learn1"><strong>En proyectos con producto avanzado, el research de campo puede cambiar la dirección fundamental.</strong> Ir a campo descubrió en semanas lo que meses de desarrollo habían pasado por alto: el producto estaba construido para el usuario equivocado.</p>
+          </div>
+          <div class="learning-item" role="listitem">
+            <div class="learning-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 7l3.5 3.5L12 3" stroke="#F472B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <p class="learning-text" data-i18n-html="learn2"><strong>Los flujos B2B tienen múltiples usuarios en la misma sesión.</strong> Diseñar los momentos de handoff con la misma precisión que el flujo completo es lo que separa una interfaz que funciona en campo de una que genera caos.</p>
+          </div>
+          <div class="learning-item" role="listitem">
+            <div class="learning-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 7l3.5 3.5L12 3" stroke="#F472B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <p class="learning-text" data-i18n-html="learn3"><strong>El contexto real de uso importa más que el flujo ideal.</strong> Un flujo que no funciona con conectividad inestable no es un flujo funcional. Diseñar para las condiciones reales — no para el escenario perfecto — es lo que hace que el producto funcione donde tiene que funcionar.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MÁS PROYECTOS -->
+  <div class="container">
+    <div class="more-projects">
+      <p class="more-projects-label" data-i18n="more-label">Más proyectos</p>
+      <div class="more-projects-grid">
+        <a href="mercado-libre.html" class="more-project-card">
+          <span class="mp-company">Mercado Libre · 2026</span>
+          <span class="mp-title">Inbound &amp; Sorting</span>
+          <span class="mp-arrow">→</span>
+        </a>
+        <a href="ui-kit.html" class="more-project-card">
+          <span class="mp-company">albo · 2021</span>
+          <span class="mp-title">UI KIT &amp; Design System</span>
+          <span class="mp-arrow">→</span>
+        </a>
+        <a href="espacios.html" class="more-project-card">
+          <span class="mp-company">albo · 2020</span>
+          <span class="mp-title">Espacios</span>
+          <span class="mp-arrow">→</span>
+        </a>
+      </div>
+      <a href="index.html#casos" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M13 8H3M3 8L7 4M3 8L7 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span data-i18n="back-link">Volver al portfolio</span>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const gate = document.getElementById('pw-gate');
+      const input = document.getElementById('pw-input');
+      const error = document.getElementById('pw-error');
+      const form = document.getElementById('pw-form');
+      const KEY = 'pw_accenture_ok';
+
+      if (sessionStorage.getItem(KEY)) {
+        gate.style.display = 'none';
+        return;
+      }
+
+      function unlock() {
+        if (input.value.trim().toLowerCase() === 'adrivette') {
+          sessionStorage.setItem(KEY, '1');
+          gate.style.display = 'none';
+          input.value = '';
+          error.textContent = '';
+        } else {
+          error.textContent = document.documentElement.lang === 'en' ? 'Wrong password.' : 'Contraseña incorrecta.';
+          input.classList.add('error');
+          input.addEventListener('animationend', () => input.classList.remove('error'), { once: true });
+          input.select();
+        }
+      }
+
+      form.addEventListener('submit', unlock);
+      document.getElementById('pw-submit').addEventListener('click', unlock);
+    }());
+  </script>
+
+  <script>
+  (function() {
+    const translations = {
+      es: {
+        'nav-back': 'Proyectos',
+        'nav-about': 'Sobre mí',
+        'nav-work': 'Proyectos',
+        'nav-contact': 'Hablemos',
+        'pw-title': 'Contenido protegido',
+        'pw-desc': 'Este caso de estudio contiene información confidencial. Introduce la contraseña para continuar.',
+        'pw-btn': 'Acceder',
+        'pw-back': 'Volver al portfolio',
+        'nda-badge': 'Confidencial — Proceso y aprendizajes',
+        'hero-title': 'Plataforma financiera',
+        'hero-summary': 'Rediseño del onboarding de cuenta nómina para un banco en México: del flujo de autoservicio al modelo real asistido por asesor bancario, descubierto en campo.',
+        'chip-ia': 'Arquitectura de información',
+        'next-project': 'Ver siguiente proyecto',
+        'mockup-placeholder': 'Simulación de la vista del asesor — referencia conceptual',
+        's1-title': 'El reto',
+        's1-p1': 'Cuando me incorporé al proyecto, el equipo llevaba meses desarrollando una plataforma de apertura de cuenta nómina para un banco en México. La premisa que guiaba el diseño: el empleado abriría su cuenta de forma digital y autónoma, sin ir a sucursal. Una premisa razonable... <strong>que resultó ser incorrecta</strong>.',
+        's1-quote': '"Diseñamos para el usuario equivocado. Lo descubrimos en campo, no en la sala de reuniones."',
+        's1-p2': 'La investigación de campo reveló lo que realmente pasaba: <strong>asesores bancarios se desplazaban a las instalaciones de las empresas para abrir las cuentas de nómina de cada nuevo empleado</strong>. El asesor controlaba todo el flujo y solo cedía el celular al cliente en momentos específicos de firma o validación de identidad. Además, las oficinas corporativas tenían conectividad inestable, lo que hacía el proceso aún más caótico.',
+        's1-p3': 'Con este hallazgo, el reto dejó de ser "mejorar la interfaz" y se convirtió en <strong>rediseñar todo el onboarding desde la perspectiva del usuario correcto: el asesor bancario</strong>.',
+        's2-title': 'Usuarios',
+        's2-p1': 'La investigación de campo reveló que el flujo de apertura tenía tres actores con roles muy distintos — y que la plataforma original solo había contemplado a uno de ellos.',
+        'th-profile': 'Perfil',
+        'th-context': 'Contexto de uso',
+        'th-need': 'Necesidad principal',
+        'tr1-profile': 'Asesor bancario',
+        'tr1-context': 'Conduce todo el proceso en las instalaciones de la empresa cliente. Usuario activo durante toda la sesión, con conectividad inestable.',
+        'tr1-need': 'Fluidez y control total del flujo. Necesita saber en qué paso está y cuándo ceder el celular al empleado.',
+        'tr2-profile': 'Empleado / Nominado',
+        'tr2-context': 'Recibe el celular en pasos específicos: validación de identidad y firma biométrica. Sin contexto previo de la plataforma.',
+        'tr2-need': 'Instrucciones claras en segundos. Tiene que completar su parte sin fricción ni contexto adicional.',
+        'tr3-profile': 'RRHH de la empresa',
+        'tr3-context': 'Coordina las aperturas masivas para nuevos empleados. No interactúa directamente con la plataforma.',
+        'tr3-need': 'Visibilidad del estado de cada apertura y coordinación fluida con el asesor.',
+        'mockup-heuristic': 'Auditoría heurística / mapa de navegación',
+        's3-title': 'Mi proceso',
+        's3-p1': 'Un proceso que cambió de dirección a mitad de camino. Primero entender lo que realmente pasaba — y solo después diseñar.',
+        'step1-title': 'Research de campo con asesores',
+        'step1-desc': 'Sesiones de observación y entrevistas con asesores bancarios en su contexto real: oficinas de empresas clientes. Aquí descubrimos el mismatch fundamental: la plataforma asumía autoservicio del empleado cuando la realidad era un flujo completamente asistido por el asesor.',
+        'step2-title': 'Reframing del usuario y alineación',
+        'step2-desc': 'Con los datos de campo, presentamos el hallazgo al equipo: el flujo estaba diseñado para el usuario equivocado. Conseguir alineación de stakeholders antes de diseñar fue tan importante como el diseño mismo.',
+        'step3-title': 'Rediseño del onboarding para el asesor',
+        'step3-desc': 'Nuevo flujo construido desde la perspectiva del asesor como actor principal. Se diseñaron explícitamente los momentos de handoff: los pasos donde el asesor cede el celular al empleado para firma o validación de identidad.',
+        'step4-title': 'Lanzamiento F&F y validación en campo',
+        'step4-desc': 'Lanzamiento con grupo cerrado de asesores para validar el flujo rediseñado en condiciones reales, incluyendo conectividad inestable. Los datos confirmaron el rediseño y justificaron la siguiente fase del proyecto.',
+        's4-title': 'Decisiones clave',
+        's4-p1': 'Tres decisiones que definieron el rediseño — y que solo fueron posibles gracias a lo que vimos en campo.',
+        'd1-label': 'Decisión 01',
+        'd1-title': 'Rediseñar para el asesor, no para el cliente',
+        'd1-desc': 'El hallazgo más crítico del research fue que el actor principal del flujo no era el empleado, sino el asesor bancario. <strong>Cambiar esta premisa implicó rediseñar la arquitectura completa del onboarding</strong>: los estados, la navegación y el lenguaje pasaron a estar construidos para alguien que gestiona el proceso en nombre de otra persona.',
+        'd2-label': 'Decisión 02',
+        'd2-title': 'Handoff explícito en la interfaz',
+        'd2-desc': 'El momento en que el asesor cede el celular al empleado es un punto crítico del flujo. Si no está bien señalizado, genera confusión en ambas partes. Se diseñaron <strong>transiciones claras que marcan qué tipo de usuario está activo</strong> en cada paso: el asesor nunca duda de cuándo pasar el celular ni de qué tiene que hacer el empleado con él.',
+        'd3-label': 'Decisión 03',
+        'd3-title': 'Diseñar para conectividad inestable',
+        'd3-desc': 'Las aperturas se hacen en oficinas corporativas donde el WiFi raramente es fiable. <strong>El flujo no podía depender de una conexión estable</strong>. Se priorizó el guardado progresivo del estado de la apertura y mensajes de error que guían al asesor para retomar sin perder el progreso.',
+        'mockup-ff': 'Flujo de apertura de cuenta nómina — versión F&F',
+        's5-title': 'Resultados y aprendizajes',
+        's5-p1': 'El lanzamiento F&F con asesores validó que el rediseño reducía drásticamente el tiempo de apertura y eliminaba los puntos de abandono más críticos. Los datos justificaron continuar el rediseño hacia el resto de los flujos de la plataforma.',
+        'metric1-label': 'Reducción en el tiempo de apertura de una cuenta nómina tras el rediseño',
+        'metric2-label': 'Entrevistas externas de campo con clientes, empleados y empresas de distintos segmentos',
+        'metric3-label': 'Entrevistas internas con áreas del banco para mapear el flujo existente',
+        'learn1': '<strong>En proyectos con producto avanzado, el research de campo puede cambiar la dirección fundamental.</strong> Ir a campo descubrió en semanas lo que meses de desarrollo habían pasado por alto: el producto estaba construido para el usuario equivocado.',
+        'learn2': '<strong>Los flujos B2B tienen múltiples usuarios en la misma sesión.</strong> Diseñar los momentos de handoff con la misma precisión que el flujo completo es lo que separa una interfaz que funciona en campo de una que genera caos.',
+        'learn3': '<strong>El contexto real de uso importa más que el flujo ideal.</strong> Un flujo que no funciona con conectividad inestable no es un flujo funcional. Diseñar para las condiciones reales — no para el escenario perfecto — es lo que hace que el producto funcione donde tiene que funcionar.',
+        'back-link': 'Volver al portfolio',
+        'more-label': 'Más proyectos',
+      },
+      en: {
+        'nav-back': 'Projects',
+        'nav-about': 'About',
+        'nav-work': 'Work',
+        'nav-contact': "Let's talk",
+        'pw-title': 'Protected content',
+        'pw-desc': 'This case study contains confidential information. Enter the password to continue.',
+        'pw-btn': 'Access',
+        'pw-back': '← Back to portfolio',
+        'nda-badge': 'Confidential — Process & learnings',
+        'hero-title': 'Financial platform',
+        'hero-summary': 'Payroll account onboarding redesign for a bank in Mexico: from self-service to the real advisor-assisted model discovered through field research.',
+        'chip-ia': 'Information architecture',
+        'next-project': 'Next project',
+        'mockup-placeholder': 'Image / platform mockup',
+        's1-title': 'The challenge',
+        's1-p1': 'When I joined the project, the team had been developing a payroll account onboarding platform for a bank in Mexico for months. The design premise: employees would open their accounts digitally and independently, without visiting a branch. A reasonable premise... <strong>that turned out to be wrong</strong>.',
+        's1-quote': '"We designed for the wrong user. We found out in the field, not in the meeting room."',
+        's1-p2': 'Field research revealed what was really happening: <strong>bank advisors traveled to company offices to open payroll accounts for each new employee</strong>. The advisor controlled the entire flow and only handed the phone to the client at specific moments for signature or identity verification. On top of that, corporate offices had unreliable connectivity, making the process even more chaotic.',
+        's1-p3': 'With this finding, the challenge shifted from "improve the interface" to <strong>redesigning the entire onboarding from the correct user\'s perspective: the banking advisor</strong>.',
+        's2-title': 'Users',
+        's2-p1': 'Field research revealed that the account opening flow had three actors with very different roles — and that the original platform had only accounted for one of them.',
+        'th-profile': 'Profile',
+        'th-context': 'Usage context',
+        'th-need': 'Primary need',
+        'tr1-profile': 'Banking advisor',
+        'tr1-context': 'Runs the entire process at the client company\'s premises. Active user throughout the session, with unreliable connectivity.',
+        'tr1-need': 'Flow and full control. Needs to know which step they\'re on and when to hand the phone to the employee.',
+        'tr2-profile': 'Employee / Nominee',
+        'tr2-context': 'Receives the phone at specific steps: identity verification and biometric signature. No prior context of the platform.',
+        'tr2-need': 'Clear instructions in seconds. Must complete their part without friction or additional context.',
+        'tr3-profile': 'HR department',
+        'tr3-context': 'Coordinates bulk account openings for new employees. Does not interact directly with the platform.',
+        'tr3-need': 'Visibility of each account\'s status and smooth coordination with the advisor.',
+        'mockup-heuristic': 'Heuristic audit / navigation map',
+        's3-title': 'My process',
+        's3-p1': 'A process that changed direction midway. First understand what was really happening — then design.',
+        'step1-title': 'Field research with advisors',
+        'step1-desc': 'Observation sessions and interviews with banking advisors in their real context: client company offices. This is where we discovered the fundamental mismatch: the platform assumed employee self-service when the reality was a fully advisor-assisted flow.',
+        'step2-title': 'User reframe and stakeholder alignment',
+        'step2-desc': 'With field data in hand, we presented the finding to the team: the flow was designed for the wrong user. Getting stakeholder alignment before designing was just as important as the design itself.',
+        'step3-title': 'Onboarding redesign for the advisor',
+        'step3-desc': 'New flow built from the advisor\'s perspective as the primary actor. Handoff moments were explicitly designed: the steps where the advisor passes the phone to the employee for signature or KYC validation.',
+        'step4-title': 'F&F launch and field validation',
+        'step4-desc': 'Closed-group launch with advisors to validate the redesigned flow under real conditions, including unreliable connectivity. The data confirmed the redesign and justified the next phase of the project.',
+        's4-title': 'Key decisions',
+        's4-p1': 'Three decisions that defined the redesign — and were only possible because of what we saw in the field.',
+        'd1-label': 'Decision 01',
+        'd1-title': 'Redesign for the advisor, not the client',
+        'd1-desc': 'The most critical research finding was that the primary actor in the flow was not the employee, but the banking advisor. <strong>Changing this premise meant redesigning the entire onboarding architecture</strong>: states, navigation, and language were rebuilt for someone managing the process on behalf of someone else.',
+        'd2-label': 'Decision 02',
+        'd2-title': 'Explicit handoff in the interface',
+        'd2-desc': 'The moment the advisor hands the phone to the employee is a critical point in the flow. If it\'s not clearly signaled, it creates confusion for both parties. <strong>Clear transitions were designed to mark which user is active</strong> at each step: the advisor never wonders when to pass the phone or what the employee needs to do with it.',
+        'd3-label': 'Decision 03',
+        'd3-title': 'Design for unreliable connectivity',
+        'd3-desc': 'Account openings happen in corporate offices where WiFi is rarely reliable. <strong>The flow couldn\'t depend on a stable connection</strong>. Progressive saving of the account opening state was prioritized, along with error messages that guide the advisor to resume without losing progress.',
+        'mockup-ff': 'Payroll account opening flow — F&F version',
+        's5-title': 'Results & learnings',
+        's5-p1': 'The F&F launch with advisors validated that the redesign drastically reduced opening time and eliminated the most critical drop-off points. The data justified extending the redesign to the rest of the platform\'s flows.',
+        'metric1-label': 'Reduction in payroll account opening time after the redesign',
+        'metric2-label': 'External field interviews with clients, employees, and companies across segments',
+        'metric3-label': 'Internal interviews with bank teams to map the existing flow',
+        'learn1': '<strong>On projects with an advanced product, field research can change the fundamental direction.</strong> Going to the field uncovered in weeks what months of development had missed: the product was built for the wrong user.',
+        'learn2': '<strong>B2B flows have multiple users in the same session.</strong> Designing handoff moments with the same precision as the full flow is what separates an interface that works in the field from one that creates chaos.',
+        'learn3': '<strong>Real usage context matters more than the ideal flow.</strong> A flow that doesn\'t work with unreliable connectivity isn\'t a functional flow. Designing for real conditions — not the perfect scenario — is what makes the product work where it needs to.',
+        'back-link': 'Back to portfolio',
+        'more-label': 'More projects',
+      }
+    };
+
+    let currentLang = 'es';
+
+    window.setLang = function(lang) {
+      currentLang = lang;
+      const t = translations[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) el.textContent = t[key];
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const key = el.getAttribute('data-i18n-html');
+        if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+      document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.getElementById('btn-es').setAttribute('aria-pressed', lang === 'es');
+      document.getElementById('btn-en').setAttribute('aria-pressed', lang === 'en');
+      document.documentElement.lang = lang;
+    };
+  }());
+  </script>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <p>Diseñado con ❤️ por <a href="index.html" aria-label="Adrivette — portfolio principal">Adrivette</a> · <span aria-hidden="true">2026</span></p>
+    </div>
+  </footer>
+
+</body>
+</html>
