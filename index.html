@@ -507,6 +507,17 @@
       section { scroll-margin-top: 64px; }
     }
 
+    /* ===== SCROLL ANIMATIONS ===== */
+    .anim {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .anim.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     /* ===== ACCESIBILIDAD ===== */
     :focus-visible {
       outline: 2px solid var(--color-accent);
@@ -714,7 +725,7 @@
     <section id="sobre-mi" aria-labelledby="sobre-title">
       <div class="container">
         <div class="about-grid">
-          <div class="about-text">
+          <div class="about-text anim">
             <p class="section-label" aria-hidden="true" data-i18n="about-label">Sobre mí</p>
             <h2 id="sobre-title" class="section-title" data-i18n="about-title">Energética, curiosa y centrada en el usuario</h2>
             <p data-i18n="about-p1">Con 10 años de experiencia en tecnología, me especializo en diseñar soluciones que optimizan procesos y mejoran la experiencia del usuario. He trabajado en <strong>fintech (albo)</strong>, <strong>plataformas financieras (Accenture)</strong>, <strong>consultoría de producto (Bambú Mobile)</strong> y <strong>logística de última milla (Mercado Libre)</strong>.</p>
@@ -723,7 +734,7 @@
           </div>
           <div>
             <p class="section-label" aria-hidden="true">Habilidades</p>
-            <div class="skills-list" role="list">
+            <div class="skills-list anim" role="list">
               <div class="skill-item" role="listitem">
                 <span class="skill-name">Product Design &amp; UX Research</span>
                 <span class="skill-badge">Senior</span>
@@ -766,7 +777,7 @@
         <div class="casos-grid">
 
           <!-- Mercado Libre - NDA -->
-          <a href="mercado-libre.html" class="caso-card nda" aria-labelledby="caso-meli" aria-describedby="caso-meli-nda">
+          <a href="mercado-libre.html" class="caso-card nda anim" aria-labelledby="caso-meli" aria-describedby="caso-meli-nda">
             <div id="caso-meli-nda" class="caso-nda-badge">
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                 <rect x="2" y="5" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
@@ -792,7 +803,7 @@
           </a>
 
           <!-- UI KIT -->
-          <a href="ui-kit.html" class="caso-card" aria-labelledby="caso-uikit">
+          <a href="ui-kit.html" class="caso-card anim" aria-labelledby="caso-uikit">
             <div class="caso-empresa">albo <span class="caso-year">· 2021</span></div>
             <h3 id="caso-uikit" class="caso-titulo">UI Kit &amp; Design System</h3>
             <p class="caso-desc">Guía de componentes para mejorar la comunicación entre diseño y desarrollo, y acelerar la construcción de producto sin sacrificar consistencia.</p>
@@ -811,7 +822,7 @@
           </a>
 
           <!-- Espacios -->
-          <a href="espacios.html" class="caso-card" aria-labelledby="caso-espacios">
+          <a href="espacios.html" class="caso-card anim" aria-labelledby="caso-espacios">
             <div class="caso-empresa">albo <span class="caso-year">· 2020</span></div>
             <h3 id="caso-espacios" class="caso-titulo">Espacios</h3>
             <p class="caso-desc">La primera herramienta de ahorro por metas de albo. Diseñada desde un insight cultural: los mexicanos no ahorran en abstracto — ahorran cuando tienen una meta concreta que recordar.</p>
@@ -830,7 +841,7 @@
           </a>
 
           <!-- Accenture - Confidencial -->
-          <a href="accenture.html" class="caso-card nda" aria-labelledby="caso-accenture" aria-describedby="caso-accenture-conf">
+          <a href="accenture.html" class="caso-card nda anim" aria-labelledby="caso-accenture" aria-describedby="caso-accenture-conf">
             <div id="caso-accenture-conf" class="caso-nda-badge">
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                 <rect x="2" y="5" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
@@ -864,8 +875,8 @@
       <div class="container">
         <p class="section-label" aria-hidden="true" data-i18n="contact-label">Contacto</p>
         <h2 id="contacto-title" class="section-title" data-i18n="contact-title">¿Hablamos?</h2>
-        <p class="section-subtitle" data-i18n="contact-desc">Estoy disponible para nuevas oportunidades, proyectos freelance y colaboraciones. Si crees que podemos hacer algo bueno juntos, escríbeme.</p>
-        <nav aria-label="Redes sociales" class="social-links-grid">
+        <p class="section-subtitle anim" data-i18n="contact-desc">Estoy disponible para nuevas oportunidades, proyectos freelance y colaboraciones. Si crees que podemos hacer algo bueno juntos, escríbeme.</p>
+        <nav aria-label="Redes sociales" class="social-links-grid anim">
           <a href="mailto:ciira818@gmail.com" class="social-link">
             <div class="social-icon" aria-hidden="true">✉️</div>
             <div>
@@ -900,7 +911,7 @@
 
     <!-- CV -->
     <section id="cv" aria-labelledby="cv-title">
-      <div class="container cv-section-inner">
+      <div class="container cv-section-inner anim">
         <div>
           <p class="section-label" aria-hidden="true" data-i18n="cv-label">Currículum</p>
           <h2 id="cv-title" class="section-title" data-i18n="cv-title-h2">Descarga mi CV</h2>
@@ -1045,6 +1056,22 @@
       document.documentElement.lang = lang;
     }
 
+  </script>
+
+  <script>
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.anim').forEach(el => observer.observe(el));
+    } else {
+      document.querySelectorAll('.anim').forEach(el => el.classList.add('visible'));
+    }
   </script>
 </body>
 </html>

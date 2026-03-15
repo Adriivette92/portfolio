@@ -176,6 +176,16 @@
       outline-offset: 3px;
       border-radius: 4px;
     }
+    /* ===== SCROLL ANIMATIONS ===== */
+    .anim {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .anim.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { transition: none !important; animation: none !important; }
     }
@@ -276,6 +286,18 @@
     .next-project-link:hover, .next-project-link:focus-visible {
       color: var(--color-text);
       gap: 10px;
+    }
+    .confidential-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--color-accent-2);
+      padding: 3px 8px;
+      border-radius: 100px;
+      background: rgba(103,232,249,0.1);
+      border: 1px solid rgba(103,232,249,0.2);
     }
 
     /* ===== IMÁGENES DEL CASO ===== */
@@ -1052,7 +1074,7 @@
       <div class="more-projects-grid">
         <a href="mercado-libre.html" class="more-project-card">
           <span class="mp-company">Mercado Libre · 2026</span>
-          <span class="mp-title">Inbound &amp; Sorting</span>
+          <span class="mp-title">Inbound &amp; Sorting <span class="confidential-pill" aria-label="Confidencial"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><rect x="2" y="5" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 1 1 4 0V5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></span></span>
           <span class="mp-arrow">→</span>
         </a>
         <a href="ui-kit.html" class="more-project-card">
@@ -1276,6 +1298,23 @@
       <p>Diseñado con ❤️ por <a href="index.html" aria-label="Adrivette — portfolio principal">Adrivette</a> · <span aria-hidden="true">2026</span></p>
     </div>
   </footer>
+
+  <script>
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08 });
+      document.querySelectorAll('.case-section, .case-img, .case-summary, .meta-chips, .process-steps').forEach(el => {
+        el.classList.add('anim');
+        observer.observe(el);
+      });
+    }
+  </script>
 
 </body>
 </html>
