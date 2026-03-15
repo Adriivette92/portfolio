@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Adrivette — Product Designer</title>
+  <title>Adrivette | Design happens</title>
+  <link rel="icon" href="assets/Page.png" type="image/png" />
   <meta name="description" content="Adriana Romero, Product Designer especializada en experiencias centradas en el usuario. Proyectos en fintech, logística y bienestar corporativo." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1054,7 +1055,13 @@
 
       // Lang del documento
       document.documentElement.lang = lang;
+
+      // Persistir preferencia
+      localStorage.setItem('lang', lang);
     }
+
+    // Aplicar idioma guardado al cargar
+    setLang(localStorage.getItem('lang') || 'es');
 
   </script>
 

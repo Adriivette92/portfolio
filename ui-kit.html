@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>UI Kit & Design System — Caso de estudio · Adrivette</title>
+  <title>Adrivette | Design happens</title>
+  <link rel="icon" href="assets/Page.png" type="image/png" />
   <meta name="description" content="Caso de estudio: UI Kit & Design System para albo. Sistema de diseño construido desde cero para alinear diseño y desarrollo en la primera fintech digital de México. Product Designer: Adriana Romero." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1123,7 +1124,9 @@
       document.getElementById('btn-es').setAttribute('aria-pressed', lang === 'es');
       document.getElementById('btn-en').setAttribute('aria-pressed', lang === 'en');
       document.documentElement.lang = lang;
+      localStorage.setItem('lang', lang);
     };
+    setLang(localStorage.getItem('lang') || 'es');
   }());
   </script>
 
