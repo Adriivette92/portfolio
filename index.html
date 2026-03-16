@@ -680,7 +680,7 @@
             </p>
             <div class="hero-actions">
               <a href="#casos" class="btn-primary" data-i18n="hero-cta">Ver proyectos</a>
-              <a id="cv-download" href="assets/CV-Adrivette-Español.pdf" class="btn-secondary" download>
+              <a id="cv-download" href="assets/CV-Adrivette-ES.pdf" class="btn-secondary" download>
                 <span data-i18n="cv-btn">Descargar CV</span>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                   <path d="M8 10.5L4.5 7M8 10.5L11.5 7M8 10.5V2.5M3 13.5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -919,7 +919,7 @@
           <p class="section-subtitle" data-i18n="cv-desc">Versión actualizada con mis proyectos más recientes y experiencia en IA aplicada al diseño.</p>
         </div>
         <div class="cv-btns">
-          <a id="cv-download-2" href="assets/CV-Adrivette-Español.pdf" class="btn-primary" download>
+          <a id="cv-download-2" href="assets/CV-Adrivette-ES.pdf" class="btn-primary" download>
             <span data-i18n="cv-btn">Descargar CV</span>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M8 10.5L4.5 7M8 10.5L11.5 7M8 10.5V2.5M3 13.5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -950,7 +950,7 @@
         'hero-desc': 'Soy Adriana, Product Designer con experiencia en fintech, logística de última milla y bienestar corporativo. Creo experiencias que funcionan en el mundo real.',
         'hero-cta': 'Ver proyectos',
         'cv-btn': 'Descargar CV',
-        'cv-file': 'CV-Adrivette-Español.pdf',
+        'cv-file': 'CV-Adrivette-ES.pdf',
         'about-label': 'Sobre mí',
         'about-title': 'Energética, curiosa y centrada en el usuario',
         'about-p1': 'Soy Product Designer con experiencia en productos a gran escala. He trabajado en <strong>fintech (albo)</strong>, <strong>bienestar corporativo (Bambú Mobile)</strong> y <strong>logística de última milla (Mercado Libre)</strong>, lo que me ha dado una perspectiva muy amplia sobre cómo diseñar para contextos y usuarios radicalmente distintos.',
@@ -977,7 +977,7 @@
         'hero-desc': "I'm Adriana, a Product Designer & Design Ops with 10 years of experience in tech. I design solutions that optimize processes and create real impact for people.",
         'hero-cta': 'View projects',
         'cv-btn': 'Download CV',
-        'cv-file': 'CV-Adrivette-Inglés.pdf',
+        'cv-file': 'CV-Adrivette-EN.pdf',
         'about-label': 'About me',
         'about-title': 'Energetic, curious, and user-centered',
         'about-p1': "With 10 years in tech, I specialize in designing solutions that optimize processes and improve user experience. I've worked in <strong>fintech (albo)</strong>, <strong>financial platforms (Accenture)</strong>, <strong>product consulting (Bambú Mobile)</strong>, and <strong>last-mile logistics (Mercado Libre)</strong>.",
@@ -1042,9 +1042,9 @@
 
       // CV links
       const cvFile = t['cv-file'];
-      document.getElementById('cv-download').href = cvFile;
+      document.getElementById('cv-download').href = 'assets/' + cvFile;
       document.getElementById('cv-download').download = cvFile;
-      document.getElementById('cv-download-2').href = cvFile;
+      document.getElementById('cv-download-2').href = 'assets/' + cvFile;
       document.getElementById('cv-download-2').download = cvFile;
 
       // Botones switch
