@@ -508,6 +508,17 @@
       section { scroll-margin-top: 64px; }
     }
 
+    /* ===== HERO ENTRANCE ANIMATION ===== */
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-tag       { animation: slideUp 0.6s ease both; animation-delay: 0.1s; }
+    .hero-content h1 { animation: slideUp 0.6s ease both; animation-delay: 0.25s; }
+    .hero-desc      { animation: slideUp 0.6s ease both; animation-delay: 0.4s; }
+    .hero-actions   { animation: slideUp 0.6s ease both; animation-delay: 0.55s; }
+    .hero-visual    { animation: slideUp 0.6s ease both; animation-delay: 0.4s; }
+
     /* ===== SCROLL ANIMATIONS ===== */
     .anim {
       opacity: 0;
@@ -680,7 +691,7 @@
             </p>
             <div class="hero-actions">
               <a href="#casos" class="btn-primary" data-i18n="hero-cta">Ver proyectos</a>
-              <a id="cv-download" href="assets/CV-Adrivette-Español.pdf" class="btn-secondary" download>
+              <a id="cv-download" href="assets/CV-Adrivette-ES.pdf" class="btn-secondary" download>
                 <span data-i18n="cv-btn">Descargar CV</span>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                   <path d="M8 10.5L4.5 7M8 10.5L11.5 7M8 10.5V2.5M3 13.5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -777,6 +788,25 @@
         </div>
         <div class="casos-grid">
 
+          <!-- Espacios -->
+          <a href="espacios.html" class="caso-card anim" aria-labelledby="caso-espacios">
+            <div class="caso-empresa">albo <span class="caso-year">· 2020</span></div>
+            <h3 id="caso-espacios" class="caso-titulo">Espacios</h3>
+            <p class="caso-desc" data-i18n="card-spaces-desc">La primera herramienta de ahorro por metas de albo. Diseñada desde un insight cultural: los mexicanos no ahorran en abstracto — ahorran cuando tienen una meta concreta que recordar.</p>
+            <div class="caso-footer">
+              <div class="caso-tags">
+                <span class="tag">Fintech</span>
+                <span class="tag">Mobile · iOS &amp; Android</span>
+                <span class="tag">UX Research</span>
+              </div>
+              <div class="caso-arrow" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </a>
+
           <!-- Mercado Libre - NDA -->
           <a href="mercado-libre.html" class="caso-card nda anim" aria-labelledby="caso-meli" aria-describedby="caso-meli-nda">
             <div id="caso-meli-nda" class="caso-nda-badge">
@@ -822,34 +852,8 @@
             </div>
           </a>
 
-          <!-- Espacios -->
-          <a href="espacios.html" class="caso-card anim" aria-labelledby="caso-espacios">
-            <div class="caso-empresa">albo <span class="caso-year">· 2020</span></div>
-            <h3 id="caso-espacios" class="caso-titulo">Espacios</h3>
-            <p class="caso-desc" data-i18n="card-spaces-desc">La primera herramienta de ahorro por metas de albo. Diseñada desde un insight cultural: los mexicanos no ahorran en abstracto — ahorran cuando tienen una meta concreta que recordar.</p>
-            <div class="caso-footer">
-              <div class="caso-tags">
-                <span class="tag">Fintech</span>
-                <span class="tag">Mobile · iOS &amp; Android</span>
-                <span class="tag">UX Research</span>
-              </div>
-              <div class="caso-arrow" aria-hidden="true">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </div>
-          </a>
-
-          <!-- Accenture - Confidencial -->
-          <a href="accenture.html" class="caso-card nda anim" aria-labelledby="caso-accenture" aria-describedby="caso-accenture-conf">
-            <div id="caso-accenture-conf" class="caso-nda-badge">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                <rect x="2" y="5" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
-                <path d="M4 5V3.5a2 2 0 1 1 4 0V5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-              </svg>
-              <span data-i18n="card-confidential">Confidencial — Proceso y aprendizajes</span>
-            </div>
+          <!-- Accenture -->
+          <a href="accenture.html" class="caso-card anim" aria-labelledby="caso-accenture">
             <div class="caso-empresa">Accenture <span class="caso-year">· 2019</span></div>
             <h3 id="caso-accenture" class="caso-titulo" data-i18n="card-accenture-title">Plataforma financiera</h3>
             <p class="caso-desc" data-i18n="card-accenture-desc">Rediseño del onboarding de cuenta nómina: el research de campo reveló que el producto estaba construido para el usuario equivocado. Proceso completo rediseñado desde cero.</p>
@@ -919,7 +923,7 @@
           <p class="section-subtitle" data-i18n="cv-desc">Versión actualizada con mis proyectos más recientes y experiencia en IA aplicada al diseño.</p>
         </div>
         <div class="cv-btns">
-          <a id="cv-download-2" href="assets/CV-Adrivette-Español.pdf" class="btn-primary" download>
+          <a id="cv-download-2" href="assets/CV-Adrivette-ES.pdf" class="btn-primary" download>
             <span data-i18n="cv-btn">Descargar CV</span>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M8 10.5L4.5 7M8 10.5L11.5 7M8 10.5V2.5M3 13.5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -956,7 +960,7 @@
         'hero-desc': 'Soy Adriana, Product Designer con experiencia en fintech, logística de última milla y bienestar corporativo. Creo experiencias que funcionan en el mundo real.',
         'hero-cta': 'Ver proyectos',
         'cv-btn': 'Descargar CV',
-        'cv-file': 'CV-Adrivette-Español.pdf',
+        'cv-file': 'CV-Adrivette-ES.pdf',
         'stat-years': 'Años de experiencia',
         'stat-companies': 'Empresas',
         'stat-ai-tools': 'Herramientas avanzadas',
@@ -1008,7 +1012,7 @@
         'hero-desc': "I'm Adriana, a Product Designer & Design Ops with 10 years of experience in tech. I design solutions that optimize processes and create real impact for people.",
         'hero-cta': 'View projects',
         'cv-btn': 'Download CV',
-        'cv-file': 'CV-Adrivette-Inglés.pdf',
+        'cv-file': 'CV-Adrivette-EN.pdf',
         'stat-years': 'Years of experience',
         'stat-companies': 'Companies',
         'stat-ai-tools': 'Advanced tools',
@@ -1099,9 +1103,9 @@
 
       // CV links
       const cvFile = t['cv-file'];
-      document.getElementById('cv-download').href = cvFile;
+      document.getElementById('cv-download').href = 'assets/' + cvFile;
       document.getElementById('cv-download').download = cvFile;
-      document.getElementById('cv-download-2').href = cvFile;
+      document.getElementById('cv-download-2').href = 'assets/' + cvFile;
       document.getElementById('cv-download-2').download = cvFile;
 
       // Botones switch
