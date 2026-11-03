@@ -560,7 +560,7 @@
 </head>
 <body>
 
-  <a href="#main" class="skip-link">Saltar al contenido principal</a>
+  <a href="#main" class="skip-link" data-i18n="skip">Saltar al contenido principal</a>
 
   <!-- NAV -->
   <nav aria-label="Navegación principal">
@@ -833,7 +833,7 @@
   <!-- FOOTER -->
   <footer>
     <div class="container">
-      <p>Diseñado con ❤️ por <a href="index.html" aria-label="Adrivette — portfolio principal">Adrivette</a> · <span aria-hidden="true">2026</span></p>
+      <p><span data-i18n="footer-designed">Diseñado con ❤️ por</span> <a href="index.html" aria-label="Adrivette — portfolio principal">Adrivette</a> · <span aria-hidden="true">2026</span></p>
     </div>
   </footer>
 
@@ -841,6 +841,7 @@
   (function() {
     const translations = {
       es: {
+        'skip': 'Saltar al contenido principal',
         'nav-back': 'Proyectos',
         'nav-about': 'Sobre mí',
         'nav-work': 'Proyectos',
@@ -897,8 +898,10 @@
         'learn2': '<strong>La complejidad técnica no tiene que ser visible.</strong> Cuanto más complejo es el backend, más simple tiene que ser la interfaz. El usuario no necesita entender el sistema; necesita conseguir su objetivo.',
         'learn3': '<strong>La restricción visible es mejor que la sorpresa en checkout.</strong> Mostrar qué puede pedir el usuario con su saldo antes de que lo seleccione reduce la fricción mucho más que permitirle seleccionar y recibir un error al pagar.',
         'back-link': 'Volver al portfolio',
+        'footer-designed': 'Diseñado con ❤️ por',
       },
       en: {
+        'skip': 'Skip to main content',
         'nav-back': 'Projects',
         'nav-about': 'About',
         'nav-work': 'Work',
@@ -955,6 +958,7 @@
         'learn2': "<strong>Technical complexity doesn't have to be visible.</strong> The more complex the backend, the simpler the interface needs to be. Users don't need to understand the system; they need to achieve their goal.",
         'learn3': '<strong>Visible restrictions beat checkout surprises.</strong> Showing users what they can order with their balance before they select it reduces friction far more than letting them choose and then hitting an error at payment.',
         'back-link': 'Back to portfolio',
+        'footer-designed': 'Designed with ❤️ by',
       }
     };
 
@@ -976,7 +980,9 @@
       document.getElementById('btn-es').setAttribute('aria-pressed', lang === 'es');
       document.getElementById('btn-en').setAttribute('aria-pressed', lang === 'en');
       document.documentElement.lang = lang;
+      localStorage.setItem('lang', lang);
     };
+    setLang(localStorage.getItem('lang') || 'es');
   }());
   </script>
 

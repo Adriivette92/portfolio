@@ -802,7 +802,7 @@
     </div>
   </div>
 
-  <a href="#main" class="skip-link">Saltar al contenido principal</a>
+  <a href="#main" class="skip-link" data-i18n="skip">Saltar al contenido principal</a>
 
   <!-- NAV -->
   <nav aria-label="Navegación principal">
@@ -1064,7 +1064,7 @@
         </a>
         <a href="accenture.html" class="more-project-card">
           <span class="mp-company">Accenture · 2019</span>
-          <span class="mp-title">Plataforma financiera <span class="confidential-pill" aria-label="Confidencial"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><rect x="2" y="5" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 1 1 4 0V5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></span></span>
+          <span class="mp-title"><span data-i18n="mp-accenture-title">Plataforma financiera</span> <span class="confidential-pill" aria-label="Confidencial"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><rect x="2" y="5" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 1 1 4 0V5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></span></span>
           <span class="mp-arrow">→</span>
         </a>
       </div>
@@ -1080,7 +1080,7 @@
   <!-- FOOTER -->
   <footer>
     <div class="container">
-      <p>Diseñado con ❤️ por <a href="index.html" aria-label="Adrivette — portfolio principal">Adrivette</a> · <span aria-hidden="true">2026</span></p>
+      <p><span data-i18n="footer-designed">Diseñado con ❤️ por</span> <a href="index.html" aria-label="Adrivette — portfolio principal">Adrivette</a> · <span aria-hidden="true">2026</span></p>
     </div>
   </footer>
 
@@ -1120,6 +1120,7 @@
   (function() {
     const translations = {
       es: {
+        'skip': 'Saltar al contenido principal',
         'nav-back': 'Proyectos',
         'nav-about': 'Sobre mí',
         'nav-work': 'Proyectos',
@@ -1182,8 +1183,11 @@
         'learn4': '<strong>Los errores de clasificación tienen consecuencias en el mundo real.</strong> Diseñar para logística me enseñó a pensar en el impacto aguas abajo de cada decisión de interfaz. Un error de diseño no es solo un problema de UX — puede ser un paquete perdido o una entrega fallida.',
         'back-link': 'Volver al portfolio',
         'more-label': 'Más proyectos',
+        'mp-accenture-title': 'Plataforma financiera',
+        'footer-designed': 'Diseñado con ❤️ por',
       },
       en: {
+        'skip': 'Skip to main content',
         'nav-back': 'Projects',
         'nav-about': 'About',
         'nav-work': 'Work',
@@ -1246,6 +1250,8 @@
         'learn4': '<strong>Classification errors have real-world consequences.</strong> Designing for logistics taught me to think about the downstream impact of every interface decision. A design error is not just a UX problem — it can be a lost package or a failed delivery.',
         'back-link': 'Back to portfolio',
         'more-label': 'More projects',
+        'mp-accenture-title': 'Financial platform',
+        'footer-designed': 'Designed with ❤️ by',
       }
     };
 

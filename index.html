@@ -646,8 +646,8 @@
   <a href="#main" class="skip-link" data-i18n="skip">Saltar al contenido principal</a>
 
   <!-- NAV -->
-  <nav aria-label="Navegación principal">
-    <a href="#" class="nav-logo" aria-label="Adrivette — inicio">
+  <nav aria-label="Navegación principal" data-i18n-aria-label="aria-main-nav">
+    <a href="#" class="nav-logo" aria-label="Adrivette — inicio" data-i18n-aria-label="aria-home">
       <img src="assets/logo-adrivette.svg" alt="Adrivette" height="32" />
     </a>
     <ul class="nav-links" role="list">
@@ -656,7 +656,7 @@
       <li><a href="#contacto" data-i18n="nav-contact">Hablemos</a></li>
       <li><a href="#cv" class="nav-cta" data-i18n="nav-cv">CV</a></li>
     </ul>
-    <div class="lang-switch" role="group" aria-label="Seleccionar idioma">
+    <div class="lang-switch" role="group" aria-label="Seleccionar idioma" data-i18n-aria-label="aria-language">
       <button class="lang-btn active" id="btn-es" onclick="setLang('es')" aria-pressed="true">🇲🇽 ES</button>
       <button class="lang-btn" id="btn-en" onclick="setLang('en')" aria-pressed="false">🇺🇸 EN</button>
     </div>
@@ -695,11 +695,11 @@
               <div class="hero-stats">
                 <div class="hero-stat">
                   <div class="hero-stat-value">10+</div>
-                  <div class="hero-stat-label">Años de experiencia</div>
+                  <div class="hero-stat-label" data-i18n="stat-years">Años de experiencia</div>
                 </div>
                 <div class="hero-stat">
                   <div class="hero-stat-value">4</div>
-                  <div class="hero-stat-label">Empresas</div>
+                  <div class="hero-stat-label" data-i18n="stat-companies">Empresas</div>
                 </div>
                 <div class="hero-stat">
                   <div class="hero-stat-value">DS</div>
@@ -707,7 +707,7 @@
                 </div>
                 <div class="hero-stat">
                   <div class="hero-stat-value">IA</div>
-                  <div class="hero-stat-label">Herramientas avanzadas</div>
+                  <div class="hero-stat-label" data-i18n="stat-ai-tools">Herramientas avanzadas</div>
                 </div>
               </div>
               <div class="hero-tags">
@@ -734,7 +734,7 @@
             <p data-i18n="about-p3">Además, integro <strong>herramientas de IA en mi flujo de trabajo</strong>: desde síntesis de research hasta generación de propuestas y edición directa en Figma con Claude Code.</p>
           </div>
           <div>
-            <p class="section-label" aria-hidden="true">Habilidades</p>
+            <p class="section-label" aria-hidden="true" data-i18n="skills-label">Habilidades</p>
             <div class="skills-list anim" role="list">
               <div class="skill-item" role="listitem">
                 <span class="skill-name">Product Design &amp; UX Research</span>
@@ -742,22 +742,22 @@
               </div>
               <div class="skill-item" role="listitem">
                 <span class="skill-name">Design Ops &amp; Design Systems</span>
-                <span class="skill-badge">Especialidad</span>
+                <span class="skill-badge" data-i18n="skill-specialty">Especialidad</span>
               </div>
               <div class="skill-item" role="listitem">
                 <span class="skill-name">Design Sprint &amp; User Centered Design</span>
                 <span class="skill-badge">Senior</span>
               </div>
               <div class="skill-item" role="listitem">
-                <span class="skill-name">Diseño para alta presión</span>
-                <span class="skill-badge">Especialidad</span>
+                <span class="skill-name" data-i18n="skill-pressure">Diseño para alta presión</span>
+                <span class="skill-badge" data-i18n="skill-specialty">Especialidad</span>
               </div>
               <div class="skill-item" role="listitem">
-                <span class="skill-name">IA aplicada al diseño</span>
-                <span class="skill-badge cyan">Avanzado</span>
+                <span class="skill-name" data-i18n="skill-ai">IA aplicada al diseño</span>
+                <span class="skill-badge cyan" data-i18n="skill-advanced">Avanzado</span>
               </div>
               <div class="skill-item" role="listitem">
-                <span class="skill-name">Figma &amp; Prototipado</span>
+                <span class="skill-name" data-i18n="skill-figma">Figma &amp; Prototipado</span>
                 <span class="skill-badge">Senior</span>
               </div>
             </div>
@@ -784,16 +784,16 @@
                 <rect x="2" y="5" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
                 <path d="M4 5V3.5a2 2 0 1 1 4 0V5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
               </svg>
-              Confidencial — Proceso y aprendizajes
+              <span data-i18n="card-confidential">Confidencial — Proceso y aprendizajes</span>
             </div>
             <div class="caso-empresa">Mercado Libre <span class="caso-year">· 2026</span></div>
             <h3 id="caso-meli" class="caso-titulo">Inbound &amp; Sorting</h3>
-            <p class="caso-desc">Rediseño de la herramienta handheld que usan los reps para clasificar paquetes al llegar al service center. El objetivo: identificar en segundos si un paquete era normal, voluminoso o tenía una anomalía.</p>
+            <p class="caso-desc" data-i18n="card-meli-desc">Rediseño de la herramienta handheld que usan los reps para clasificar paquetes al llegar al service center. El objetivo: identificar en segundos si un paquete era normal, voluminoso o tenía una anomalía.</p>
             <div class="caso-footer">
               <div class="caso-tags">
-                <span class="tag">Logística</span>
+                <span class="tag" data-i18n="tag-logistics">Logística</span>
                 <span class="tag">Handheld</span>
-                <span class="tag">Research contextual</span>
+                <span class="tag" data-i18n="tag-contextual">Research contextual</span>
               </div>
               <div class="caso-arrow" aria-hidden="true">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -807,7 +807,7 @@
           <a href="ui-kit.html" class="caso-card anim" aria-labelledby="caso-uikit">
             <div class="caso-empresa">albo <span class="caso-year">· 2021</span></div>
             <h3 id="caso-uikit" class="caso-titulo">UI Kit &amp; Design System</h3>
-            <p class="caso-desc">Guía de componentes para mejorar la comunicación entre diseño y desarrollo, y acelerar la construcción de producto sin sacrificar consistencia.</p>
+            <p class="caso-desc" data-i18n="card-uikit-desc">Guía de componentes para mejorar la comunicación entre diseño y desarrollo, y acelerar la construcción de producto sin sacrificar consistencia.</p>
             <div class="caso-footer">
               <div class="caso-tags">
                 <span class="tag">Design Systems</span>
@@ -826,7 +826,7 @@
           <a href="espacios.html" class="caso-card anim" aria-labelledby="caso-espacios">
             <div class="caso-empresa">albo <span class="caso-year">· 2020</span></div>
             <h3 id="caso-espacios" class="caso-titulo">Espacios</h3>
-            <p class="caso-desc">La primera herramienta de ahorro por metas de albo. Diseñada desde un insight cultural: los mexicanos no ahorran en abstracto — ahorran cuando tienen una meta concreta que recordar.</p>
+            <p class="caso-desc" data-i18n="card-spaces-desc">La primera herramienta de ahorro por metas de albo. Diseñada desde un insight cultural: los mexicanos no ahorran en abstracto — ahorran cuando tienen una meta concreta que recordar.</p>
             <div class="caso-footer">
               <div class="caso-tags">
                 <span class="tag">Fintech</span>
@@ -848,15 +848,15 @@
                 <rect x="2" y="5" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
                 <path d="M4 5V3.5a2 2 0 1 1 4 0V5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
               </svg>
-              Confidencial — Proceso y aprendizajes
+              <span data-i18n="card-confidential">Confidencial — Proceso y aprendizajes</span>
             </div>
             <div class="caso-empresa">Accenture <span class="caso-year">· 2019</span></div>
-            <h3 id="caso-accenture" class="caso-titulo">Plataforma financiera</h3>
-            <p class="caso-desc">Rediseño del onboarding de cuenta nómina: el research de campo reveló que el producto estaba construido para el usuario equivocado. Proceso completo rediseñado desde cero.</p>
+            <h3 id="caso-accenture" class="caso-titulo" data-i18n="card-accenture-title">Plataforma financiera</h3>
+            <p class="caso-desc" data-i18n="card-accenture-desc">Rediseño del onboarding de cuenta nómina: el research de campo reveló que el producto estaba construido para el usuario equivocado. Proceso completo rediseñado desde cero.</p>
             <div class="caso-footer">
               <div class="caso-tags">
                 <span class="tag">Fintech</span>
-                <span class="tag">Arquitectura de información</span>
+                <span class="tag" data-i18n="tag-ia">Arquitectura de información</span>
                 <span class="tag">B2B</span>
               </div>
               <div class="caso-arrow" aria-hidden="true">
@@ -877,7 +877,7 @@
         <p class="section-label" aria-hidden="true" data-i18n="contact-label">Contacto</p>
         <h2 id="contacto-title" class="section-title" data-i18n="contact-title">¿Hablamos?</h2>
         <p class="section-subtitle anim" data-i18n="contact-desc">Estoy disponible para nuevas oportunidades, proyectos freelance y colaboraciones. Si crees que podemos hacer algo bueno juntos, escríbeme.</p>
-        <nav aria-label="Redes sociales" class="social-links-grid anim">
+        <nav aria-label="Redes sociales" data-i18n-aria-label="aria-social" class="social-links-grid anim">
           <a href="mailto:ciira818@gmail.com" class="social-link">
             <div class="social-icon" aria-hidden="true">✉️</div>
             <div>
@@ -934,13 +934,19 @@
   <!-- FOOTER -->
   <footer>
     <div class="container">
-      <p>Diseñado con ❤️ por <a href="#" aria-label="Adrivette, inicio de página">Adrivette</a> · <span aria-hidden="true">2026</span></p>
+      <p><span data-i18n="footer-designed">Diseñado con ❤️ por</span> <a href="#" aria-label="Adrivette, inicio de página" data-i18n-aria-label="aria-page-top">Adrivette</a> · <span aria-hidden="true">2026</span></p>
     </div>
   </footer>
 
   <script>
     const translations = {
       es: {
+        'page-title': 'Adrivette | Diseño de producto',
+        'aria-main-nav': 'Navegación principal',
+        'aria-home': 'Adrivette — inicio',
+        'aria-language': 'Seleccionar idioma',
+        'aria-social': 'Redes sociales',
+        'aria-page-top': 'Adrivette, inicio de página',
         'skip': 'Saltar al contenido principal',
         'nav-about': 'Sobre mí',
         'nav-work': 'Proyectos',
@@ -951,13 +957,31 @@
         'hero-cta': 'Ver proyectos',
         'cv-btn': 'Descargar CV',
         'cv-file': 'CV-Adrivette-Español.pdf',
+        'stat-years': 'Años de experiencia',
+        'stat-companies': 'Empresas',
+        'stat-ai-tools': 'Herramientas avanzadas',
         'about-label': 'Sobre mí',
         'about-title': 'Energética, curiosa y centrada en el usuario',
         'about-p1': 'Soy Product Designer con experiencia en productos a gran escala. He trabajado en <strong>fintech (albo)</strong>, <strong>bienestar corporativo (Bambú Mobile)</strong> y <strong>logística de última milla (Mercado Libre)</strong>, lo que me ha dado una perspectiva muy amplia sobre cómo diseñar para contextos y usuarios radicalmente distintos.',
         'about-p2': 'En Mercado Libre aprendí algo que cambió mi forma de diseñar: cuando el usuario está bajo presión, cada decisión de diseño tiene que ganarse su lugar. La escaneabilidad, la jerarquía y los fallbacks no son nice-to-have — son el diseño.',
         'about-p3': 'Además, integro <strong>herramientas de IA en mi flujo de trabajo</strong>: desde síntesis de research hasta generación de propuestas y edición directa en Figma con Claude Code.',
+        'skills-label': 'Habilidades',
+        'skill-specialty': 'Especialidad',
+        'skill-pressure': 'Diseño para alta presión',
+        'skill-ai': 'IA aplicada al diseño',
+        'skill-advanced': 'Avanzado',
+        'skill-figma': 'Figma y prototipado',
         'work-label': 'Proyectos',
         'work-title': 'Casos de estudio',
+        'card-confidential': 'Confidencial — Proceso y aprendizajes',
+        'card-meli-desc': 'Rediseño de la herramienta handheld que usan los reps para clasificar paquetes al llegar al service center. El objetivo: identificar en segundos si un paquete era normal, voluminoso o tenía una anomalía.',
+        'tag-logistics': 'Logística',
+        'tag-contextual': 'Research contextual',
+        'card-uikit-desc': 'Guía de componentes para mejorar la comunicación entre diseño y desarrollo, y acelerar la construcción de producto sin sacrificar consistencia.',
+        'card-spaces-desc': 'La primera herramienta de ahorro por metas de albo. Diseñada desde un insight cultural: los mexicanos no ahorran en abstracto — ahorran cuando tienen una meta concreta que recordar.',
+        'card-accenture-title': 'Plataforma financiera',
+        'card-accenture-desc': 'Rediseño del onboarding de cuenta nómina: el research de campo reveló que el producto estaba construido para el usuario equivocado. Proceso completo rediseñado desde cero.',
+        'tag-ia': 'Arquitectura de información',
         'contact-label': 'Contacto',
         'contact-title': '¿Hablamos?',
         'contact-desc': 'Estoy disponible para nuevas oportunidades, proyectos freelance y colaboraciones. Si crees que podemos hacer algo bueno juntos, escríbeme.',
@@ -966,8 +990,15 @@
         'cv-title-h2': 'Descarga mi CV',
         'cv-title': 'Descarga mi CV',
         'cv-desc': 'Versión actualizada con mis proyectos más recientes y experiencia en IA aplicada al diseño.',
+        'footer-designed': 'Diseñado con ❤️ por',
       },
       en: {
+        'page-title': 'Adrivette | Product Design',
+        'aria-main-nav': 'Main navigation',
+        'aria-home': 'Adrivette — home',
+        'aria-language': 'Select language',
+        'aria-social': 'Social links',
+        'aria-page-top': 'Adrivette, back to top',
         'skip': 'Skip to main content',
         'nav-about': 'About',
         'nav-work': 'Work',
@@ -978,13 +1009,31 @@
         'hero-cta': 'View projects',
         'cv-btn': 'Download CV',
         'cv-file': 'CV-Adrivette-Inglés.pdf',
+        'stat-years': 'Years of experience',
+        'stat-companies': 'Companies',
+        'stat-ai-tools': 'Advanced tools',
         'about-label': 'About me',
         'about-title': 'Energetic, curious, and user-centered',
         'about-p1': "With 10 years in tech, I specialize in designing solutions that optimize processes and improve user experience. I've worked in <strong>fintech (albo)</strong>, <strong>financial platforms (Accenture)</strong>, <strong>product consulting (Bambú Mobile)</strong>, and <strong>last-mile logistics (Mercado Libre)</strong>.",
         'about-p2': "At albo I was the first Product Designer on the team: I set design standards, co-founded the Design Ops team, and reduced screen creation time by 25% with a Design System. At Mercado Libre I learned that when users are under pressure, scannability and fallbacks aren't nice-to-have — they are the design.",
         'about-p3': 'I also integrate <strong>AI tools into my workflow</strong>: from research synthesis to design proposals and direct Figma editing with Claude Code.',
+        'skills-label': 'Skills',
+        'skill-specialty': 'Specialty',
+        'skill-pressure': 'Design for high-pressure contexts',
+        'skill-ai': 'AI applied to design',
+        'skill-advanced': 'Advanced',
+        'skill-figma': 'Figma & Prototyping',
         'work-label': 'Work',
         'work-title': 'Case studies',
+        'card-confidential': 'Confidential — Process and learnings',
+        'card-meli-desc': 'Redesign of the handheld tool used by reps to sort packages as they arrive at the service center. The goal: identify in seconds whether a package was standard, oversized, or had an anomaly.',
+        'tag-logistics': 'Logistics',
+        'tag-contextual': 'Contextual research',
+        'card-uikit-desc': 'A component library that improved communication between design and development and accelerated product delivery without sacrificing consistency.',
+        'card-spaces-desc': "albo's first goal-based savings tool. Designed around a cultural insight: people in Mexico do not save in the abstract — they save when they have a concrete goal to remember.",
+        'card-accenture-title': 'Financial platform',
+        'card-accenture-desc': 'Redesign of a payroll-account onboarding flow: field research revealed the product had been built for the wrong user. The complete process was redesigned from the ground up.',
+        'tag-ia': 'Information architecture',
         'contact-label': 'Contact',
         'contact-title': "Let's talk",
         'contact-desc': "I'm available for new opportunities, freelance projects, and collaborations. If you think we can build something great together, reach out.",
@@ -993,6 +1042,7 @@
         'cv-title-h2': 'Download my CV',
         'cv-title': 'Download my CV',
         'cv-desc': 'Updated with my latest projects and experience with AI-powered design tools.',
+        'footer-designed': 'Designed with ❤️ by',
       }
     };
 
@@ -1020,6 +1070,7 @@
       currentLang = lang;
       rotatingEl.textContent = phrases[lang][currentIndex];
       const t = translations[lang];
+      document.title = t['page-title'];
 
       // Textos simples
       document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -1032,6 +1083,12 @@
         const key = el.getAttribute('data-i18n-html');
         const htmlKey = key + '-html';
         if (t[htmlKey]) el.innerHTML = t[htmlKey];
+      });
+
+      // Atributos accesibles
+      document.querySelectorAll('[data-i18n-aria-label]').forEach(el => {
+        const key = el.getAttribute('data-i18n-aria-label');
+        if (t[key]) el.setAttribute('aria-label', t[key]);
       });
 
       // Párrafos con HTML interno

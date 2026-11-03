@@ -697,7 +697,7 @@
 </head>
 <body>
 
-  <a href="#main" class="skip-link">Saltar al contenido principal</a>
+  <a href="#main" class="skip-link" data-i18n="skip">Saltar al contenido principal</a>
 
   <!-- NAV -->
   <nav aria-label="Navegación principal">
@@ -963,7 +963,7 @@
         </a>
         <a href="accenture.html" class="more-project-card">
           <span class="mp-company">Accenture · 2019</span>
-          <span class="mp-title">Plataforma financiera <span class="confidential-pill" aria-label="Confidencial"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><rect x="2" y="5" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 1 1 4 0V5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></span></span>
+          <span class="mp-title"><span data-i18n="mp-accenture-title">Plataforma financiera</span> <span class="confidential-pill" aria-label="Confidencial"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><rect x="2" y="5" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 1 1 4 0V5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></span></span>
           <span class="mp-arrow">→</span>
         </a>
       </div>
@@ -979,7 +979,7 @@
   <!-- FOOTER -->
   <footer>
     <div class="container">
-      <p>Diseñado con ❤️ por <a href="index.html" aria-label="Adrivette — portfolio principal">Adrivette</a> · <span aria-hidden="true">2026</span></p>
+      <p><span data-i18n="footer-designed">Diseñado con ❤️ por</span> <a href="index.html" aria-label="Adrivette — portfolio principal">Adrivette</a> · <span aria-hidden="true">2026</span></p>
     </div>
   </footer>
 
@@ -987,6 +987,10 @@
   (function() {
     const translations = {
       es: {
+        'img-components': 'Librería de componentes — UI Kit albo',
+        'img-painpoints': 'Pain points — auditoría de inconsistencias y deuda de diseño',
+        'img-strongpoints': 'Strong points — beneficios del sistema de diseño',
+        'skip': 'Saltar al contenido principal',
         'nav-back': 'Proyectos',
         'nav-about': 'Sobre mí',
         'nav-work': 'Proyectos',
@@ -1044,8 +1048,14 @@
         'learn3': '<strong>Empezar por los tokens acelera todo lo demás.</strong> Definir bien los valores base antes de construir componentes evita retrabajo masivo cuando llega el primer cambio de marca.',
         'back-link': 'Volver al portfolio',
         'more-label': 'Más proyectos',
+        'mp-accenture-title': 'Plataforma financiera',
+        'footer-designed': 'Diseñado con ❤️ por',
       },
       en: {
+        'img-components': 'Component library — albo UI Kit',
+        'img-painpoints': 'Pain points — audit of inconsistencies and design debt',
+        'img-strongpoints': 'Strong points — benefits of the design system',
+        'skip': 'Skip to main content',
         'nav-back': 'Projects',
         'nav-about': 'About',
         'nav-work': 'Work',
@@ -1103,6 +1113,8 @@
         'learn3': '<strong>Starting with tokens accelerates everything else.</strong> Getting the base values right before building components prevents massive rework when the first brand refresh comes.',
         'back-link': 'Back to portfolio',
         'more-label': 'More projects',
+        'mp-accenture-title': 'Financial platform',
+        'footer-designed': 'Designed with ❤️ by',
       }
     };
 

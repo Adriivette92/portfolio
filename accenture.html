@@ -813,7 +813,7 @@
     </div>
   </div>
 
-  <a href="#main" class="skip-link">Saltar al contenido principal</a>
+  <a href="#main" class="skip-link" data-i18n="skip">Saltar al contenido principal</a>
 
   <!-- NAV -->
   <nav aria-label="Navegación principal">
@@ -876,7 +876,7 @@
     <div class="content-col">
       <figure class="case-img">
         <img src="assets/Accenture%20-%20Screen%201.png" alt="Simulación de la vista del asesor en el flujo rediseñado de apertura de cuenta nómina" loading="lazy" />
-        <figcaption>Simulación de la vista del asesor — referencia conceptual</figcaption>
+        <figcaption data-i18n="img-advisor-caption">Simulación de la vista del asesor — referencia conceptual</figcaption>
       </figure>
     </div>
 
@@ -940,7 +940,7 @@
 
         <figure class="case-img">
           <img src="assets/Accenture%20-%20Wireframes.png" alt="Wireframes del flujo rediseñado: vista del asesor, momento de handoff y pantalla del empleado para KYC" loading="lazy" style="width: 100%;" />
-          <figcaption>Wireframes del flujo rediseñado — referencia conceptual</figcaption>
+          <figcaption data-i18n="img-wireframes-caption">Wireframes del flujo rediseñado — referencia conceptual</figcaption>
         </figure>
       </div>
     </section>
@@ -1008,7 +1008,7 @@
 
         <figure class="case-img">
           <img src="assets/Accenture%20-%20Screen%202.png" alt="Simulación del momento de handoff: pantalla de transición del asesor al empleado para validación de identidad" loading="lazy" />
-          <figcaption>Momento de handoff — el asesor cede el celular al empleado para validación de identidad</figcaption>
+          <figcaption data-i18n="img-handoff-caption">Momento de handoff — el asesor cede el celular al empleado para validación de identidad</figcaption>
         </figure>
       </div>
     </section>
@@ -1134,7 +1134,11 @@
   (function() {
     const translations = {
       es: {
+        'skip': 'Saltar al contenido principal',
         'nav-back': 'Proyectos',
+        'img-advisor-caption': 'Simulación de la vista del asesor — referencia conceptual',
+        'img-wireframes-caption': 'Wireframes del flujo rediseñado — referencia conceptual',
+        'img-handoff-caption': 'Momento de handoff — el asesor cede el celular al empleado para validación de identidad',
         'nav-about': 'Sobre mí',
         'nav-work': 'Proyectos',
         'nav-contact': 'Hablemos',
@@ -1200,9 +1204,14 @@
         'learn3': '<strong>El contexto real de uso importa más que el flujo ideal.</strong> Un flujo que no funciona con conectividad inestable no es un flujo funcional. Diseñar para las condiciones reales — no para el escenario perfecto — es lo que hace que el producto funcione donde tiene que funcionar.',
         'back-link': 'Volver al portfolio',
         'more-label': 'Más proyectos',
+        'footer-designed': 'Diseñado con ❤️ por',
       },
       en: {
+        'skip': 'Skip to main content',
         'nav-back': 'Projects',
+        'img-advisor-caption': 'Advisor view simulation — conceptual reference',
+        'img-wireframes-caption': 'Wireframes of the redesigned flow — conceptual reference',
+        'img-handoff-caption': 'Handoff moment — the advisor passes the phone to the employee for identity verification',
         'nav-about': 'About',
         'nav-work': 'Work',
         'nav-contact': "Let's talk",
@@ -1268,6 +1277,7 @@
         'learn3': '<strong>Real usage context matters more than the ideal flow.</strong> A flow that doesn\'t work with unreliable connectivity isn\'t a functional flow. Designing for real conditions — not the perfect scenario — is what makes the product work where it needs to.',
         'back-link': 'Back to portfolio',
         'more-label': 'More projects',
+        'footer-designed': 'Designed with ❤️ by',
       }
     };
 
@@ -1298,9 +1308,13 @@
   <!-- FOOTER -->
   <footer>
     <div class="container">
-      <p>Diseñado con ❤️ por <a href="index.html" aria-label="Adrivette — portfolio principal">Adrivette</a> · <span aria-hidden="true">2026</span></p>
+      <p><span data-i18n="footer-designed">Diseñado con ❤️ por</span> <a href="index.html" aria-label="Adrivette — portfolio principal">Adrivette</a> · <span aria-hidden="true">2026</span></p>
     </div>
   </footer>
+
+  <script>
+    window.setLang(localStorage.getItem('lang') || 'es');
+  </script>
 
   <script>
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
